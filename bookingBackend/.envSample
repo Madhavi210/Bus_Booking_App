@@ -1,0 +1,6 @@
+
+
+MONGODB_URI = url
+PORT = 3000
+SECRET_KEY = madhavijoshi
+
