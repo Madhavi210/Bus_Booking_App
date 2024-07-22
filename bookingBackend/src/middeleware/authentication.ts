@@ -2,7 +2,7 @@
 import TokenPayload from "../interface/user.interface";
 import { SECRET_KEY } from "../config/config";
 import jwt from "jsonwebtoken";
-import "../types/typeExtention";
+import "../types/typesExtension";
 import { Request, Response, NextFunction } from "express";
 import {User} from "../model/user.model";
 import IUser from "../interface/user.interface";
@@ -22,6 +22,7 @@ export default class Authentication {
         throw new Error("SECRET_KEY is not defined");
       }
       const decode = (await jwt.verify(token, SECRET_KEY)) as any ;      
+      
       req.id = decode.userId;
       
       next();

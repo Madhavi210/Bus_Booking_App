@@ -20,6 +20,14 @@ const couponSchema = new Schema<ICoupon>(
       type: Date,
       required: true,
     },
+    usageLimit: {
+      type: Number,
+      default: 0, // Default 0 means no limit
+    },
+    usageCount: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

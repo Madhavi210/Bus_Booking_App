@@ -10,7 +10,7 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  totalUsers: number = 0;
+  totalUsers: number = 4;
   totalBuses: number = 5;
   totalRoutes: number = 5;
   

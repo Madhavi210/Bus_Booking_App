@@ -29,7 +29,9 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       role: ['user', Validators.required],
-      profilePic: ['', Validators.required] 
+      profilePic: ['', Validators.required] ,
+      gender: ['', [Validators.required]],
+      age: ['', [Validators.required, Validators.min(18), Validators.max(100)]]
     });
   }
 
@@ -40,6 +42,8 @@ export class RegisterComponent {
       formData.append('email', this.registerForm.get('email')?.value);
       formData.append('password', this.registerForm.get('password')?.value);
       formData.append('role', this.registerForm.get('role')?.value);
+      formData.append('gender', this.registerForm.get('gender')?.value);
+      formData.append('age', this.registerForm.get('age')?.value);
       const profilePicFile = this.registerForm.get('profilePic')?.value;
       if (profilePicFile) {
         formData.append('profilePic', profilePicFile);

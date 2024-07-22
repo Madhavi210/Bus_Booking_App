@@ -31,6 +31,15 @@ const userSchema = new Schema<IUser>(
     profilePic: {
       type: String,
     },
+    gender : {
+      type: String,
+      enum: ['Male', 'Female', 'Other'],
+      required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+    }
   },
   { timestamps: true }
 );

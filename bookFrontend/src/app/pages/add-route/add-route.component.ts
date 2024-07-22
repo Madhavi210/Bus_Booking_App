@@ -41,19 +41,20 @@ export class AddRouteComponent {
   initializeForm(): void {
     this.createRouteForm = this.fb.group({
       totalDistance: [0, [Validators.required, Validators.min(1)]],
-      stations: this.fb.array([this.createStationGroup(), this.createStationGroup()])
+      stations: this.fb.array([this.createStationGroup(), this.createStationGroup()]),
+      
     });
   }
   createStationGroup(): FormGroup {
     return this.fb.group({
       name: ['', Validators.required],
-      distanceFromPrevious: [0, [Validators.required, Validators.min(0)]]
+      distanceFromPrevious: [0, [Validators.required, Validators.min(0)]],
+      timing: [null, Validators.required]
     });
   }
   loadRouteData(): void {
     if (this.routeId) {
       this.routeService.getRouteById(this.routeId).subscribe(route => {
-        console.log('Loaded route data:', route); // Debug line
         this.createRouteForm.patchValue({
           totalDistance: route.totalDistance
         });
@@ -64,7 +65,8 @@ export class AddRouteComponent {
           console.log('Patching station:', station); // Debug line
           stationsArray.push(this.fb.group({
             name: [station.name, Validators.required],
-            distanceFromPrevious: [station.distanceFromPrevious, [Validators.required, Validators.min(0)]]
+            distanceFromPrevious: [station.distanceFromPrevious, [Validators.required, Validators.min(0)]],
+            timing: [station.timing, Validators.required]  
           }));
         });
       });
@@ -78,7 +80,8 @@ export class AddRouteComponent {
   createStation(): FormGroup {
     return this.fb.group({
       name: ['', Validators.required],
-      distanceFromPrevious: [0, [Validators.required, Validators.min(0)]]
+      distanceFromPrevious: [0, [Validators.required, Validators.min(0)]],
+      timing: ["", Validators.required]
     });
   }
 
@@ -87,6 +90,8 @@ export class AddRouteComponent {
   }
 
   removeStation(index: number): void {
+    console.log(index);
+    
     if (this.stations.length > 1) {
       this.stations.removeAt(index);
     } else {

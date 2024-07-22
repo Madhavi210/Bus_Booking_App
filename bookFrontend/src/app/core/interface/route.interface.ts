@@ -1,6 +1,7 @@
 export interface IStation {
   name: string;
   distanceFromPrevious: number; // Distance from the previous station
+  timing: Date;
 }
 
 export interface IRoute {

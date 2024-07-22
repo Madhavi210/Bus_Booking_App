@@ -19,7 +19,7 @@ export default class UserController {
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, gender, age } = req.body;
     const profilePic = req.file?.path;
     if (!profilePic) {
       throw new AppError("File not uploaded", StatusCode.BAD_REQUEST);
@@ -33,6 +33,8 @@ export default class UserController {
         password,
         role,
         profilePic,
+        gender,
+        age,
         session
       );
       await session.commitTransaction();

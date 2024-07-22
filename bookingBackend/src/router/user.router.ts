@@ -2,6 +2,7 @@
 import express from 'express';
 import UserController from '../controller/user.controller';
 import upload from '../utils/fileUploads';
+import Authentication from '../middeleware/authentication';
 
 export default class UserRouter {
   private router: express.Router;
@@ -20,7 +21,7 @@ export default class UserRouter {
 
     this.router.put('/:id',upload.single('profilePic'), UserController.updateUser);
 
-    this.router.get('/', UserController.getAllUsers);
+    this.router.get('/',  UserController.getAllUsers);
 
     this.router.post('/login', UserController.loginUser);
 

@@ -1,4 +1,3 @@
-<p>edit-user works!</p>
 <div class="container-fluid p-0 m-0">
     <div class="row sec1">
       <div class="sec2 d-flex align-items-center justify-content-center">
@@ -58,6 +57,32 @@
                 <div *ngIf="editForm.get('profilePic')?.hasError('required')">Profile picture is required.</div>
               </div>
             </div>
+
+
+          <!-- Gender -->
+          <div class="form-group">
+            <label class="mb-2" for="gender">Gender <span class="text-danger">*</span></label>
+            <select class="form-control" id="gender" formControlName="gender">
+              <option value="" disabled>Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Facebook">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <div *ngIf="editForm.get('gender')?.errors && (editForm.get('gender')?.dirty || editForm.get('gender')?.touched)" class="text-danger">
+              <div *ngIf="editForm.get('gender')?.hasError('required')">Gender is required.</div>
+            </div>
+          </div>
+
+          <!-- Age -->
+          <div class="form-group">
+            <label class="mb-2" for="age">Age <span class="text-danger">*</span></label>
+            <input type="number" class="form-control" id="age" formControlName="age" placeholder="Enter your age" >
+            <div *ngIf="editForm.get('age')?.errors && (editForm.get('age')?.dirty || editForm.get('age')?.touched)" class="text-danger">
+              <div *ngIf="editForm.get('age')?.hasError('required')">Age is required.</div>
+              <div *ngIf="editForm.get('age')?.hasError('min')">Age must be at least 18.</div>
+              <div *ngIf="editForm.get('age')?.hasError('max')">Age must be less than 100.</div>
+            </div>
+          </div>
   
             <div class="loginbtnsec form-group">
               <button type="submit" class="btn btn-primary m-1 btn-lg" >{{ isEditMode ? 'Save' : 'Add' }}</button>

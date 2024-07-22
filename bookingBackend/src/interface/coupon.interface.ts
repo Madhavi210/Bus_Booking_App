@@ -5,4 +5,6 @@ export default interface ICoupon extends Document {
   discountPercentage: number;
   validFrom: Date;
   validTo: Date;
+  usageLimit: number;
+  usageCount: number;
 }

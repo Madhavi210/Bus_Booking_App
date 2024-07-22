@@ -17,6 +17,8 @@ export default class UserService {
         password: string,
         role: string,
         profilePic: string,
+        gender: string,
+        age: number,
         session: ClientSession
     ): Promise<IUser> {        
         const existingUser = await User.findOne({ email }).session(session);
@@ -33,7 +35,9 @@ export default class UserService {
             email,
             password: hashedPassword,
             role ,
-            profilePic
+            profilePic,
+            gender,
+            age,
         });
 
         await newUser.save({ session });

@@ -29,6 +29,7 @@ import { BusDataComponent } from './pages/bus-data/bus-data.component';
 import { BookingFormComponent } from './pages/booking/booking.component';
 import { CouponComponent } from './pages/coupon/coupon.component';
 import { AddFareComponent } from './pages/add-fare/add-fare.component';
+import { SeatingArrangementComponent } from './pages/seating-arrangement/seating-arrangement.component';
 // import { BookingFormComponentComponent } from './pages/booking-form-component/booking-form-component.component';
 
 @NgModule({
@@ -52,6 +53,7 @@ import { AddFareComponent } from './pages/add-fare/add-fare.component';
     BookingFormComponent,
     CouponComponent,
     AddFareComponent,
+    SeatingArrangementComponent,
   ],
   imports: [
     BrowserModule,

@@ -34,6 +34,8 @@ export class EditUserComponent implements OnInit {
       password: ['', Validators.required],
       role: ['user', Validators.required],
       profilePic: ['', Validators.required],
+      gender: ['', [Validators.required]],
+      age: ['', [Validators.required, Validators.min(18), Validators.max(100)]],
     });
     this.route.paramMap.subscribe((params) => {
       this.userId = params.get('id');
@@ -51,6 +53,8 @@ export class EditUserComponent implements OnInit {
           name: user.name,
           email: user.email,
           role: user.role,
+          gender: user.gender,
+          age: user.age,
         });
 
         this.existingProfilePic = user.profilePic
@@ -72,6 +76,8 @@ export class EditUserComponent implements OnInit {
       formData.append('email', this.editForm.get('email')?.value);
       formData.append('password', this.editForm.get('password')?.value);
       formData.append('role', this.editForm.get('role')?.value);
+      formData.append('gender', this.editForm.get('gender')?.value);
+      formData.append('age', this.editForm.get('age')?.value);
       
       if (this.selectedFile) {
         formData.append('profilePic', this.selectedFile);
@@ -79,7 +85,7 @@ export class EditUserComponent implements OnInit {
         formData.append('profilePic', this.existingProfilePic || '');
       }
 
-      if (this.userId && this.isEditMode) {
+      if (this.userId ) {
         this.userService.updateUser(this.userId, formData).subscribe(
           (response)=>{            
             Swal.fire('Success', 'User updated successfully', 'success'); //this is printed but not updating

@@ -10,6 +10,10 @@ const stationSchema = new Schema<IStation>({
     type: Number,
     required: true,
   }, // Distance from the previous station
+  timing: {
+    type: Date,
+    required: true,
+  },
 });
 
 const routeSchema = new Schema<IRoute>(

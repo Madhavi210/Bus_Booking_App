@@ -3,7 +3,7 @@ import { Bus } from '../model/bus.model';
 import { Route } from '../model/route.model';
 import AppError from '../utils/errorHandler';
 import StatusConstants from '../constant/statusConstant';
-import IBus  from '../interface/bus.interface';
+import IBus from '../interface/bus.interface';
 
 export default class BusService {
 
@@ -23,8 +23,9 @@ export default class BusService {
     busData: Partial<IBus> & { route: string; stops: { station: string; timing: Date }[] },
     session: ClientSession
   ): Promise<IBus> {
-    const { route: routeId, stops } = busData;
+    const { route: routeId, stops, seatsLayout= '2*2', rows, columns } = busData;
 
+    // Validate route existence
     const route = await Route.findById(routeId).exec();
     if (!route) {
       throw new AppError(
@@ -33,6 +34,7 @@ export default class BusService {
       );
     }
 
+    // Validate stops
     const routeStations = route.stations.map(station => station.name);
     for (const stop of stops) {
       if (!routeStations.includes(stop.station)) {
@@ -43,6 +45,7 @@ export default class BusService {
       }
     }
 
+    // Check for schedule conflicts
     if (await this.isBusScheduledAtSameTime(routeId.toString(), stops)) {
       throw new AppError(
         "A bus is already scheduled at the same time on this route.",
@@ -50,6 +53,23 @@ export default class BusService {
       );
     }
 
+    // Validate seating layout
+    if (!['2x2', '2x1', '1x1', '3x2'].includes(seatsLayout )) {
+      throw new AppError(
+        'Invalid seat layout',
+        StatusConstants.BAD_REQUEST.httpStatusCode
+      );
+    }
+
+    // Validate rows and columns
+    if (typeof rows !== 'number' || typeof columns !== 'number') {
+      throw new AppError(
+        'Rows and columns must be numbers',
+        StatusConstants.BAD_REQUEST.httpStatusCode
+      );
+    }
+
+    // Check for existing bus
     const { busNumber } = busData;
     const existingBus = await Bus.findOne({ busNumber }).session(session);
     if (existingBus) {
@@ -59,6 +79,7 @@ export default class BusService {
       );
     }
 
+    // Create and save the new bus
     const newBus = new Bus({
       ...busData,
       route: routeId
@@ -91,7 +112,7 @@ export default class BusService {
       );
     }
 
-    const { stops } = updates;
+    const { stops, seatsLayout, rows, columns } = updates;
 
     if (stops) {
       const route = await Route.findById(existingBus.route).exec();
@@ -120,6 +141,24 @@ export default class BusService {
       }
     }
 
+    if (seatsLayout) {
+      if (!['2x2', '2x1', '1x1', '3x2'].includes(seatsLayout)) {
+        throw new AppError(
+          'Invalid seat layout',
+          StatusConstants.BAD_REQUEST.httpStatusCode
+        );
+      }
+    }
+
+    if (rows !== undefined && columns !== undefined) {
+      if (typeof rows !== 'number' || typeof columns !== 'number') {
+        throw new AppError(
+          'Rows and columns must be numbers',
+          StatusConstants.BAD_REQUEST.httpStatusCode
+        );
+      }
+    }
+
     const updatedBus = await Bus.findByIdAndUpdate(id, updates, { new: true, session }).exec();
     return updatedBus ? updatedBus.toObject() : null;
   }
@@ -132,9 +171,5 @@ export default class BusService {
         StatusConstants.NOT_FOUND.httpStatusCode
       );
     }
-  }
-
-
-
-  
+  }  
 }

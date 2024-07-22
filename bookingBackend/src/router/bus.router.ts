@@ -11,13 +11,13 @@ export default class BusRouter {
   }
 
   private routes() {
-    this.router.post('/',  BusController.createBus);
+    this.router.post('/',  Authentication.authUser, Authentication.authAdmin, BusController.createBus);
 
     this.router.get('/:id', BusController.getBusById);
 
-    this.router.put('/:id', BusController.updateBus);
+    this.router.put('/:id', Authentication.authUser, Authentication.authAdmin, BusController.updateBus);
 
-    this.router.delete('/:id', BusController.deleteBus);
+    this.router.delete('/:id', Authentication.authUser, Authentication.authAdmin, BusController.deleteBus);
 
     this.router.get('/', BusController.getAllBuses);
 

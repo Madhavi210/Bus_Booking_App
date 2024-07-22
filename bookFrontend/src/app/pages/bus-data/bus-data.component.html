@@ -42,14 +42,14 @@
                 <th>Total Timing</th>
                 <td>{{ bus.totalTiming }} mins</td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <th>Created At</th>
                 <td>{{ bus.createdAt | date:'medium' }}</td>
               </tr>
               <tr>
                 <th>Updated At</th>
                 <td>{{ bus.updatedAt | date:'medium' }}</td>
-              </tr>
+              </tr> -->
               <tr>
                 <th>Stops</th>
                 <td>    
@@ -75,6 +75,7 @@
           <button (click)="bookNow()" class="btn btn-primary">
             <i class="fas fa-calendar-check"></i> Book Now
           </button>
+          
           <button class="btn btn-secondary m-1" routerLink="/home">
             Home
           </button>

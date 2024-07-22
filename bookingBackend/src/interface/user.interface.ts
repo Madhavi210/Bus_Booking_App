@@ -7,4 +7,6 @@ export default interface IUser extends Document {
     role: 'user' | 'admin';
     token: string;
     profilePic: string;
+    gender: 'Male' | 'Female' | 'Other';
+    age : number
 }

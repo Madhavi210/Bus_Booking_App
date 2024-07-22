@@ -58,6 +58,32 @@
                 <div *ngIf="registerForm.get('profilePic')?.hasError('required')">Profile picture is required.</div>
               </div>
             </div>
+
+
+          <!-- Gender -->
+          <div class="form-group">
+            <label class="mb-2" for="gender">Gender <span class="text-danger">*</span></label>
+            <select class="form-control" id="gender" formControlName="gender">
+              <option value="" disabled>Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <div *ngIf="registerForm.get('gender')?.errors && (registerForm.get('gender')?.dirty || registerForm.get('gender')?.touched)" class="text-danger">
+              <div *ngIf="registerForm.get('gender')?.hasError('required')">Gender is required.</div>
+            </div>
+          </div>
+
+          <!-- Age -->
+          <div class="form-group">
+            <label class="mb-2" for="age">Age <span class="text-danger">*</span></label>
+            <input type="number" class="form-control" id="age" formControlName="age" placeholder="Enter your age" >
+            <div *ngIf="registerForm.get('age')?.errors && (registerForm.get('age')?.dirty || registerForm.get('age')?.touched)" class="text-danger">
+              <div *ngIf="registerForm.get('age')?.hasError('required')">Age is required.</div>
+              <div *ngIf="registerForm.get('age')?.hasError('min')">Age must be at least 18.</div>
+              <div *ngIf="registerForm.get('age')?.hasError('max')">Age must be less than 100.</div>
+            </div>
+          </div>
   
             <!-- Submit and Reset Buttons -->
             <div class="loginbtnsec form-group">

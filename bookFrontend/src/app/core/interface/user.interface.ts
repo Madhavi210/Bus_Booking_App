@@ -7,6 +7,8 @@ export interface IUser  {
     role: 'user' | 'admin';
     token: string;
     profilePic: string;
+    gender: 'Male' | 'Female' | 'Other';
+    age: number;  
     createdAt: Date; 
     updatedAt: Date; 
 }

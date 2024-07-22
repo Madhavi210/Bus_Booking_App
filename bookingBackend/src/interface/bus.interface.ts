@@ -6,6 +6,7 @@ export interface ISeat extends Document {
   seatNumber: number;
   isBooked: boolean;
   booking?: Types.ObjectId | IBooking;
+  isSingleLady: boolean;
 }
 
 export default interface IBus extends Document {
@@ -19,4 +20,9 @@ export default interface IBus extends Document {
   }[];
   totalTiming: number;
   seats: ISeat[];
+  busType: 'Luxury', 'Sleeper';
+  seatsLayout: string;
+  rows: number;
+  columns: number;
+  layoutDescription: string;
 }
