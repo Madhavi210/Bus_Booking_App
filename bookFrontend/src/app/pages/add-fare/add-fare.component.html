@@ -1,0 +1,26 @@
+<!-- src/app/fare/add-fare.component.html -->
+<div class="d-flex justify-content-center align-items-center">
+<div class="container m-5   ">
+    <form [formGroup]="fareForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="routeId">Route ID</label>
+        <input type="text" id="routeId" formControlName="routeId" class="form-control" readonly>
+      </div>
+      
+      <div class="form-group">
+        <label for="baseFarePerKm">Base Fare per Km</label>
+        <input type="number" id="baseFarePerKm" formControlName="baseFarePerKm" class="form-control" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="governmentTaxPercentage">Government Tax Percentage</label>
+        <input type="number" id="governmentTaxPercentage" formControlName="governmentTaxPercentage" class="form-control" required>
+      </div>
+      
+      <div class="d-flex">
+        <button type="submit" class="btn btn-primary m-1" [disabled]="fareForm.invalid">Submit</button>
+        <button type="button" class="btn btn-secondary m-1" routerLink="/admin/fareList">Back</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="container">
+    <h2>Fare Management</h2> 
+    <button type="button" class="btn btn-secondary" routerLink="/admin/addfare">Add Fare</button>
+  
+    <form [formGroup]="fareForm" (ngSubmit)="getFareByRoute()">
+      <div class="form-group">
+        <label for="routeId">Route ID</label>
+        <input type="text" id="routeId" class="form-control" formControlName="routeId" placeholder="669a7137b00675809c0996cd">
+      </div>
+      <button type="submit" class="btn btn-primary">Fetch Fare Details</button>
+    </form>
+  
+    <div *ngIf="fareDetails">
+      <h3 class="text-center">Fare Details</h3>
+      <p><strong>Base Fare per Km:</strong> {{ fareDetails.baseFarePerKm }}</p>
+      <p><strong>Government Tax Percentage:</strong> {{ fareDetails.governmentTaxPercentage }}</p>
+  
+      <form [formGroup]="fareForm" (ngSubmit)="setFare()">
+        <div class="form-group">
+          <label for="baseFarePerKm">Base Fare per Km</label>
+          <input type="number" id="baseFarePerKm" class="form-control" formControlName="baseFarePerKm">
+        </div>
+        <div class="form-group">
+          <label for="governmentTaxPercentage">Government Tax Percentage</label>
+          <input type="number" id="governmentTaxPercentage" class="form-control" formControlName="governmentTaxPercentage">
+        </div>
+        <div class="d-flex justify-content-center " >
+            <button type="submit" class="btn btn-success">Set Fare</button>
+        </div>
+      </form>
+    </div>
+  
+    <div *ngIf="fareDetails">
+      <h3 class="text-center">Calculate Total Fare</h3>
+      <form [formGroup]="fareForm" (ngSubmit)="calculateTotalFare()">
+        <div class="form-group">
+          <label for="distance">Distance (Km)</label>
+          <input type="number" id="distance" class="form-control" formControlName="distance">
+        </div>
+        <div class="form-group">
+          <label for="paymentMethod">Payment Method</label>
+          <select id="paymentMethod" class="form-control" formControlName="paymentMethod">
+            <option value="cash">Cash</option>
+            <option value="card">Card</option>
+            <option value="upi">UPI</option>
+          </select>
+        </div>
+        <div class="d-flex justify-content-center ">
+            <button type="submit" class="btn btn-primary">Calculate Total Fare</button>
+        </div>
+    </form>
+      <div *ngIf="calculatedTotalFare !== null">
+        <h4>Total Fare: {{ calculatedTotalFare | currency:'INR' }}</h4>
+      </div>
+    </div>
+  </div>
+  

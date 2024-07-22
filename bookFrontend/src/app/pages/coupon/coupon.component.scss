@@ -1,0 +1,64 @@
+/* src/app/coupon/coupon.component.scss */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  thead {
+    background-color: #f4f4f4;
+  }
+  
+  thead th {
+    background-color: #58a7e7; /* Green background */
+    color: white; /* White text */
+    text-transform: uppercase;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  @media (max-width: 768px) {
+    table {
+      font-size: 0.9rem;
+    }
+  
+    th, td {
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    table {
+      font-size: 0.8rem;
+    }
+  
+    th, td {
+      padding: 8px;
+    }
+  }
+  
+  .ng-container {
+    display: inline-block;
+    min-width: 50px;
+  }
+  
+  .ng-template {
+    display: inline-block;
+    min-width: 50px;
+  }
+  

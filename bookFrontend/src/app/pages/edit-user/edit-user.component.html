@@ -1,0 +1,71 @@
+<p>edit-user works!</p>
+<div class="container-fluid p-0 m-0">
+    <div class="row sec1">
+      <div class="sec2 d-flex align-items-center justify-content-center">
+        <div class="login-form rounded-lg shadow-lg p-5">
+          <h4 class="mb-4 text-center">
+            <i class="fas fa-user-edit p-2 fs-1"></i>
+            <br>
+            <span>{{ isEditMode ? 'Edit User' : 'Add User' }}</span>
+          </h4>
+  
+          <!-- Edit User Form -->
+          <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <!-- Name Input -->
+            <div class="form-group">
+              <label class="mb-2" for="name">Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter your name">
+              <div *ngIf="editForm.get('name')?.errors && (editForm.get('name')?.dirty || editForm.get('name')?.touched)" class="text-danger">
+                <div *ngIf="editForm.get('name')?.hasError('required')">Name is required.</div>
+              </div>
+            </div>
+  
+            <!-- Email Input -->
+            <div class="form-group">
+              <label class="mb-2" for="email">Email address <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter email">
+              <div *ngIf="editForm.get('email')?.errors && (editForm.get('email')?.dirty || editForm.get('email')?.touched)" class="text-danger">
+                <div *ngIf="editForm.get('email')?.hasError('required')">Email is required.</div>
+                <div *ngIf="editForm.get('email')?.hasError('email')">Invalid email format.</div>
+              </div>
+            </div>
+  
+            <!-- Password Input -->
+            <div class="form-group">
+              <label class="mb-2" for="password">Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text p-3"><i class="fas fa-lock"></i></span>
+                </div>
+                <input [type]="passwordFieldType" class="form-control" id="password" formControlName="password" placeholder="Password">
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-toggle-password" (click)="togglePasswordVisibility()">
+                    <i [ngClass]="passwordFieldType === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="editForm.get('password')?.errors && (editForm.get('password')?.dirty || editForm.get('password')?.touched)" class="text-danger">
+                <div *ngIf="editForm.get('password')?.hasError('required')">Password is required.</div>
+              </div>
+            </div>
+  
+            <!-- Profile Picture Input -->
+            <div class="form-group">
+              <label class="mb-2" for="profilePic">Profile Picture <span class="text-danger">*</span></label>
+              <input type="file" class="form-control" id="profilePic" formControlName="profilePic" (change)="onFileChange($event)" accept="image/*">
+              <img *ngIf="existingProfilePic" [src]="existingProfilePic" alt="Current Profile Picture" width="100" height="100" class="mt-2">
+              <div *ngIf="editForm.get('profilePic')?.errors && (editForm.get('profilePic')?.touched || editForm.get('profilePic')?.dirty)" class="text-danger mt-1">
+                <div *ngIf="editForm.get('profilePic')?.hasError('required')">Profile picture is required.</div>
+              </div>
+            </div>
+  
+            <div class="loginbtnsec form-group">
+              <button type="submit" class="btn btn-primary m-1 btn-lg" >{{ isEditMode ? 'Save' : 'Add' }}</button>
+              <button type="reset" class="btn btn-secondary m-1 btn-lg">Reset</button>
+              <button type="button" class="btn btn-secondary m-1 btn-lg" routerLink="/admin">Dashboard</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

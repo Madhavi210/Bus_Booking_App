@@ -1,0 +1,68 @@
+<div class="m-3 ">
+    <div class="container-fluid p-4 ">
+      <div class="d-flex justify-content-between align-items-center mb-3 ">
+        <h2>User Details</h2>
+        <div>
+          <button type="button" class="btn btn-secondary" routerLink="/admin/addUser">
+            <i class="fas fa-user-plus mr-2"></i> Add User
+          </button>
+          <button type="button" class="btn btn-secondary" routerLink="/admin">
+             Dashboard
+          </button>
+        </div>
+      </div>
+  
+       <!-- Search Input -->
+       <div class="container mb-2">
+        <form class=" d-flex justify-content-center" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+          <div class="form-group m-1">
+            <input type="text" class="form-control " formControlName="searchTerm" placeholder="Search by Name">
+          </div>
+          <div class="form-group m-1">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="button" class="btn btn-secondary" (click)="onClear()">Clear</button>
+          </div>
+        </form>
+      </div>
+  
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>SR. No.</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Profile Picture</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredUsers; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ user._id }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td *ngIf="profilePicUrl[i]" >
+                <img [src]="profilePicUrl[i]" width="50" height="50" alt="{{ user.name }}'s profile picture">
+              </td>
+              <td>{{ user.createdAt | date:'medium' }}</td>
+              <td>{{ user.updatedAt | date:'medium' }}</td>
+              <td>
+                <button (click)="editUser(user._id)" class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                <button (click)="deleteUser(user._id)" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="filteredUsers.length === 0">
+          <p class="text-center">No users found.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

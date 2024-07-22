@@ -1,0 +1,52 @@
+<!-- src/app/create-bus/create-bus.component.html -->
+<div class="m-5 ">
+<form [formGroup]="busForm" (ngSubmit)="onSubmit()" class="bus-form">
+    <div class="form-group">
+      <label for="busNumber">Bus Number</label>
+      <input id="busNumber" formControlName="busNumber" class="form-control" />
+    </div>
+  
+    <div class="form-group">
+      <label for="seatingCapacity">Seating Capacity</label>
+      <input id="seatingCapacity" type="number" formControlName="seatingCapacity" class="form-control" />
+    </div>
+  
+    <div formArrayName="amenities" class="form-group">
+      <label>Amenities</label>
+      <div *ngFor="let amenity of amenities.controls; let i = index" class="amenity-item">
+        <input [formControlName]="i" class="form-control" />
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="route">Route</label>
+      <input id="route" formControlName="route" class="form-control" />
+    </div>
+  
+    <div formArrayName="stops" class="form-group stops-group">
+      <label>Stops</label>
+      <div *ngFor="let stop of stops.controls; let i = index" [formGroupName]="i" class="stop-item">
+        <div class="form-group">
+          <label for="station">Station</label>
+          <input id="station" formControlName="station" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="timing">Timing</label>
+          <input id="timing" type="datetime-local" formControlName="timing" class="form-control" />
+        </div>
+        <button type="button" (click)="removeStop(i)" class="btn btn-danger">Remove Stop</button>
+      </div>
+      <button type="button" (click)="addStop()" class="btn btn-primary add-stop-btn">Add Stop</button>
+    </div>
+  
+    <div class="form-group">
+      <label for="totalTiming">Total Timing (minutes)</label>
+      <input id="totalTiming" type="number" formControlName="totalTiming" class="form-control" />
+    </div>
+  
+    <div>
+        <button type="submit" class="btn btn-success m-1">Save</button>
+        <button type="button" class="btn btn-secondary m-1" routerLink="/admin/busList" >Bus List</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,40 @@
+
+/* src/app/components/dashboard/dashboard.component.scss */
+
+.dashboard-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px;
+  
+    .card {
+      background: #f9f9f9; /* Light background color */
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      text-align: center;
+      width: 100%;
+      max-width: 300px;
+      
+      h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #333; /* Darker color for the heading */
+      }
+      
+      .description {
+        font-size: 0.875rem; /* Slightly smaller font size for the description */
+        color: #666; /* Lighter color for the description */
+        // margin: 8px 0;
+      }
+      
+      .count {
+        font-size: 2rem;
+        margin: 0;
+        color: #000; /* Dark color for the count */
+      }
+    }
+  }
+
+  

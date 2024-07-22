@@ -1,0 +1,87 @@
+<!-- src/app/home/home.component.html -->
+
+<div class="container-fluid m-4">
+  <div class="d-flex justify-content-center">
+    <div class="">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="mb-4">
+        <div class="form-row">
+          <div class="col">
+            <input
+              type="text"
+              formControlName="searchTerm"
+              class="form-control"
+              placeholder="Search by Bus Number"
+            >
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">
+              Search
+            </button>
+            <button type="button" (click)="onClear()" class="btn btn-secondary ml-2">
+              Clear
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="m-3">
+    <div class="container-fluid p-4">
+      <h2>Available Buses</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>SR. No.</th>
+              <th>Bus Number</th>
+              <th>Route</th>
+              <th>First Station</th>
+              <th>Last Station</th>
+              <th>Stops</th>
+              <th>Seating Capacity</th>
+              <th>Amenities</th>
+              <th>Total Timing</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bus of filteredBuses; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ bus.busNumber }}</td>
+              <td>{{ bus.route }}</td>
+              <td>{{ bus.stops[0].station }} - {{ bus.stops[0].timing | date:'shortTime' }}</td>
+              <td>{{ bus.stops[bus.stops.length - 1].station }} - {{ bus.stops[bus.stops.length - 1].timing | date:'shortTime' }}</td>
+              <td>
+                <ul>
+                  <li *ngFor="let stop of bus.stops">
+                    {{ stop.station }} - {{ stop.timing | date:'shortTime' }}
+                  </li>
+                </ul>
+              </td>
+              <td>{{ bus.seatingCapacity }}</td>
+              <td>
+                <ul>
+                  <li *ngFor="let amenity of bus.amenities">{{ amenity }}</li>
+                </ul>
+              </td>
+              <td>{{ bus.totalTiming }} mins</td>
+              <td>{{ bus.createdAt | date:'medium' }}</td>
+              <td>{{ bus.updatedAt | date:'medium' }}</td>
+              <td>
+                <button (click)="viewBusDetails(bus._id)" class="btn btn-info">
+                  <i class="fas fa-eye"></i> View
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="filteredBuses.length === 0">
+          <p class="text-center">No buses found.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

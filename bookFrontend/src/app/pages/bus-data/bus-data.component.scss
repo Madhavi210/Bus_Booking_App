@@ -1,0 +1,39 @@
+.seat-map {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // Adjust for 4 columns
+    grid-gap: 10px;
+    max-width: 600px; // Adjust based on available space
+    margin: 20px auto;
+    padding: 10px;
+  }
+  
+  .seat {
+    width: 50px; // Adjust size of each seat box
+    height: 50px;
+    background-color: lightgray;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px; // Center text vertically
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  .seat.booked {
+    background-color: green;
+    color: white;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 768px) {
+    .seat-map {
+      grid-template-columns: repeat(2, 1fr); // Adjust to 2 columns for smaller screens
+    }
+  
+    .seat {
+      width: 40px; // Adjust seat size for smaller screens
+      height: 40px;
+      font-size: 10px;
+    }
+  }
+  

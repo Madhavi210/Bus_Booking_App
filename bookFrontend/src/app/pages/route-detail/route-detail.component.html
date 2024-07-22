@@ -1,0 +1,66 @@
+<div class="m-3">
+    <div class="container-fluid p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Route Details</h2>
+        <div>
+          <button type="button" class="btn btn-secondary" routerLink="/admin/addRoute">
+            <i class="fas fa-route mr-2"></i> Add Route
+          </button>
+          <button type="button" class="btn btn-secondary" routerLink="/admin">
+            Dashboard
+          </button>
+        </div>
+      </div>
+  
+      <!-- Search Input -->
+      <div class="container mb-2">
+        <form class="d-flex justify-content-center" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+          <div class="form-group m-1">
+            <input type="text" class="form-control" formControlName="searchTerm" placeholder="Search by Route ID">
+          </div>
+          <div class="form-group m-1">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="button" class="btn btn-secondary" (click)="onClear()">Clear</button>
+          </div>
+        </form>
+      </div>
+  
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>SR. No.</th>
+              <th>Route ID</th>
+              <th>Total Distance</th>
+              <th>Stations</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let route of filteredRoutes; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ route._id }}</td>
+              <td>{{ route.totalDistance }} km</td>
+              <td>
+                <ul>
+                  <li *ngFor="let station of route.stations">{{ station.name }} ({{ station.distanceFromPrevious }} km)</li>
+                </ul>
+              </td>
+              <td>{{ route.createdAt | date:'medium' }}</td>
+              <td>{{ route.updatedAt | date:'medium' }}</td>
+              <td>
+                <button (click)="editRoute(route._id)" class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                <button (click)="deleteRoute(route._id)" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="filteredRoutes.length === 0">
+          <p class="text-center">No routes found.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

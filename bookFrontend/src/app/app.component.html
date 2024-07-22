@@ -1,0 +1,10 @@
+
+<div class="container-fluid m-0 p-0">
+  <div *ngIf="showElements" class="main-content">
+      <app-sidebar></app-sidebar>
+  </div>
+  <router-outlet></router-outlet>
+  <div *ngIf="showElements" class="main-content">
+      <app-footer></app-footer>
+  </div>
+</div>

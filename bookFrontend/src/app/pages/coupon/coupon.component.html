@@ -1,0 +1,30 @@
+<!-- src/app/coupon/coupon.component.html -->
+
+<div class="m-5">
+  <table >
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Discount</th>
+        <th>Valid From</th>
+        <th>Valid To</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let coupon of coupons">
+        <td>{{ coupon.code }}</td>
+        <td>
+          <ng-container >
+            {{ coupon.discountPercentage }}%
+          </ng-container>
+          <ng-template #fixedAmount>
+            {{ coupon.discountAmount | currency }}
+          </ng-template>
+        </td>
+        <td>{{ coupon.validFrom | date }}</td>
+        <td>{{ coupon.validTo | date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  

@@ -1,0 +1,34 @@
+<div>
+
+    <div class="dashboard-container">
+        <div class="card">
+          <h3>Total Users</h3>
+          <p class="description">Total number of registered users</p>
+          <p class="count">{{ totalUsers }}</p>
+        </div>
+        <div class="card">
+          <h3>Total Buses</h3>
+          <p class="description">Total number of available buses</p>
+          <p class="count">{{ totalBuses }}</p>
+        </div>
+        <div class="card">
+          <h3>Total Routes</h3>
+          <p class="description">Total number of bus routes</p>
+          <p class="count">{{ totalRoutes }}</p>
+        </div>
+      </div>
+
+         <!-- Pie Chart -->
+    <div class="col-lg-4 m-4">
+      <div class="card">
+      <div class="card-body text-center">
+          <h5 class="card-title">Overview</h5>
+          <div class="d-flex justify-content-center ">
+          <canvas id="myPieChart" width="200" height="200"></canvas>
+          </div>
+      </div>
+      </div>
+  </div>
+  
+</div>
+

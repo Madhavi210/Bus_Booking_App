@@ -1,0 +1,64 @@
+
+.navbar {
+    .navbar-brand {
+      font-weight: bold;
+    }
+    
+    .nav-link {
+      color: #fff; 
+    }
+  
+    .navbar-toggler {
+      background-color: white;
+      border: none; 
+    }
+  }
+  
+  .offcanvas {
+    width: 250px; 
+    transition: width 0.3s ease; 
+  
+    .offcanvas-header {
+      background-color: #343a40; 
+    }
+  
+    .offcanvas-body {
+      background-color: #212529; 
+      color: #fff; 
+    }
+  
+    .nav-link {
+      color: #fff; 
+    }
+  
+    .nav-link.active {
+      font-weight: bold; 
+    }
+  
+    .nav-link:hover {
+      text-decoration: none; 
+    }
+  
+    .btn-danger {
+      width: 100%; 
+    }
+  }
+  
+  
+  .modal-content {
+    background-color: #f8f9fa;
+  }
+  
+  .modal-header {
+    background-color: #343a40;
+    color: #ffffff;
+  }
+  
+  .modal-title {
+    color: #ffffff;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
