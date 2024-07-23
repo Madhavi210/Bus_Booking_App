@@ -8,5 +8,7 @@ export default interface IUser extends Document {
     token: string;
     profilePic: string;
     gender: 'Male' | 'Female' | 'Other';
-    age : number
+    age : number;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

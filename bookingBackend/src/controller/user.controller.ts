@@ -209,4 +209,19 @@ export default class UserController {
       );
     }
   }
+
+  public static async logoutUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const userId = req.params.id;
+    try {
+      await UserService.logoutUser(userId);
+      res.status(StatusCode.NO_CONTENT).send();
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }

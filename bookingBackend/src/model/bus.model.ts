@@ -6,10 +6,9 @@ const seatSchema = new Schema<ISeat>(
   {
     seatNumber: { type: Number, required: true },
     isBooked: { type: Boolean, default: false },
-    booking: { type: Schema.Types.ObjectId, ref: "Booking" },
+    bookingDate: {type: Date },
     isSingleLady: { type: Boolean, default: false } 
   },
-  { _id: false }
 );
 
 const busSchema = new Schema<IBus>(
@@ -38,8 +37,13 @@ const busSchema = new Schema<IBus>(
         timing: { type: Date, required: true },
       },
     ],
-    totalTiming: { type: Number },
+    // totalTiming: { type: Number },
     seats: [seatSchema],
+    // seatId: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "SeSeaat",
+    //   required: true,
+    // },
     busType: {
       type: String,
       enum: ['Seater', 'Sleeper'], 
@@ -47,23 +51,20 @@ const busSchema = new Schema<IBus>(
     },
     seatsLayout: {
       type: String, // e.g., "2x2", "2x1", "1x1", "3x2"
-      required: true
+      required: false
     },
     rows: {
-      type: Number, // Number of rows based on layout
-      required: true
+      type: Number, 
+      required: false
     },
     columns: {
-      type: Number, // Number of columns based on layout
-      required: true
+      type: Number, 
+      required: false
     },
-    layoutDescription: {
-      type: String, // A textual description of the seat layout
-      required: true
-    }
     
   },
   { timestamps: true }
 );
 
 export const Bus = model<IBus>("Bus", busSchema);
+

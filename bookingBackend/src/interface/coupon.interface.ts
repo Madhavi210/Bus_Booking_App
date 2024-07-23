@@ -7,4 +7,6 @@ export default interface ICoupon extends Document {
   validTo: Date;
   usageLimit: number;
   usageCount: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

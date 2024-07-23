@@ -18,6 +18,7 @@ export class BookingFormComponent implements OnInit {
   bus: IBus | undefined;
   userId: string = '';
   routeId: string = '';
+  seatNo: number = 0;
 
   stations: string[] = []; // Array to hold station names
   routeDistances: { [key: string]: number } = {};
@@ -34,7 +35,10 @@ export class BookingFormComponent implements OnInit {
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId') || '';
     this.busId = this.route.snapshot.paramMap.get('id') || '' ;
-
+    const seatNumber = this.route.snapshot.paramMap.get('seatnumber');
+    this.seatNo = seatNumber ? parseInt(seatNumber, 10) : 0;
+    console.log(this.seatNo, this.busId, this.userId, "seat bus user");
+    
     if (!this.busId) {
       console.error('Bus ID is missing from URL');
       return;
@@ -43,10 +47,10 @@ export class BookingFormComponent implements OnInit {
     this.bookingForm = this.fb.group({
       fromStation: ['', Validators.required],
       toStation: ['', Validators.required],
-      seatNumber: [null, [Validators.required, Validators.min(1)]],
-      fare:['' ],
-      paymentType: ['', Validators.required],
-      transactionId: ['', Validators.required]
+      seatNumber: [this.seatNo, [Validators.required, Validators.min(1)]],
+      fare:[{ value: '', disabled: true }],
+      // paymentType: ['', Validators.required],
+      // transactionId: ['', Validators.required]
     });
 
     this.fetchBusDetails();
@@ -57,7 +61,7 @@ export class BookingFormComponent implements OnInit {
       data => {
         this.bus = data;
         this.routeId = this.bus.route;
-        let fare = 150;
+        // let fare = 150;
         this.stations = this.bus.stops.map(stop => stop.station); // Extract station names
         this.calculateFare();
       },
@@ -69,21 +73,22 @@ export class BookingFormComponent implements OnInit {
 
   calculateFare(): void {
     const fromStation = this.bookingForm.get('fromStation')?.value;
-    const toStation = this.bookingForm.get('toStation')?.value;
-
+    const toStation = this.bookingForm.get('toStation')?.value;    
     if (fromStation && toStation && this.bus) {
       const distance = this.calculateDistance(fromStation, toStation);
+      console.log(distance, "distance");
+      
       this.fareService.getFareByRoute(this.routeId).subscribe(
         fareDetails => {
           const baseFarePerKm = fareDetails.baseFarePerKm;
           const governmentTaxPercentage = fareDetails.governmentTaxPercentage;
           this.fareService.calculateFare(distance, baseFarePerKm, governmentTaxPercentage).subscribe(
             fare => {
-              // Manually setting a placeholder fare value for testing
-              const placeholderFare = 200; // Set a fixed fare value for testing
               this.bookingForm.patchValue({
-                fare: placeholderFare
+                fare: fare
               });
+              console.log(fare);
+              
             },
             error => {
               console.error('Error calculating fare:', error);
@@ -97,8 +102,8 @@ export class BookingFormComponent implements OnInit {
     }
   }
 
+
   calculateDistance(fromStation: string, toStation: string): number {
-    // Calculate the total distance between fromStation and toStation
     let totalDistance = 0;
     let currentStation = fromStation;
 
@@ -113,9 +118,11 @@ export class BookingFormComponent implements OnInit {
       }
       if (currentStation === toStation) break;
     }
-
+    console.log(totalDistance, "total distance");
+    
     return totalDistance;
   }
+
 
   onSubmit(): void {
     if (this.bookingForm.invalid) {
@@ -132,6 +139,7 @@ export class BookingFormComponent implements OnInit {
         transactionId: this.bookingForm.value.transactionId,
         additionalCharges: 26.0 // Placeholder for additional charges
       }
+      
     };
     
     this.bookingService.createBooking(bookingDetails).subscribe(

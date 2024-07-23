@@ -3,11 +3,14 @@ import { Document } from 'mongoose';
 export interface IStation {
   name: string;
   distanceFromPrevious: number;
-  timing: Date;
+  // timing: Date;
 }
 
 export default interface IRoute extends Document {
 
-  totalDistance: number;
+  // totalDistance: number;
+  routeName: string;
   stations: IStation[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }

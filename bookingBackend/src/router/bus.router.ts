@@ -21,6 +21,9 @@ export default class BusRouter {
 
     this.router.get('/', BusController.getAllBuses);
 
+    this.router.get("/search", BusController.searchBuses);
+
+
   }
 
   public getRouter() {

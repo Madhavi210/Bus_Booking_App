@@ -4,35 +4,61 @@ import { Route } from '../model/route.model';
 import AppError from '../utils/errorHandler';
 import StatusConstants from '../constant/statusConstant';
 import IBus from '../interface/bus.interface';
+import { Types } from 'mongoose';
 
 export default class BusService {
+  
+  private static async getRouteIdByName(routeName: string): Promise<string> {
+    const route = await Route.findOne({ routeName: routeName }).exec();
+    console.log(route, "route");
+    
+    if (!route) {
+      throw new AppError(
+        'Route not found',
+        StatusConstants.NOT_FOUND.httpStatusCode
+      );
+    }
+    return route.id.toString();
+  }
 
   private static async isBusScheduledAtSameTime(
-    route: string,
+    routeId: string,
     stopTimings: { station: string; timing: Date }[]
   ): Promise<boolean> {
     const overlappingBuses = await Bus.find({
-      route,
+      route: routeId,
       'stops.timing': { $in: stopTimings.map(stop => stop.timing) }
     }).exec();
-
     return overlappingBuses.length > 0;
   }
 
   public static async createBus(
-    busData: Partial<IBus> & { route: string; stops: { station: string; timing: Date }[] },
+    busData: {
+      busNumber: string;
+      seatingCapacity: number;
+      amenities: string[];
+      routeName: string;
+      stops: { station: string; timing: Date }[];
+      busType: string;
+      seatsLayout?: string;
+      rows?: number;
+      columns?: number;
+    },
     session: ClientSession
   ): Promise<IBus> {
-    const { route: routeId, stops, seatsLayout= '2*2', rows, columns } = busData;
+    const { routeName, stops, seatsLayout = '2x2', rows, columns } = busData;
 
-    // Validate route existence
-    const route = await Route.findById(routeId).exec();
+    // Fetch route ID based on route name
+    const route = await Route.findOne({ routeName: routeName }).session(session);
+    console.log(route, "route");
+    
     if (!route) {
       throw new AppError(
-        StatusConstants.NOT_FOUND.body.message,
+        'Route not found',
         StatusConstants.NOT_FOUND.httpStatusCode
       );
     }
+    const routeId = route.id.toString();
 
     // Validate stops
     const routeStations = route.stations.map(station => station.name);
@@ -46,7 +72,7 @@ export default class BusService {
     }
 
     // Check for schedule conflicts
-    if (await this.isBusScheduledAtSameTime(routeId.toString(), stops)) {
+    if (await this.isBusScheduledAtSameTime(routeId, stops)) {
       throw new AppError(
         "A bus is already scheduled at the same time on this route.",
         StatusConstants.CONFLICT.httpStatusCode
@@ -54,7 +80,7 @@ export default class BusService {
     }
 
     // Validate seating layout
-    if (!['2x2', '2x1', '1x1', '3x2'].includes(seatsLayout )) {
+    if (!['2x2', '2x1', '1x1', '3x2'].includes(seatsLayout)) {
       throw new AppError(
         'Invalid seat layout',
         StatusConstants.BAD_REQUEST.httpStatusCode
@@ -62,16 +88,17 @@ export default class BusService {
     }
 
     // Validate rows and columns
-    if (typeof rows !== 'number' || typeof columns !== 'number') {
-      throw new AppError(
-        'Rows and columns must be numbers',
-        StatusConstants.BAD_REQUEST.httpStatusCode
-      );
+    if (rows !== undefined && columns !== undefined) {
+      if (typeof rows !== 'number' || typeof columns !== 'number') {
+        throw new AppError(
+          'Rows and columns must be numbers',
+          StatusConstants.BAD_REQUEST.httpStatusCode
+        );
+      }
     }
 
     // Check for existing bus
-    const { busNumber } = busData;
-    const existingBus = await Bus.findOne({ busNumber }).session(session);
+    const existingBus = await Bus.findOne({ busNumber:String }).session(session);
     if (existingBus) {
       throw new AppError(
         StatusConstants.DUPLICATE_KEY_VALUE.body.message,
@@ -79,16 +106,23 @@ export default class BusService {
       );
     }
 
+    // Generate seats array
+    const seats = Array.from({ length: busData.seatingCapacity }, (_, i) => ({
+      seatNumber: i + 1,
+      isBooked: false,
+      bookingDate: null,
+      isSingleLady: false,
+    }));
+
     // Create and save the new bus
     const newBus = new Bus({
       ...busData,
-      route: routeId
+      route: routeId,
+      seats,
     });
 
-    await newBus.save({ session });
-    return newBus.toObject();
+    return await newBus.save({ session });
   }
-
   public static async getBusById(id: string): Promise<IBus | null> {
     return Bus.findById(id).exec();
   }
@@ -101,7 +135,7 @@ export default class BusService {
 
   public static async updateBus(
     id: string,
-    updates: Partial<IBus> & { stops?: { station: string; timing: Date }[] },
+    updates: Partial<IBus> & { routeName?: string; stops?: { station: string; timing: Date }[] },
     session: ClientSession
   ): Promise<IBus | null> {
     const existingBus = await Bus.findById(id).session(session);
@@ -111,9 +145,14 @@ export default class BusService {
         StatusConstants.NOT_FOUND.httpStatusCode
       );
     }
-
-    const { stops, seatsLayout, rows, columns } = updates;
-
+  
+    const { routeName, stops, seatsLayout, rows, columns } = updates;
+  
+    if (routeName) {
+      const routeId = await this.getRouteIdByName(routeName);
+      updates.route = new Types.ObjectId(routeId); // Convert to ObjectId type
+    }
+  
     if (stops) {
       const route = await Route.findById(existingBus.route).exec();
       if (!route) {
@@ -122,7 +161,7 @@ export default class BusService {
           StatusConstants.NOT_FOUND.httpStatusCode
         );
       }
-
+  
       const routeStations = route.stations.map(station => station.name);
       for (const stop of stops) {
         if (!routeStations.includes(stop.station)) {
@@ -132,7 +171,7 @@ export default class BusService {
           );
         }
       }
-
+  
       if (await this.isBusScheduledAtSameTime(existingBus.route.toString(), stops)) {
         throw new AppError(
           "A bus is already scheduled at the same time on this route.",
@@ -140,7 +179,7 @@ export default class BusService {
         );
       }
     }
-
+  
     if (seatsLayout) {
       if (!['2x2', '2x1', '1x1', '3x2'].includes(seatsLayout)) {
         throw new AppError(
@@ -149,7 +188,7 @@ export default class BusService {
         );
       }
     }
-
+  
     if (rows !== undefined && columns !== undefined) {
       if (typeof rows !== 'number' || typeof columns !== 'number') {
         throw new AppError(
@@ -158,7 +197,7 @@ export default class BusService {
         );
       }
     }
-
+  
     const updatedBus = await Bus.findByIdAndUpdate(id, updates, { new: true, session }).exec();
     return updatedBus ? updatedBus.toObject() : null;
   }
@@ -171,5 +210,66 @@ export default class BusService {
         StatusConstants.NOT_FOUND.httpStatusCode
       );
     }
-  }  
+  }
+
+  public static async searchBuses(
+    fromStation: string,
+    toStation: string,
+    date: Date,
+    sortBy: string = "departureTime",
+    sortOrder: "asc" | "desc" = "asc",
+    page: number = 1,
+    limit: number = 10
+  ): Promise<{ buses: any[], total: number }> {
+    const buses = await Bus.aggregate([
+      {
+        $match: {
+          stops: {
+            $elemMatch: {
+              station: fromStation,
+              timing: { $gte: new Date(date) },
+            },
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "routes",
+          localField: "route",
+          foreignField: "_id",
+          as: "routeDetails",
+        },
+      },
+      {
+        $unwind: "$routeDetails",
+      },
+      {
+        $match: {
+          "routeDetails.stations.name": toStation,
+        },
+      },
+      {
+        $sort: { [sortBy]: sortOrder === "asc" ? 1 : -1 },
+      },
+      {
+        $skip: (page - 1) * limit,
+      },
+      {
+        $limit: limit,
+      },
+    ]);
+
+    const total = await Bus.countDocuments({
+      stops: {
+        $elemMatch: {
+          station: fromStation,
+          timing: { $gte: new Date(date) },
+        },
+      },
+    });
+
+    return { buses, total };
+  }
 }
+
+

@@ -5,4 +5,6 @@ export default interface IFare extends Document {
   route: Types.ObjectId | IRoute;
   baseFarePerKm: number;
   governmentTaxPercentage: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

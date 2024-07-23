@@ -9,13 +9,16 @@ export default interface IBooking extends Document {
   route: Schema.Types.ObjectId;
   fromStation: string;
   toStation: string;
+  date: Date;
   seatNumber: number;
   fare: number;
   paymentType: 'cash' | 'card' | 'UPI';
   paymentDetails: {
-    transactionId?: string;
+    cardNumber?: string;
+    upiId?: string;
     additionalCharges?: number;
   };
   isSingleLady: boolean;
-  createdAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -30,6 +30,7 @@ import { BookingFormComponent } from './pages/booking/booking.component';
 import { CouponComponent } from './pages/coupon/coupon.component';
 import { AddFareComponent } from './pages/add-fare/add-fare.component';
 import { SeatingArrangementComponent } from './pages/seating-arrangement/seating-arrangement.component';
+import { PaymentComponent } from './pages/payment/payment.component';
 // import { BookingFormComponentComponent } from './pages/booking-form-component/booking-form-component.component';
 
 @NgModule({
@@ -54,6 +55,7 @@ import { SeatingArrangementComponent } from './pages/seating-arrangement/seating
     CouponComponent,
     AddFareComponent,
     SeatingArrangementComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,

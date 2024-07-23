@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from "express";
-import mongoose, { ClientSession } from "mongoose";
-import RouteService from "../service/route.service";
-import AppError from "../utils/errorHandler";
-import StatusConstants from "../constant/statusConstant";
-import { StatusCode } from "../enum/statusCode";
+import { Request, Response, NextFunction } from 'express';
+import mongoose, { ClientSession } from 'mongoose';
+import RouteService from '../service/route.service';
+import AppError from '../utils/errorHandler';
+import StatusConstants from '../constant/statusConstant';
+import { StatusCode } from '../enum/statusCode';
 
 export default class RouteController {
   public static async createRoute(
@@ -11,15 +11,12 @@ export default class RouteController {
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const { totalDistance, stations } = req.body;
+    const { routeName, stations } = req.body;
     const session = await mongoose.startSession();
     session.startTransaction();
     try {
-      const newRoute = await RouteService.createRoute(
-        totalDistance,
-        stations,
-        session
-      );
+      const newRoute = await RouteService.createRoute(routeName, stations, session);
+      
       await session.commitTransaction();
       session.endSession();
       res.status(StatusCode.CREATED).json(newRoute);
@@ -63,32 +60,6 @@ export default class RouteController {
     }
   }
 
-  public static async updateRoute(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    const routeId = req.params.id;
-    const updates = req.body;
-    const session = await mongoose.startSession();
-    session.startTransaction();
-
-    try {
-      const updatedRoute = await RouteService.updateRoute(
-        routeId,
-        updates,
-        session
-      );
-      await session.commitTransaction();
-      session.endSession();
-      res.status(StatusCode.OK).json(updatedRoute);
-    } catch (error) {
-      await session.abortTransaction();
-      session.endSession();
-      next(error);
-    }
-  }
-
   public static async deleteRoute(
     req: Request,
     res: Response,
@@ -108,4 +79,34 @@ export default class RouteController {
       next(error);
     }
   }
+
+
+  public static async updateRoute(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const routeId = req.params.id;
+    const updates = req.body;
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+      const updatedRoute = await RouteService.updateRoute(routeId, updates, session);
+      if (!updatedRoute) {
+        throw new AppError(
+          StatusConstants.NOT_FOUND.body.message,
+          StatusConstants.NOT_FOUND.httpStatusCode
+        );
+      }
+      await session.commitTransaction();
+      session.endSession();
+      res.status(StatusConstants.OK.httpStatusCode).json(updatedRoute);
+    } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
+      next(error);
+    }
+  }
+
 }

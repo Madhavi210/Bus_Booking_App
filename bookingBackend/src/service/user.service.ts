@@ -104,4 +104,16 @@ export default class UserService {
         await user.save();
         return { id: String(user._id), role: String(user.role), token };
     }
+
+    public static async logoutUser(userId: string): Promise<void> {
+        const user = await User.findById(userId).exec();
+        if (!user) {
+            throw new AppError(
+                StatusConstants.NOT_FOUND.body.message,
+                StatusConstants.NOT_FOUND.httpStatusCode
+            );
+        }
+        user.token = '';
+        await user.save();
+    }
 }

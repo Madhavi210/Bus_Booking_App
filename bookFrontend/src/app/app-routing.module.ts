@@ -18,6 +18,7 @@ import { AddRouteComponent } from './pages/add-route/add-route.component';
 import { CouponComponent } from './pages/coupon/coupon.component';
 import { AddBusComponent } from './pages/add-bus/add-bus.component';
 import { AddFareComponent } from './pages/add-fare/add-fare.component';
+import { PaymentComponent } from './pages/payment/payment.component';
 // import { BookingFormComponent } from './pages/booking/booking.component';
 
 
@@ -33,8 +34,12 @@ const routes: Routes = [
     component: BusDataComponent, 
     canActivate: [authGuard] 
   },
-  { path: 'home/book/:id', 
+  { path: 'home/book/:id/:seatNumber', 
     component: BookingFormComponent, 
+    canActivate: [authGuard] 
+  },
+  { path: 'home/book/:id/:seatNumber/payment', 
+    component: PaymentComponent, 
     canActivate: [authGuard] 
   },
   {

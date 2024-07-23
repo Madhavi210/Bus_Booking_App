@@ -5,7 +5,9 @@ import IBooking from './booking.interface';
 export interface ISeat extends Document {
   seatNumber: number;
   isBooked: boolean;
-  booking?: Types.ObjectId | IBooking;
+  bookingDate: Date;
+  // booking?: Types.ObjectId | IBooking;
+  // busId :  Types.ObjectId | IBus;
   isSingleLady: boolean;
 }
 
@@ -18,11 +20,13 @@ export default interface IBus extends Document {
     station: string;
     timing: Date;
   }[];
-  totalTiming: number;
+  // totalTiming: number;
   seats: ISeat[];
+  // seatId :  Types.ObjectId | ISeat;
   busType: 'Luxury', 'Sleeper';
   seatsLayout: string;
   rows: number;
   columns: number;
-  layoutDescription: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -18,7 +18,10 @@ export default class BusController {
       const newBus = await BusService.createBus(busData, session);
       await session.commitTransaction();
       session.endSession();
-      res.status(StatusConstants.CREATED.httpStatusCode).json(newBus);
+      res.status(StatusConstants.CREATED.httpStatusCode).json({
+        status: 'success',
+        data: newBus,
+      });
     } catch (error) {
       await session.abortTransaction();
       session.endSession();
@@ -40,7 +43,10 @@ export default class BusController {
           StatusConstants.NOT_FOUND.httpStatusCode
         );
       }
-      res.status(StatusConstants.OK.httpStatusCode).json(bus);
+      res.status(StatusConstants.OK.httpStatusCode).json({
+        status: 'success',
+        data: bus,
+      });
     } catch (error) {
       next(error);
     }
@@ -53,7 +59,10 @@ export default class BusController {
   ): Promise<void> {
     try {
       const { buses, totalBuses } = await BusService.getAllBuses();
-      res.status(StatusConstants.OK.httpStatusCode).json({ buses, totalBuses });
+      res.status(StatusConstants.OK.httpStatusCode).json({
+        status: 'success',
+        data: { buses, totalBuses },
+      });
     } catch (error) {
       next(error);
     }
@@ -79,7 +88,10 @@ export default class BusController {
       }
       await session.commitTransaction();
       session.endSession();
-      res.status(StatusConstants.OK.httpStatusCode).json(updatedBus);
+      res.status(StatusConstants.OK.httpStatusCode).json({
+        status: 'success',
+        data: updatedBus,
+      });
     } catch (error) {
       await session.abortTransaction();
       session.endSession();
@@ -107,4 +119,29 @@ export default class BusController {
       next(error);
     }
   }
+
+  public static async searchBuses(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const { fromStation, toStation, date, sortBy = "departureTime", sortOrder = "asc", page = 1, limit = 10 } = req.query;
+
+    try {
+      const { buses, total } = await BusService.searchBuses(
+        fromStation as string,
+        toStation as string,
+        new Date(date as string),
+        sortBy as string,
+        sortOrder as "asc" | "desc",
+        parseInt(page as string),
+        parseInt(limit as string)
+      );
+
+      res.status(StatusConstants.OK.httpStatusCode).json({ buses, total });
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }

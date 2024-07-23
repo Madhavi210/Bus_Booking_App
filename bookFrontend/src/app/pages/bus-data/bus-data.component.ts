@@ -11,6 +11,8 @@ import { IBus } from 'src/app/core/interface/bus.interface';
 export class BusDataComponent {
   busId!: string;
   bus!: IBus;
+  rows: number[] = [];
+  columns: number[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -29,8 +31,8 @@ export class BusDataComponent {
     this.busService.getBusById(this.busId).subscribe(
       (data) => {
         this.bus = data;
-        console.log(data);
-        
+        this.rows = Array(this.bus.rows).fill(0).map((x, i) => i);
+        this.columns = Array(this.bus.columns).fill(0).map((x, i) => i);        
       },
       (error) => {
         console.error('Error fetching bus details:', error);
@@ -41,4 +43,52 @@ export class BusDataComponent {
   bookNow(): void {
     this.router.navigate(['home/book/', this.busId]);
   }
+
+  onSeatClick(row: number, col: number): void {
+    const seatNumber = this.getSeatNumber(row, col);
+    const seat = this.bus.seats.find(s => s.seatNumber === seatNumber);
+
+    if (seat && !seat.isBooked) {
+      this.router.navigate(['home/book/', this.busId, seatNumber]);
+    }
+  }
+
+  isSeatBooked(row: number, col: number): boolean {
+    const seatNumber = this.getSeatNumber(row, col);
+    const seat = this.bus.seats.find(s => s.seatNumber === seatNumber);
+    return seat ? seat.isBooked : false;
+  }
+
+  isSingleLadySeat(row: number, col: number): boolean {
+    const seatNumber = this.getSeatNumber(row, col);
+    const seat = this.bus.seats.find(s => s.seatNumber === seatNumber);
+    return seat ? seat.isSingleLady : false;
+  }
+
+
+ getSeatGroups(): number[][] {
+  const groups: number[][] = [];
+  const columnsPerGroup = 2;
+  let startIndex = 0;
+
+  while (startIndex < this.columns.length) {
+    const endIndex = Math.min(startIndex + columnsPerGroup, this.columns.length);
+    groups.push(this.columns.slice(startIndex, endIndex));
+    startIndex = endIndex;
+  }
+
+  return groups;
+}
+
+shouldAddAisle(colIndex: number, groupIndex: number): boolean {
+  const columnsPerGroup = 2;
+  return (colIndex + 1) % columnsPerGroup === 0 && colIndex + 1 < this.getSeatGroups()[groupIndex].length;
+}
+
+
+  getSeatNumber(row: number, col: number): number {
+    return row * this.bus.columns + col + 1;
+  }
+
+
 }

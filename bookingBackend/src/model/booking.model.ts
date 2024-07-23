@@ -25,6 +25,10 @@ const bookingSchema = new Schema<IBooking>(
       type: String,
       required: true,
     },
+    date: {
+      type: Date,
+      required: true,
+    },
     seatNumber: {
       type: Number,
       required: true,
@@ -36,7 +40,8 @@ const bookingSchema = new Schema<IBooking>(
       required: true,
     },
     paymentDetails: {
-      transactionId: { type: String },
+      cardNumber: String,
+      upiId: String,
       additionalCharges: { type: Number },
     },
     isSingleLady: { type: Boolean, default: false },
