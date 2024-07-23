@@ -50,7 +50,6 @@ export default class BusService {
 
     // Fetch route ID based on route name
     const route = await Route.findOne({ routeName: routeName }).session(session);
-    console.log(route, "route");
     
     if (!route) {
       throw new AppError(
@@ -127,9 +126,64 @@ export default class BusService {
     return Bus.findById(id).exec();
   }
 
-  public static async getAllBuses(): Promise<{ buses: IBus[], totalBuses: number }> {
-    const buses = await Bus.find().exec();
-    const totalBuses = await Bus.countDocuments().exec();
+  public static async getAllBuses(
+    fromStation?: string,
+    toStation?: string,
+    date?: Date,
+    sortBy: string = "departureTime",
+    sortOrder: "asc" | "desc" = "asc",
+    page: number = 1,
+    limit: number = 10
+  ): Promise<{ buses: IBus[], totalBuses: number }> {
+    const matchCriteria: any = {};
+
+    if (fromStation || toStation || date) {
+      matchCriteria['stops'] = {};
+      if (fromStation) {
+        matchCriteria['stops.station'] = fromStation;
+      }
+      if (date) {
+        matchCriteria['stops.timing'] = { $gte: new Date(date) };
+      }
+    }
+
+    if (toStation) {
+      matchCriteria['routeDetails.stations.name'] = toStation;
+    }
+
+    const buses = await Bus.aggregate([
+      {
+        $match: matchCriteria,
+      },
+      {
+        $lookup: {
+          from: "routes",
+          localField: "route",
+          foreignField: "_id",
+          as: "routeDetails",
+        },
+      },
+      {
+        $unwind: "$routeDetails",
+      },
+      {
+        $match: {
+          "routeDetails.stations.name": toStation || { $exists: true }
+        },
+      },
+      {
+        $sort: { [sortBy]: sortOrder === "asc" ? 1 : -1 },
+      },
+      {
+        $skip: (page - 1) * limit,
+      },
+      {
+        $limit: limit,
+      },
+    ]);
+
+    const totalBuses = await Bus.countDocuments(matchCriteria);
+
     return { buses, totalBuses };
   }
 

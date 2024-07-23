@@ -61,7 +61,10 @@ const busSchema = new Schema<IBus>(
       type: Number, 
       required: false
     },
-    
+    date: {
+      type: Date, 
+      required: false
+    },
   },
   { timestamps: true }
 );

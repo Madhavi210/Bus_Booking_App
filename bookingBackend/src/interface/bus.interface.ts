@@ -6,8 +6,6 @@ export interface ISeat extends Document {
   seatNumber: number;
   isBooked: boolean;
   bookingDate: Date;
-  // booking?: Types.ObjectId | IBooking;
-  // busId :  Types.ObjectId | IBus;
   isSingleLady: boolean;
 }
 
@@ -27,6 +25,7 @@ export default interface IBus extends Document {
   seatsLayout: string;
   rows: number;
   columns: number;
+  date: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }

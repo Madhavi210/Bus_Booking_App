@@ -52,18 +52,38 @@ export default class BusController {
     }
   }
 
-  public static async getAllBuses(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
+  public static async getAllBuses(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { buses, totalBuses } = await BusService.getAllBuses();
-      res.status(StatusConstants.OK.httpStatusCode).json({
-        status: 'success',
-        data: { buses, totalBuses },
+      // Extract query parameters from request
+      const fromStation = req.query.fromStation as string;
+      const toStation = req.query.toStation as string;
+      const date = req.query.date ? new Date(req.query.date as string) : undefined;
+      const sortBy = req.query.sortBy ? req.query.sortBy as string : "departureTime";
+      const sortOrder = req.query.sortOrder === 'desc' ? "desc" : "asc";
+      const page = parseInt(req.query.page as string, 10) || 1;
+      const limit = parseInt(req.query.limit as string, 10) || 10;
+
+      // Call the service method
+      const { buses, totalBuses } = await BusService.getAllBuses(
+        fromStation,
+        toStation,
+        date,
+        sortBy,
+        sortOrder,
+        page,
+        limit
+      );
+
+      // Send response
+      res.status(200).json({
+        success: true,
+        data: {
+          buses,
+          totalBuses
+        }
       });
     } catch (error) {
+      // Handle errors
       next(error);
     }
   }
