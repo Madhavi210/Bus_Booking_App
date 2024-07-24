@@ -3,7 +3,8 @@ import BusService from "../service/bus.service";
 import AppError from "../utils/errorHandler";
 import StatusConstants from "../constant/statusConstant";
 import mongoose from "mongoose";
-
+import { Bus } from "../model/bus.model";
+import { logger } from "../utils/logger";
 export default class BusController {
   public static async createBus(
     req: Request,
@@ -18,6 +19,7 @@ export default class BusController {
       const newBus = await BusService.createBus(busData, session);
       await session.commitTransaction();
       session.endSession();
+      logger.info('API post/api/bus hit successfully');
       res.status(StatusConstants.CREATED.httpStatusCode).json({
         status: 'success',
         data: newBus,
@@ -43,6 +45,7 @@ export default class BusController {
           StatusConstants.NOT_FOUND.httpStatusCode
         );
       }
+      logger.info('API get/api/bus/:id hit successfully');
       res.status(StatusConstants.OK.httpStatusCode).json({
         status: 'success',
         data: bus,
@@ -52,40 +55,20 @@ export default class BusController {
     }
   }
 
-  public static async getAllBuses(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      // Extract query parameters from request
-      const fromStation = req.query.fromStation as string;
-      const toStation = req.query.toStation as string;
-      const date = req.query.date ? new Date(req.query.date as string) : undefined;
-      const sortBy = req.query.sortBy ? req.query.sortBy as string : "departureTime";
-      const sortOrder = req.query.sortOrder === 'desc' ? "desc" : "asc";
-      const page = parseInt(req.query.page as string, 10) || 1;
-      const limit = parseInt(req.query.limit as string, 10) || 10;
-
-      // Call the service method
-      const { buses, totalBuses } = await BusService.getAllBuses(
-        fromStation,
-        toStation,
-        date,
-        sortBy,
-        sortOrder,
-        page,
-        limit
-      );
-
-      // Send response
-      res.status(200).json({
-        success: true,
-        data: {
-          buses,
-          totalBuses
-        }
-      });
-    } catch (error) {
-      // Handle errors
-      next(error);
-    }
+    public static async getAllBuses(req: Request, res: Response, next: NextFunction): Promise<void> {
+      try {
+          const { buses, totalBuses } = await BusService.getAllBuses(req);          
+          logger.info('API get/api/bus hit successfully');
+          res.status(200).json({
+              success: true,
+              data: {
+                  buses,
+                  totalBuses
+              }
+          });
+      } catch (error) {
+          next(error);  // Forward error to the error-handling middleware
+      }
   }
 
   public static async updateBus(
@@ -108,6 +91,7 @@ export default class BusController {
       }
       await session.commitTransaction();
       session.endSession();
+      logger.info('API put/api/bus/:id hit successfully');
       res.status(StatusConstants.OK.httpStatusCode).json({
         status: 'success',
         data: updatedBus,
@@ -132,6 +116,7 @@ export default class BusController {
       await BusService.deleteBus(busId, session);
       await session.commitTransaction();
       session.endSession();
+      logger.info('API delete/api/bus/:id hit successfully');
       res.status(StatusConstants.NO_CONTENT.httpStatusCode).send();
     } catch (error) {
       await session.abortTransaction();

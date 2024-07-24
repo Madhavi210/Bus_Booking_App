@@ -12,6 +12,7 @@ import path from "path";
 import upload from "../utils/fileUploads";
 import bcrypt from "bcrypt";
 import fs from "fs";
+import { logger } from "../utils/logger";
 
 export default class UserController {
   public static async createUser(
@@ -39,6 +40,7 @@ export default class UserController {
       );
       await session.commitTransaction();
       session.endSession();
+      logger.info('API post/api/user hit successfully');
       res.status(StatusCode.CREATED).json(newUser);
     } catch (error) {
       await session.abortTransaction();
@@ -61,6 +63,7 @@ export default class UserController {
           StatusConstants.NOT_FOUND.httpStatusCode
         );
       }
+      logger.info('API get/api/user/:id hit successfully');
       res.status(StatusCode.OK).json(user);
     } catch (error) {
       next(error);
@@ -74,6 +77,7 @@ export default class UserController {
   ): Promise<void> {
     try {
       const { users, totalUser } = await UserService.getAllUsers();
+      logger.info('API get/api/user hit successfully', { params: req.query });
       res.status(StatusCode.OK).json({ users, totalUser });
     } catch (error) {
       next(error);
@@ -119,6 +123,7 @@ export default class UserController {
         }
         await session.commitTransaction();
         session.endSession();
+        logger.info('API delete/api/user hit successfully');
         res.status(StatusCode.NO_CONTENT).send();
       });
     } catch (error) {
@@ -136,6 +141,7 @@ export default class UserController {
     const { email, password } = req.body;
     try {
       const { id, role, token } = await UserService.loginUser(email, password);
+      logger.info('API post/api/user/login hit successfully');
       res.status(StatusCode.OK).json({ id, role, token });
     } catch (error) {
       next(error);
@@ -187,6 +193,7 @@ export default class UserController {
 
       await session.commitTransaction();
       session.endSession();
+      logger.info('API put/api/user/:id hit successfully');
       res.status(StatusCode.OK).json(updatedUser);
     } catch (error) {
       await session.abortTransaction();
@@ -218,6 +225,7 @@ export default class UserController {
     const userId = req.params.id;
     try {
       await UserService.logoutUser(userId);
+      logger.info('API post/api/user/logout hit successfully');
       res.status(StatusCode.NO_CONTENT).send();
     } catch (error) {
       next(error);

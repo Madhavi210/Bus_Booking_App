@@ -21,7 +21,7 @@ export default interface IBus extends Document {
   // totalTiming: number;
   seats: ISeat[];
   // seatId :  Types.ObjectId | ISeat;
-  busType: 'Luxury', 'Sleeper';
+  busType: 'Seater', 'Sleeper';
   seatsLayout: string;
   rows: number;
   columns: number;

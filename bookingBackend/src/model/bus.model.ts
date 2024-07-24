@@ -34,7 +34,7 @@ const busSchema = new Schema<IBus>(
           type: String,
           required: true,
         },
-        timing: { type: Date, required: true },
+        departureTime: { type: Date, required: true },
       },
     ],
     // totalTiming: { type: Number },
@@ -63,7 +63,7 @@ const busSchema = new Schema<IBus>(
     },
     date: {
       type: Date, 
-      required: false
+      required: true,
     },
   },
   { timestamps: true }

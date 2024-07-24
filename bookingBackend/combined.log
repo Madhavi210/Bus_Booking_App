@@ -1,0 +1,203 @@
+2024-07-24T09:39:11.082Z [32minfo[39m: API /api/user get hit successfully
+2024-07-24T09:44:16.271Z [32minfo[39m: API /api/user get hit successfully
+2024-07-24T09:45:42.602Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:46:26.058Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:46:26.688Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:47:25.389Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:47:26.289Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:48:14.331Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:48:15.033Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:48:37.414Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:48:38.166Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:48:50.114Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:48:50.738Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:49:02.685Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:49:03.341Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:49:24.993Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:49:25.751Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:49:32.377Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:49:33.095Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:49:50.982Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:49:51.948Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:50:47.810Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:50:48.421Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:50:54.725Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:50:55.490Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:51:17.289Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:51:17.901Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:51:32.658Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:51:33.292Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:51:39.136Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:51:39.742Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:51:45.926Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:51:46.484Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:52:08.560Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:52:09.191Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:52:32.859Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:52:33.574Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:52:39.051Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:52:39.777Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:55:45.681Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:55:46.439Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:55:56.247Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:55:56.916Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:56:18.212Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:56:18.858Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:56:30.311Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:56:30.964Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:56:43.402Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:56:43.937Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:56:51.690Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:56:52.310Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:57:23.123Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:57:23.671Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:57:30.323Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:57:30.964Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:57:41.390Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:57:41.966Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:58:22.136Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:58:22.754Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:58:38.919Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:58:39.502Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:58:44.253Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:58:44.803Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:59:02.663Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:59:03.285Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:59:13.209Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:59:13.994Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:59:33.064Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:59:33.682Z [32minfo[39m: Connected to MongoDB
+2024-07-24T09:59:46.796Z [32minfo[39m: Server is running on port 3000
+2024-07-24T09:59:47.369Z [32minfo[39m: Connected to MongoDB
+2024-07-24T10:00:21.888Z [32minfo[39m: Server is running on port 3000
+2024-07-24T10:00:22.568Z [32minfo[39m: Connected to MongoDB
+2024-07-24T10:00:56.631Z [32minfo[39m: Server is running on port 3000
+2024-07-24T10:00:57.266Z [32minfo[39m: Connected to MongoDB
+2024-07-24T10:01:04.058Z [32minfo[39m: Server is running on port 3000
+2024-07-24T10:01:04.630Z [32minfo[39m: Connected to MongoDB
+2024-07-24T10:01:28.112Z [32minfo[39m: Server is running on port 3000
+2024-07-24T10:01:28.689Z [32minfo[39m: Connected to MongoDB
+2024-07-24T10:02:45.796Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-24T10:02:45.954Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:02:46.001Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:02:46.032Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:02:58.604Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:06:34.791Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:06:34.796Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:06:34.901Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:07:39.160Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:07:39.165Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:07:39.314Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:07:40.732Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:07:40.737Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:07:40.853Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:07:48.822Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:08:02.901Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:08:03.560Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:08:03.571Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:08:03.638Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:08:12.875Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:09:02.633Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:09:02.654Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:09:02.679Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:09:06.796Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:09:06.812Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:09:06.868Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:09:14.011Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:09:14.013Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:09:14.140Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:09:31.054Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:09:31.057Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:09:31.150Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:09:38.996Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:10:20.924Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:15:09.740Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:15:13.267Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:16:36.185Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:16:36.200Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:16:36.388Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:16:49.085Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:16:49.088Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:16:49.227Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:18:16.583Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:18:20.915Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:18:47.014Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:18:47.018Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:18:47.151Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:18:53.951Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:18:53.985Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:18:54.019Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:18:57.729Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:18:57.771Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:18:57.885Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:19:03.304Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:19:03.313Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:19:03.509Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:19:06.631Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:19:06.635Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:19:06.738Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:19:11.501Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:20:28.766Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:20:28.769Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:20:28.982Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:20:40.462Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:22:10.726Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:22:10.731Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:22:10.880Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:22:20.933Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:22:20.938Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:22:21.197Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:22:30.529Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:22:30.532Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:22:30.654Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:22:37.539Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:22:49.000Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:22:49.007Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:22:49.059Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:22:54.376Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:23:15.921Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:23:15.947Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:23:16.008Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:23:22.631Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:23:22.633Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:23:22.679Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:23:38.323Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:23:38.346Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:23:38.442Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:23:41.429Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:23:41.434Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:23:41.448Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:24:54.917Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:25:14.772Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:25:40.755Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:25:40.779Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:25:40.838Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:26:49.342Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:26:49.356Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:26:55.008Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:27:18.965Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:27:18.971Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:27:19.042Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:27:24.499Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:27:24.512Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:27:24.555Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:33:34.203Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:33:34.220Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:33:34.337Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:35:17.211Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:35:17.213Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:35:17.336Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:35:18.942Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:35:18.949Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:35:19.088Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:35:21.164Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:35:21.179Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:35:21.222Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:35:56.542Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:35:56.585Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:35:56.700Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:36:18.189Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:36:18.201Z [32minfo[39m: API get/api/user/:id hit successfully
+2024-07-24T10:36:18.265Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:36:36.019Z [32minfo[39m: API get/api/bus hit successfully
+2024-07-24T10:36:41.278Z [32minfo[39m: API get/api/bus hit successfully

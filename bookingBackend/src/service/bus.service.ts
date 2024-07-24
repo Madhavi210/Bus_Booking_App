@@ -1,10 +1,12 @@
-import { ClientSession } from 'mongoose';
+import { ClientSession, PipelineStage } from 'mongoose';
 import { Bus } from '../model/bus.model';
 import { Route } from '../model/route.model';
 import AppError from '../utils/errorHandler';
 import StatusConstants from '../constant/statusConstant';
 import IBus from '../interface/bus.interface';
 import { Types } from 'mongoose';
+import { Request, Response } from 'express';
+import moment from 'moment';
 
 export default class BusService {
   
@@ -43,10 +45,11 @@ export default class BusService {
       seatsLayout?: string;
       rows?: number;
       columns?: number;
+      date: Date;
     },
     session: ClientSession
   ): Promise<IBus> {
-    const { routeName, stops, seatsLayout = '2x2', rows, columns } = busData;
+    const { routeName, stops, seatsLayout = '2x2', rows, columns, date } = busData;
 
     // Fetch route ID based on route name
     const route = await Route.findOne({ routeName: routeName }).session(session);
@@ -118,6 +121,7 @@ export default class BusService {
       ...busData,
       route: routeId,
       seats,
+      date,
     });
 
     return await newBus.save({ session });
@@ -126,66 +130,80 @@ export default class BusService {
     return Bus.findById(id).exec();
   }
 
-  public static async getAllBuses(
-    fromStation?: string,
-    toStation?: string,
-    date?: Date,
-    sortBy: string = "departureTime",
-    sortOrder: "asc" | "desc" = "asc",
-    page: number = 1,
-    limit: number = 10
-  ): Promise<{ buses: IBus[], totalBuses: number }> {
-    const matchCriteria: any = {};
 
-    if (fromStation || toStation || date) {
-      matchCriteria['stops'] = {};
-      if (fromStation) {
-        matchCriteria['stops.station'] = fromStation;
-      }
-      if (date) {
-        matchCriteria['stops.timing'] = { $gte: new Date(date) };
-      }
+
+  public static async getAllBuses(req: Request): Promise<any> {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+
+    const startingStop = req.query.startingStop as string;
+    const endingStop = req.query.endingStop as string;
+    const dbDate = req.query.date as string;
+    const dateStart = moment.utc(dbDate).startOf('day').toDate();
+    const dateEnd = moment.utc(dbDate).endOf('day').toDate();
+
+    if (!startingStop || !endingStop || !dbDate) {
+      const buses = await Bus.find().skip(skip).limit(limit).sort({ date: -1 }).exec();
+      const totalBuses = await Bus.countDocuments().exec();
+      return { buses, totalBuses };
+      // throw console.error();
     }
 
-    if (toStation) {
-      matchCriteria['routeDetails.stations.name'] = toStation;
-    }
-
-    const buses = await Bus.aggregate([
-      {
-        $match: matchCriteria,
-      },
-      {
-        $lookup: {
-          from: "routes",
-          localField: "route",
-          foreignField: "_id",
-          as: "routeDetails",
-        },
-      },
-      {
-        $unwind: "$routeDetails",
-      },
+    // Convert the date string to a Date object for querying
+    const pipeline: PipelineStage[] = [
       {
         $match: {
-          "routeDetails.stations.name": toStation || { $exists: true }
-        },
-      },
-      {
-        $sort: { [sortBy]: sortOrder === "asc" ? 1 : -1 },
-      },
-      {
-        $skip: (page - 1) * limit,
-      },
-      {
-        $limit: limit,
-      },
-    ]);
+            date: {
+                $gte: dateStart,
+                $lt: dateEnd
+            },
+            stops: {
+                $all: [
+                    { $elemMatch: { station: startingStop } },
+                    { $elemMatch: { station: endingStop } }
+                ]
+            }
+        }
+    },
+    {
+        $addFields: {
+            startingStopIndex: {
+                $indexOfArray: ["$stops.station", startingStop]
+            },
+            endingStopIndex: {
+                $indexOfArray: ["$stops.station", endingStop]
+            }
+        }
+    },
+    {
+        $match: {
+            startingStopIndex: { $ne: -1 },
+            endingStopIndex: { $ne: -1 },
+            $expr: {
+                $lt: ["$startingStopIndex", "$endingStopIndex"]
+            }
+        }
+    },
+      { $skip: skip },
+      { $limit: limit },
+      { $sort: { date: -1 } }
+    ];
+    
+    
+    const buses = await Bus.aggregate(pipeline).exec();
+    
+    // Count documents for totalBuses
+    const totalBuses = await Bus.countDocuments({
+      date: { $gte: dateStart, $lt: dateEnd },
+      stops: { $elemMatch: { station: { $in: [startingStop, endingStop] } } }
+    }).exec();
 
-    const totalBuses = await Bus.countDocuments(matchCriteria);
+    
 
     return { buses, totalBuses };
-  }
+}
+
 
   public static async updateBus(
     id: string,
@@ -284,6 +302,7 @@ export default class BusService {
               timing: { $gte: new Date(date) },
             },
           },
+          date: new Date(date), // Ensure the date is matched correctly
         },
       },
       {
@@ -312,7 +331,7 @@ export default class BusService {
         $limit: limit,
       },
     ]);
-
+  
     const total = await Bus.countDocuments({
       stops: {
         $elemMatch: {
@@ -320,10 +339,12 @@ export default class BusService {
           timing: { $gte: new Date(date) },
         },
       },
+      date: new Date(date),
     });
-
+  
     return { buses, total };
   }
+  
+
+
 }
-
-

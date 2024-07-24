@@ -4,7 +4,7 @@ import RouteService from '../service/route.service';
 import AppError from '../utils/errorHandler';
 import StatusConstants from '../constant/statusConstant';
 import { StatusCode } from '../enum/statusCode';
-
+import { logger } from '../utils/logger';
 export default class RouteController {
   public static async createRoute(
     req: Request,
@@ -19,6 +19,7 @@ export default class RouteController {
       
       await session.commitTransaction();
       session.endSession();
+      logger.info('API post/api/route hit successfully');
       res.status(StatusCode.CREATED).json(newRoute);
     } catch (error) {
       await session.abortTransaction();
@@ -41,6 +42,7 @@ export default class RouteController {
           StatusConstants.NOT_FOUND.httpStatusCode
         );
       }
+      logger.info('API get/api/route/:id hit successfully');
       res.status(StatusCode.OK).json(route);
     } catch (error) {
       next(error);
@@ -54,6 +56,7 @@ export default class RouteController {
   ): Promise<void> {
     try {
       const { routes, totalRoutes } = await RouteService.getAllRoutes();
+      logger.info('API get/api/route hit successfully');
       res.status(StatusCode.OK).json({ routes, totalRoutes });
     } catch (error) {
       next(error);
@@ -72,6 +75,7 @@ export default class RouteController {
       await RouteService.deleteRoute(routeId, session);
       await session.commitTransaction();
       session.endSession();
+      logger.info('API delete/api/route/:id hit successfully');
       res.status(StatusCode.NO_CONTENT).send();
     } catch (error) {
       await session.abortTransaction();
@@ -101,6 +105,7 @@ export default class RouteController {
       }
       await session.commitTransaction();
       session.endSession();
+      logger.info('API put/api/route/:id hit successfully');
       res.status(StatusConstants.OK.httpStatusCode).json(updatedRoute);
     } catch (error) {
       await session.abortTransaction();

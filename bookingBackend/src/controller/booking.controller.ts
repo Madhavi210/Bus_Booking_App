@@ -4,7 +4,7 @@ import AppError from "../utils/errorHandler";
 import StatusConstants from "../constant/statusConstant";
 import mongoose from "mongoose";
 import { Bus } from "../model/bus.model";
-
+import { logger } from "../utils/logger";
 export default class BookingController {
   public static async createBooking(
     req: Request,
@@ -50,6 +50,7 @@ export default class BookingController {
 
       await session.commitTransaction();
       session.endSession();
+      logger.info('API post/api/book hit successfully');
       res.status(StatusConstants.CREATED.httpStatusCode).json(newBooking);
     } catch (error) {
       await session.abortTransaction();
@@ -67,6 +68,7 @@ export default class BookingController {
     const bookingId = req.params.id;
     try {
       const booking = await BookingService.getBookingById(bookingId);
+      logger.info('API get/api/book/:id hit successfully');
       res.status(StatusConstants.OK.httpStatusCode).json(booking);
     } catch (error) {
       console.error("Error fetching booking by ID:", error);
@@ -81,6 +83,7 @@ export default class BookingController {
   ): Promise<void> {
     try {
       const bookings = await BookingService.getAllBookings();
+      logger.info('API get/api/book hit successfully');
       res.status(StatusConstants.OK.httpStatusCode).json({ bookings });
     } catch (error) {
       console.error("Error fetching all bookings:", error);
@@ -101,6 +104,7 @@ export default class BookingController {
         bookingId,
         updateData
       );
+      logger.info('API put/api/book/:id hit successfully');
       res.status(StatusConstants.OK.httpStatusCode).json(updatedBooking);
     } catch (error) {
       console.error("Error updating booking:", error);
@@ -121,6 +125,7 @@ export default class BookingController {
       await BookingService.deleteBooking(bookingId, session);
       await session.commitTransaction();
       session.endSession();
+      logger.info('API delete/api/book/:id hit successfully');
       res.status(StatusConstants.NO_CONTENT.httpStatusCode).send();
     } catch (error) {
       await session.abortTransaction();
