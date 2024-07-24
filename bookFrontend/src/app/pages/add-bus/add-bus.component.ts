@@ -60,7 +60,7 @@ export class AddBusComponent {
           busNumber: bus.busNumber,
           seatingCapacity: bus.seatingCapacity,
           route: bus.route,
-          totalTiming: bus.totalTiming
+          totalTiming: bus.date
         });
 
         const stopsArray = this.busForm.get('stops') as FormArray;
@@ -68,7 +68,7 @@ export class AddBusComponent {
         bus.stops.forEach(stop => {
           stopsArray.push(this.fb.group({
             station: [stop.station, Validators.required],
-            timing: [stop.timing, Validators.required]
+            timing: [stop.departureTime, Validators.required]
           }));
         });
       });

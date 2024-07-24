@@ -1,37 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BusService } from 'src/app/core/services/bus/bus.service';
-import { Router } from '@angular/router';
 import { IBus } from 'src/app/core/interface/bus.interface';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   searchForm!: FormGroup;
   buses: IBus[] = [];
-  filteredBuses: IBus[] = [];
+  totalBuses: number = 0;
 
   constructor(
     private fb: FormBuilder,
     private busService: BusService,
-    private router: Router
+    private router: Router ,
   ) {}
 
   ngOnInit(): void {
-    this.fetchAllBuses();
+    this.initializeForm();
+    this.fetchAllBuses(); // Fetch all buses on initialization
+  }
+
+  initializeForm(): void {
     this.searchForm = this.fb.group({
-      searchTerm: [''],
+      date: [''],
+      startingStop: [''],
+      endingStop: ['']
     });
   }
 
-  fetchAllBuses(): void {
-    this.busService.getAllBuses().subscribe(
+  fetchAllBuses(page: number = 1, limit: number = 10): void {
+    this.busService.getAllBuses(page, limit).subscribe(
       (data) => {
-        this.buses = data.buses;
-        this.filteredBuses = this.buses; 
+        console.log(data); // Log response for debugging
+        this.buses = data.data.buses;
+        this.totalBuses = data.data.totalBuses;
       },
       (error) => {
         console.error('Error fetching buses:', error);
@@ -39,24 +45,31 @@ export class HomeComponent {
     );
   }
 
-  viewBusDetails(busId: string): void {
-    this.router.navigate(['home/busData/', busId]);
-  }
-
-  applySearchFilter(): void {
-    const searchTerm = this.searchForm.value.searchTerm;
-    this.filteredBuses = this.buses.filter((bus) =>
-      bus.busNumber.toLowerCase().includes(searchTerm.trim().toLowerCase())
-    );
-  }
-
   onSearch(): void {
-    this.applySearchFilter();
+    const { date, startingStop, endingStop } = this.searchForm.value;
+    this.busService.searchBuses(date, startingStop, endingStop).subscribe(
+      (data) => {
+        console.log(data); // Log response for debugging
+        this.buses = data.data.buses;
+        this.totalBuses = data.data.totalBuses;
+      },
+      (error) => {
+        console.error('Error searching buses:', error);
+      }
+    );
   }
 
   onClear(): void {
     this.searchForm.reset();
-    // this.fetchAllBuses();
-    this.filteredBuses = this.buses;
+    this.fetchAllBuses(); // Fetch all buses again when clearing the search
+  }
+
+  getAvailableSeatCount(seats: { isBooked: boolean }[]): number {
+    return seats.filter(seat => !seat.isBooked).length;
+  }
+
+  viewBusDetails(busId: string): void {
+    console.log('View details for bus with ID:', busId);
+    this.router.navigate(['/home/busData', busId]);
   }
 }

@@ -12,7 +12,8 @@ export class BusDataComponent {
   busId!: string;
   bus!: IBus;
   rows: number[] = [];
-  columns: number[] = [];
+  // columns: number[] = [];
+  columns: number[] = Array(4).fill(0);
 
   constructor(
     private route: ActivatedRoute,
@@ -20,6 +21,7 @@ export class BusDataComponent {
     private router: Router
   ) {}
 
+ 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.busId = params.get('id')!;
@@ -27,12 +29,14 @@ export class BusDataComponent {
     });
   }
 
+
   fetchBusDetails(): void {
     this.busService.getBusById(this.busId).subscribe(
-      (data) => {
-        this.bus = data;
-        this.rows = Array(this.bus.rows).fill(0).map((x, i) => i);
-        this.columns = Array(this.bus.columns).fill(0).map((x, i) => i);        
+      (data: any) => {
+        this.bus = data.data;
+        const totalSeats = this.bus.seatingCapacity;
+        const seatsPerRow = this.columns.length;
+        this.rows = Array(Math.ceil(totalSeats / seatsPerRow)).fill(0).map((_, i) => i);
       },
       (error) => {
         console.error('Error fetching bus details:', error);
@@ -40,16 +44,15 @@ export class BusDataComponent {
     );
   }
 
-  bookNow(): void {
-    this.router.navigate(['home/book/', this.busId]);
-  }
 
   onSeatClick(row: number, col: number): void {
     const seatNumber = this.getSeatNumber(row, col);
+    console.log(seatNumber);
+    
     const seat = this.bus.seats.find(s => s.seatNumber === seatNumber);
 
     if (seat && !seat.isBooked) {
-      this.router.navigate(['home/book/', this.busId, seatNumber]);
+      // this.router.navigate(['home/book/', this.busId, seatNumber]);
     }
   }
 
@@ -65,30 +68,10 @@ export class BusDataComponent {
     return seat ? seat.isSingleLady : false;
   }
 
-
- getSeatGroups(): number[][] {
-  const groups: number[][] = [];
-  const columnsPerGroup = 2;
-  let startIndex = 0;
-
-  while (startIndex < this.columns.length) {
-    const endIndex = Math.min(startIndex + columnsPerGroup, this.columns.length);
-    groups.push(this.columns.slice(startIndex, endIndex));
-    startIndex = endIndex;
-  }
-
-  return groups;
-}
-
-shouldAddAisle(colIndex: number, groupIndex: number): boolean {
-  const columnsPerGroup = 2;
-  return (colIndex + 1) % columnsPerGroup === 0 && colIndex + 1 < this.getSeatGroups()[groupIndex].length;
-}
-
-
   getSeatNumber(row: number, col: number): number {
-    return row * this.bus.columns + col + 1;
+    return row * this.columns.length + col + 1;
   }
+
 
 
 }

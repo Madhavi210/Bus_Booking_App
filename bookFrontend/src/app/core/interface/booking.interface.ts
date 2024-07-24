@@ -5,10 +5,17 @@ export interface IBooking {
     route: string;
     fromStation: string;
     toStation: string;
+    date: Date;
     seatNumber: number;
     fare: number;
     paymentType: 'cash' | 'card' | 'upi';  
-    paymentDetails?: { transactionId?: string; additionalCharges?: number };
+    paymentDetails?: { 
+      cardNumber?: string; 
+      upiId?: string;
+      additionalCharges?: number 
+    };
     isSingleLady: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
   }
   

@@ -42,10 +42,10 @@
             <tr *ngFor="let route of filteredRoutes; let i = index">
               <td>{{ i + 1 }}</td>
               <td>{{ route._id }}</td>
-              <td>{{ route.totalDistance }} km</td>
+              <!-- <td>{{ route.da }} km</td> -->
               <td>
                 <ul>
-                  <li *ngFor="let station of route.stations">{{ station.name }} ({{ station.distanceFromPrevious }} km)  {{ station.timing | date: 'medium' }} </li>
+                  <!-- <li *ngFor="let station of route.stations">{{ station.name }} ({{ station.distanceFromPrevious }} km)  {{ station.date  | date: 'medium' }} </li> -->
                 </ul>
               </td>
               <td>{{ route.createdAt | date:'medium' }}</td>

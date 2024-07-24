@@ -4,5 +4,9 @@ export interface ICoupon {
     discountPercentage: number;
     validFrom: Date;
     validTo: Date;
+    usageLimit: number;
+    usageCount: number;
+    createdAt?: Date;
+    updatedAt?: Date;
   }
   

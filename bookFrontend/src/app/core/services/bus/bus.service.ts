@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { IBus } from 'src/app/core/interface/bus.interface'; // Adjust path as needed
@@ -30,14 +30,45 @@ export class BusService {
     );
   }
 
-  getAllBuses(): Observable<{ buses: IBus[]; totalBuses: number }> {
-    return this.http.get<{ buses: IBus[]; totalBuses: number }>(this.apiUrl).pipe(
-      catchError((error) => {
-        console.error('Error fetching all buses:', error);
-        throw error;
-      })
-    );
+  getAllBuses(page: number = 1, limit: number = 10): Observable<any> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    return this.http.get<any>(this.apiUrl, { params });
   }
+
+  searchBuses(
+    date: string, 
+    startingStop: string, 
+    endingStop: string, 
+    page: number = 1, 
+    limit: number = 10
+  ): Observable<any> {
+    const params = new HttpParams()
+      .set('date', date)
+      .set('startingStop', startingStop)
+      .set('endingStop', endingStop)
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    return this.http.get<any>(this.apiUrl, { params });
+  }
+
+  // getAllBuses(date?: string, startingStop?: string, endingStop?: string, page: number = 1, limit: number = 10): Observable<{ buses: IBus[], totalBuses: number }> {
+  //   let params = new HttpParams()
+  //     .set('page', page.toString())
+  //     .set('limit', limit.toString());
+
+  //   if (date) params = params.set('date', date);
+  //   if (startingStop) params = params.set('startingStop', startingStop);
+  //   if (endingStop) params = params.set('endingStop', endingStop);
+
+  //   return this.http.get<{ buses: IBus[], totalBuses: number }>(this.apiUrl, { params }).pipe(
+  //     catchError((error) => {
+  //       console.error('Error fetching buses:', error);
+  //       throw error;
+  //     })
+  //   );
+  // }
 
   updateBus(busId: string, updateData: Partial<IBus>): Observable<IBus> {
     return this.http.put<IBus>(`${this.apiUrl}/${busId}`, updateData).pipe(

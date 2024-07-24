@@ -58,11 +58,11 @@
               <td>
                 <ul>
                   <li *ngFor="let stop of bus.stops">
-                    {{ stop.station }} - {{ stop.timing | date:'shortTime' }}
+                    {{ stop.station }} - {{ stop.departureTime | date:'shortTime' }}
                   </li>
                 </ul>
               </td>
-              <td>{{ bus.totalTiming }} mins</td>
+              <td>{{ bus.date }} mins</td>
               <td>
                 <ul>
                   <li *ngFor="let seat of bus.seats">

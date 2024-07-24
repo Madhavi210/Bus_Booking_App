@@ -8,7 +8,7 @@ export interface ISeat {
 
 export interface IStop {
   station: string;
-  timing: Date;
+  departureTime: Date;
 }
 
 export interface IBus {
@@ -18,13 +18,12 @@ export interface IBus {
   amenities: string[];
   route: string; // Assuming this is a reference to the route
   stops: IStop[];
-  totalTiming: number; // Total timing in minutes
   seats: ISeat[];
   busType: 'Seater' | 'Sleeper';
   seatsLayout: string;
   rows: number;
   columns: number;
-  layoutDescription: string;
+  date: Date; // Use ISO date string or Date type if supported
   createdAt: string; // Use ISO date string or Date type if supported
   updatedAt: string; // Use ISO date string or Date type if supported
 }

@@ -56,7 +56,7 @@ export class AddRouteComponent {
     if (this.routeId) {
       this.routeService.getRouteById(this.routeId).subscribe(route => {
         this.createRouteForm.patchValue({
-          totalDistance: route.totalDistance
+          // totalDistance: route.totalDistance
         });
   
         const stationsArray = this.createRouteForm.get('stations') as FormArray;
@@ -66,7 +66,7 @@ export class AddRouteComponent {
           stationsArray.push(this.fb.group({
             name: [station.name, Validators.required],
             distanceFromPrevious: [station.distanceFromPrevious, [Validators.required, Validators.min(0)]],
-            timing: [station.timing, Validators.required]  
+            // timing: [station., Validators.required]  
           }));
         });
       });

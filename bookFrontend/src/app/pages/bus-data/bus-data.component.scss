@@ -1,7 +1,4 @@
-/* Seating styles */
-.bus-layout {
-  /* Styling for the bus layout container */
-}
+
 
 .seating-container {
   display: flex;
@@ -15,53 +12,24 @@
   margin: 5px;
 }
 
-.row-container {
-  display: flex;
-  flex-direction: row;
-}
 
-.row {
-  display: flex;
-}
-
-.seat-group {
-  display: flex;
-  padding: 5px 15px;
-}
 
 .seat {
   margin: 2px;
   text-align: center;
   cursor: pointer;
-  width: 50px; // Adjust size of each seat box
+  width: 50px; /* Adjust size of each seat box */
   height: 50px;
   background-color: lightgray;
   border: 1px solid #ccc;
   border-radius: 5px;
-  line-height: 50px; // Center text vertically
+  line-height: 50px; /* Center text vertically */
   font-size: 12px;
-}
-
-.seat.booked {
-  background-color: green;
-  color: white;
-  cursor: not-allowed;
 }
 
 .seat.single-lady {
   background-color: rgb(245, 87, 113);
   color: black;
-}
-
-.seat.available {
-  background-color: #ccc;
-}
-
-.aisle-space {
-  width: 20px;
-  height: 30px;
-  margin: 2px;
-  background-color: #fff;
 }
 
 .conductorseat {
@@ -70,3 +38,91 @@
   align-items: center;
 }
 
+/* Responsive styles */
+@media (max-width: 768px) {
+  .col-md-6 {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+
+
+
+//seatying 
+.seating-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.seat-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.seat {
+  margin: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  width: 50px; /* Adjust size of each seat box */
+  height: 50px;
+  background-color: lightgray;
+  line-height: 50px; /* Center text vertically */
+  font-size: 12px;
+}
+
+.seat.booked {
+  background-color: rgb(158, 157, 157);
+  color: white;
+}
+
+.seat.single-lady {
+  background-color: rgb(243, 161, 175);
+  color: black;
+}
+
+.seat.available {
+  background-color: green;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .seat {
+    width: 30px;
+    height: 30px;
+  }
+  .seat-info .seat {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+
+/* Seat Info Section styles */
+.seat-info {
+  padding: 10px;
+  // border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #ffffff;
+  font-size: 14px;
+}
+
+.seat-info p {
+  // margin: 5px 0;
+}
+
+.seat-info .seat {
+  width: 15px; /* Smaller size for info section */
+  height: 15px;
+  // margin-right: 5px;
+  display: inline-block;
+}

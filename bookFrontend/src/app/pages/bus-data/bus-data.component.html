@@ -1,6 +1,9 @@
-<div class="container-fluid m-4">
-    <div class="m-3">
-      <div class="container-fluid p-4">
+
+<div class="container pt-4">
+  <div class="row">
+    <!-- Bus Details Section -->
+    <div class="col-md-6 ">
+      <div class="container-fluid ">
         <h2>Bus Details</h2>
         
         <div *ngIf="bus">
@@ -16,15 +19,11 @@
               </tr>
               <tr>
                 <th>First Station</th>
-                <td>{{ bus.stops[0].station }} - {{ bus.stops[0].timing | date:'shortTime' }}</td>
-<td>{{ bus.stops[bus.stops.length - 1].station }} - {{ bus.stops[bus.stops.length - 1].timing | date:'shortTime' }}</td>
-
+                <td>{{ bus.stops[0].station }} - {{ bus.stops[0].departureTime | date:'shortTime' }}</td>
               </tr>
               <tr>
                 <th>Last Station</th>
-                <td>{{ bus.stops[0].station }} - {{ bus.stops[0].timing | date:'shortTime' }}</td>
-<td>{{ bus.stops[bus.stops.length - 1].station }} - {{ bus.stops[bus.stops.length - 1].timing | date:'shortTime' }}</td>
-
+                <td>{{ bus.stops[bus.stops.length - 1].station }} - {{ bus.stops[bus.stops.length - 1].departureTime | date:'shortTime' }}</td>
               </tr>
               <tr>
                 <th>Seating Capacity</th>
@@ -39,125 +38,73 @@
                 </td>
               </tr>
               <tr>
-                <th>Total Timing</th>
-                <td>{{ bus.totalTiming }} mins</td>
+                <th>Date</th>
+                <td>{{ bus.date | date: "medium" }} mins</td>
               </tr>
-              <!-- <tr>
-                <th>Created At</th>
-                <td>{{ bus.createdAt | date:'medium' }}</td>
-              </tr>
-              <tr>
-                <th>Updated At</th>
-                <td>{{ bus.updatedAt | date:'medium' }}</td>
-              </tr> -->
               <tr>
                 <th>Stops</th>
-                <td>    
-                    <ul class="list-group">
-                      <li *ngFor="let stop of bus.stops" class="list-group-item">
-                        {{ stop.station }} - {{ stop.timing | date:'shortTime' }}
-                      </li>
-                    </ul>
+                <td>
+                  <ul class="list-group">
+                    <li *ngFor="let stop of bus.stops" class="list-group-item">
+                      {{ stop.station }} - {{ stop.departureTime | date:'shortTime' }}
+                    </li>
+                  </ul>
                 </td>
               </tr>
             </tbody>
           </table>
-<!-- 
-          <h3>Seating Arrangement</h3>
-          <h5><span class="bg-success p-1 fs-6"><i class="fa-solid fa-circle bg-success"></i></span>&nbsp;is Booked</h5>
-          <h5><span class="bg-secondary p-1 fs-6"><i class="fa-solid fa-circle bg-secondary"></i></span>&nbsp;is Available</h5>
-          <div class="seat-map">
-            <div *ngFor="let seat of bus.seats" class="seat" [ngClass]="{'booked': seat.isBooked}">
-              {{ seat.seatNumber }}
-            </div>
-          </div>   -->
-  
-          <button (click)="bookNow()" class="btn btn-primary">
-            <i class="fas fa-calendar-check"></i> Book Now
-          </button>
-          
+
           <button class="btn btn-secondary m-1" routerLink="/home">
             Home
           </button>
         </div>
-  
+
         <div *ngIf="!bus">
           <p class="text-center">Loading bus details...</p>
         </div>
       </div>
     </div>
-  </div>
 
+   <!-- Seating Layout Section -->
+   <div class="col-md-6">
+     <div class="bus-layout p-1 m-3">
+       <div class="seating-container">
+         <div class="seatsec">
+           <!-- Static driver and conductor seats -->
+           <div class="row conductorseat">
+             <div class="seat driver-seat">C</div>
+             <div class="seat conductor-seat">D</div>
+           </div>
+           
+           <!-- Row container with dynamic columns -->
+           <div *ngFor="let row of rows; let rowIndex = index" class="row-container">
+             <div class="seat-row">
+               <ng-container *ngFor="let col of columns; let colIndex = index">
+                 <div
+                   class="seat"
+                   [ngClass]="{
+                     'booked': isSeatBooked(rowIndex, colIndex),
+                     'single-lady': isSingleLadySeat(rowIndex, colIndex),
+                     'available': !isSeatBooked(rowIndex, colIndex) && !isSingleLadySeat(rowIndex, colIndex)
+                   }"
+                   (click)="onSeatClick(rowIndex, colIndex)"
+                 >
+                   {{ getSeatNumber(rowIndex, colIndex) }}
+                 </div>
+               </ng-container>
+             </div>
+           </div>
+         </div>
+         <!-- Seat Info Section -->
+   <div class="seat-info d-flex text-center ">
+     <p class="m-2"><span class="seat available "></span> Available Seat</p>
+     <p class="m-2"><span class="seat single-lady"></span> Single Lady Seat</p>
+     <p class="m-2"><span class="seat booked"></span> Booked Seat</p>
+   </div>
+       </div>
 
-  <!-- seating arrangement -->
-<div class="bus-layout">
-  <div class="seating-container">
-    <div class="seatsec">
-      <!-- Static driver and conductor seats -->
-      <div class="row conductorseat">
-        <div class="seat driver-seat">C</div>
-        <div class="seat conductor-seat">D</div>
-      </div>
-      
-      <!-- Row container with dynamic columns and aisles -->
-      <div *ngFor="let row of rows; let rowIndex = index" class="row-container">
-        <!-- Print seating groups with aisles -->
-        <ng-container *ngFor="let group of getSeatGroups(); let groupIndex = index">
-          <div class="seat-group">
-            <ng-container *ngFor="let col of group; let colIndex = index">
-              <ng-container *ngIf="shouldAddAisle(colIndex, groupIndex); else seat">
-                <div class="aisle-space"></div>
-              </ng-container>
-              <ng-template #seat>
-                <div
-                  class="seat"
-                  [ngClass]="{
-                    'booked': isSeatBooked(rowIndex, colIndex),
-                    'single-lady': isSingleLadySeat(rowIndex, colIndex),
-                    'available': !isSeatBooked(rowIndex, colIndex) && !isSingleLadySeat(rowIndex, colIndex)
-                  }"
-                  (click)="onSeatClick(rowIndex, colIndex)"
-                >
-                  {{ getSeatNumber(rowIndex, colIndex + groupIndex * group.length) }}
-                </div>
-              </ng-template>
-            </ng-container>
-          </div>
-        </ng-container>
-      </div>
-    </div>
+       
+     </div>
+   </div>
   </div>
 </div>
-
-  
-
-<!-- seating arrangement -->
-<!-- <div class="bus-layout">
-  <div class="seating-container">
-      <div class="seatsec">
-          <div class="row conductorseat">
-            <div class="seat driver-seat">C</div>
-            <div class="seat conductor-seat">D</div>
-          </div>
-          
-          <div *ngFor="let row of rows; let rowIndex = index" class="row-container">
-            <ng-container *ngFor="let group of getSeatGroups(); let groupIndex = index">
-              <div class="seat-group ">
-                <ng-container *ngFor="let col of group; let colIndex = index">
-                  <ng-container *ngIf="shouldAddAisle(colIndex, groupIndex); else seat">
-                    <div class="aisle-space"></div>
-                  </ng-container>
-                  <ng-template #seat>
-                    <div class="seat">
-                      {{ getSeatNumber(rowIndex, colIndex + groupIndex * group.length) }}
-                    </div>
-                  </ng-template>
-                </ng-container>
-              </div>
-            </ng-container>
-          </div>
-      </div>
-  </div>
-</div> -->
-
-

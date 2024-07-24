@@ -1,93 +1,48 @@
+/* Container Styling */
 .container {
-    margin-top: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .btn {
-    margin-top: 10px;
-  }
-  
-  .list-group-item {
-    margin-bottom: 10px;
-  }
-  
-  .seat-map {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 300px;
-  }
-  
-  .seat {
-    width: 30px;
-    height: 30px;
-    margin: 5px;
-    text-align: center;
-    line-height: 30px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .available {
-    background-color: grey;
-    color: white;
-  }
-  
-  .booked {
-    background-color: green;
-    color: white;
-  }
-  .container-fluid {
-    padding: 0px;
-    background-color: #f9f9f9;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .table {
-    width: 100%;
-    margin-bottom: 0; 
-  }
-  
-  .table-bordered {
-    border: 1px solid #dee2e6;
-  }
-  
-  .table-bordered th,
-  .table-bordered td {
-    border: 1px solid #dee2e6; 
-    padding: 12px; 
-  }
-  
-  .table-responsive {
-    overflow-x: auto; 
-  }
-  
-  thead {
-    background-color: #343a40; 
-    color: white;
-  }
-  
-  th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  @media (max-width: 600px) {
-    th, td {
-      font-size: 14px; 
-    }
-  }
-  
+  margin-top: 20px;
+}
+
+/* Form Styling */
+form {
+  background-color: #f8f9fa;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+input.form-control {
+  border-radius: 0.25rem;
+}
+
+button {
+  border-radius: 0.25rem;
+}
+
+/* Table Styling */
+.table {
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  text-align: center;
+}
+
+.table th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Responsive Table */
+.table-responsive {
+  overflow-x: auto;
+}
