@@ -4,7 +4,11 @@ import IBus from './bus.interface';
 import IRoute from './route.interface'; 
 
 export default interface IBooking extends Document {
-  user: Schema.Types.ObjectId;
+  // user: Schema.Types.ObjectId;
+  userName: string;
+  email: string;
+  mobileNumber: string;
+  age: number;
   bus: Schema.Types.ObjectId;
   route: Schema.Types.ObjectId;
   fromStation: string;
@@ -19,6 +23,7 @@ export default interface IBooking extends Document {
     additionalCharges?: number;
   };
   isSingleLady: boolean;
+  passengerType: 'child' | 'adult';
   createdAt?: Date;
   updatedAt?: Date;
 }

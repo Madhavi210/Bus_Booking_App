@@ -1,5 +1,3 @@
-
-
 .seating-container {
   display: flex;
   flex-direction: column;
@@ -12,8 +10,6 @@
   margin: 5px;
 }
 
-
-
 .seat {
   margin: 2px;
   text-align: center;
@@ -23,13 +19,10 @@
   background-color: lightgray;
   border: 1px solid #ccc;
   border-radius: 5px;
-  line-height: 50px; /* Center text vertically */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 12px;
-}
-
-.seat.single-lady {
-  background-color: rgb(245, 87, 113);
-  color: black;
 }
 
 .conductorseat {
@@ -44,14 +37,20 @@
     width: 100%;
     margin-bottom: 1rem;
   }
-}
-
-
-
-//seatying 
-.seating-container {
-  display: flex;
-  flex-direction: column;
+  .seat {
+    width: 30px;
+    height: 30px;
+    font-size: 10px; /* Adjust font size for smaller screens */
+  }
+  .seat-info .seat {
+    width: 15px;
+    height: 15px;
+    font-size: 8px; /* Adjust font size for info section */
+  }
+  .seat-button {
+    padding-bottom: 0;
+    margin: 2px;
+  }
 }
 
 .row-container {
@@ -64,65 +63,65 @@
   flex-wrap: wrap;
 }
 
-.seat {
-  margin: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  width: 50px; /* Adjust size of each seat box */
-  height: 50px;
-  background-color: lightgray;
-  line-height: 50px; /* Center text vertically */
-  font-size: 12px;
+.booked {
+  background-color: grey;
 }
 
-.seat.booked {
+.bookedseat {
   background-color: rgb(158, 157, 157);
   color: white;
 }
 
-.seat.single-lady {
-  background-color: rgb(243, 161, 175);
+.single-ladyseat {
+  background-color:  rgb(199, 12, 99);
   color: black;
 }
 
-.seat.available {
+.availableseat {
   background-color: green;
   color: white;
 }
 
-@media (max-width: 768px) {
-  .seat {
-    width: 30px;
-    height: 30px;
-  }
-  .seat-info .seat {
-    width: 15px;
-    height: 15px;
-  }
-}
-
-
-/* Seat Info Section styles */
 .seat-info {
   padding: 10px;
-  // border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #ffffff;
   font-size: 14px;
 }
 
 .seat-info p {
-  // margin: 5px 0;
+  margin: 5px 0;
 }
 
-.seat-info .seat {
-  width: 15px; /* Smaller size for info section */
+.seat-info .seats {
+  width: 15px;
   height: 15px;
-  // margin-right: 5px;
+  border-radius: 50% ;
   display: inline-block;
+}
+
+.seat-button {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seat-button.available {
+  background-color: green;
+  color: white;
+}
+
+.seat-button.singlelady {
+  background-color: rgb(199, 12, 99);
+  color: rgb(255, 255, 255);
+}
+
+.seat-button.booked {
+  background-color: grey;
+  color: white;
 }

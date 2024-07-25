@@ -63,7 +63,6 @@ export default class UserController {
           StatusConstants.NOT_FOUND.httpStatusCode
         );
       }
-      logger.info('API get/api/user/:id hit successfully');
       res.status(StatusCode.OK).json(user);
     } catch (error) {
       next(error);
@@ -77,7 +76,6 @@ export default class UserController {
   ): Promise<void> {
     try {
       const { users, totalUser } = await UserService.getAllUsers();
-      logger.info('API get/api/user hit successfully', { params: req.query });
       res.status(StatusCode.OK).json({ users, totalUser });
     } catch (error) {
       next(error);

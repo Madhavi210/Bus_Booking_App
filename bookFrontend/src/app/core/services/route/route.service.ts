@@ -14,51 +14,26 @@ export class RouteService {
 
   // Create a new route
   createRoute(routeData: {  totalDistance: number; stations: Array<{ name: string; distanceFromPrevious: number }> }): Observable<IRoute> {
-    return this.http.post<IRoute>(this.url, routeData).pipe(
-      catchError((error) => {
-        console.error('Error creating route:', error);
-        throw error;
-      })
-    );
+    return this.http.post<IRoute>(this.url, routeData)
   }
 
   // Get route by ID
   getRouteById(routeId: string): Observable<IRoute> {
-    return this.http.get<IRoute>(`${this.url}/${routeId}`).pipe(
-      catchError((error) => {
-        console.error('Error fetching route by ID:', error);
-        throw error;
-      })
-    );
+    return this.http.get<IRoute>(`${this.url}/${routeId}`)
   }
 
   // Get all routes
   getAllRoutes(): Observable<{ routes: IRoute[]; totalRoutes: number }> {
-    return this.http.get<{ routes: IRoute[]; totalRoutes: number }>(this.url).pipe(
-      catchError((error) => {
-        console.error('Error fetching all routes:', error);
-        throw error;
-      })
-    );
+    return this.http.get<{ routes: IRoute[]; totalRoutes: number }>(this.url)
   }
 
   // Update route by ID
   updateRoute(routeId: string, updateData: Partial<IRoute>): Observable<IRoute> {
-    return this.http.put<IRoute>(`${this.url}/${routeId}`, updateData).pipe(
-      catchError((error) => {
-        console.error('Error updating route:', error);
-        throw error;
-      })
-    );
+    return this.http.put<IRoute>(`${this.url}/${routeId}`, updateData)
   }
 
   // Delete route by ID
   deleteRoute(routeId: string): Observable<void> {
-    return this.http.delete<void>(`${this.url}/${routeId}`).pipe(
-      catchError((error) => {
-        console.error('Error deleting route:', error);
-        throw error;
-      })
-    );
+    return this.http.delete<void>(`${this.url}/${routeId}`)
   }
 }

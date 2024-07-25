@@ -9,118 +9,186 @@ import IBooking from '../interface/booking.interface';
 import mongoose from 'mongoose';
 
 export default class BookingService {
-    public static async createBooking(
-        userId: string,
-        busId: string,
-        routeId: string,
-        fromStation: string,
-        toStation: string,
-        seatNumber: number,
-        fare: 150,
-        paymentType: 'cash' | 'card' | 'upi',
-        paymentDetails: { transactionId?: string; additionalCharges?: number },
-        isSingleLady: boolean,
-        session: ClientSession
-      ): Promise<any> {
-        
-          const user = await User.findById(userId).session(session);
-          if (!user) throw new AppError(StatusConstants.NOT_FOUND.body.message, StatusConstants.NOT_FOUND.httpStatusCode);
+  public static async createBooking(
+    userName: string,
+    email: string,
+    mobileNumber: string,
+    age: number,
+    busId: string,
+    routeId: string,
+    fromStation: string,
+    toStation: string,
+    seatNumber: number,
+    fare: number,
+    paymentType: 'cash' | 'card' | 'upi',
+    paymentDetails: { cardNumber?: string; upiId?: string; additionalCharges?: number },
+    isSingleLady: boolean,
+    session: ClientSession,
+    passengerType?: 'child' | 'adult'
+  ): Promise<any> {
+    const bus = await Bus.findById(busId).session(session);
+    if (!bus) {
+      throw new AppError('Bus not found', StatusConstants.BAD_REQUEST.httpStatusCode);
+    }
     
-          const bus = await Bus.findById(busId).session(session);
-          if (!bus) throw new AppError(StatusConstants.NOT_FOUND.body.message, StatusConstants.NOT_FOUND.httpStatusCode);
-    
-          const route = await Route.findById(routeId).session(session);
-          if (!route) throw new AppError(StatusConstants.NOT_FOUND.body.message, StatusConstants.NOT_FOUND.httpStatusCode);
-    
-          const seat = bus.seats.find(seat => seat.seatNumber === seatNumber);
-          if (!seat || seat.isBooked) throw new AppError('Seat is not available or does not exist', StatusConstants.CONFLICT.httpStatusCode);
-    
-          seat.isBooked = true;
-          await bus.save({ session });
-    
-          const booking = new Booking({
-            user: userId,  
-            bus: busId,
-            route: routeId,
-            fromStation,
-            toStation,
-            seatNumber,
-            fare: 150,
-            paymentType,
-            paymentDetails,
-            isSingleLady
-          });
-    
-          await booking.save({ session });
-          return booking.toObject();
-       
-      }
+    const route = await Route.findById(routeId).session(session);
+    if (!route) {
+      throw new AppError('Route not found', StatusConstants.BAD_REQUEST.httpStatusCode);
+    }
+
+    if (fare < 0) {
+      throw new AppError('Fare must be greater than 0', StatusConstants.BAD_REQUEST.httpStatusCode);
+    }
+
+    // Check if the seat is already booked
+    const existingBooking = await Booking.findOne({
+      bus: busId,
+      route: routeId,
+      fromStation,
+      toStation,
+      seatNumber,
+      date: new Date().toISOString().split('T')[0], // Assuming bookings are per day
+    }).session(session);
+
+    if (existingBooking) {
+      throw new AppError('Seat already booked', StatusConstants.BAD_REQUEST.httpStatusCode);
+    }
+
+    const seat = bus.seats.find(seat => seat.seatNumber === seatNumber);
+    if (seat) {
+      seat.isBooked = true;
+      seat.bookingDate = new Date(); // Update booking date
+      seat.isSingleLady = isSingleLady; // Update isSingleLady status
+      await bus.save();
+    }
+
+    const newBooking: IBooking = new Booking({
+      userName,
+      email,
+      mobileNumber,
+      age,
+      bus: busId,
+      route: routeId,
+      fromStation,
+      toStation,
+      seatNumber,
+      fare,
+      paymentType,
+      paymentDetails,
+      isSingleLady,
+      passengerType,
+      date: new Date().toISOString().split('T')[0], 
+    });
+
+
+
+    await newBooking.save({ session });
+
+    return newBooking;
+  }
 
   public static async getBookingById(bookingId: string): Promise<any> {
-    try {
-      const booking = await Booking.findById(bookingId)
-        .populate('user')
-        .populate('bus')
-        .populate('route')
-        .exec();
-      if (!booking) {
-        throw new AppError(
-          StatusConstants.NOT_FOUND.body.message,
-          StatusConstants.NOT_FOUND.httpStatusCode
-        );
+      const booking = await Booking.aggregate([
+        { $match: { _id: new mongoose.Types.ObjectId(bookingId) } },
+        {
+          $lookup: {
+            from: 'buses',
+            localField: 'bus',
+            foreignField: '_id',
+            as: 'bus',
+          },
+        },
+        { $unwind: '$bus' },
+        {
+          $lookup: {
+            from: 'routes',
+            localField: 'route',
+            foreignField: '_id',
+            as: 'route',
+          },
+        },
+        { $unwind: '$route' },
+      ]);
+
+      if (!booking || booking.length === 0) {
+        throw new AppError('Booking not found', StatusConstants.NOT_FOUND.httpStatusCode);
       }
-      return booking.toObject();
-    } catch (error) {
-      console.error('Error fetching booking by ID:', error);
-      throw error;
-    }
+
+      return booking[0];
+   
   }
 
   public static async getAllBookings(): Promise<any> {
-    try {
-      const bookings = await Booking.find()
-        .populate('user')
-        .populate('bus')
-        .populate('route')
-        .exec();
+      const bookings = await Booking.aggregate([
+        {
+          $lookup: {
+            from: 'buses',
+            localField: 'bus',
+            foreignField: '_id',
+            as: 'bus',
+          },
+        },
+        { $unwind: '$bus' },
+        {
+          $lookup: {
+            from: 'routes',
+            localField: 'route',
+            foreignField: '_id',
+            as: 'route',
+          },
+        },
+        { $unwind: '$route' },
+      ]);
+
       return bookings;
-    } catch (error) {
-      console.error('Error fetching all bookings:', error);
-      throw error;
-    }
+    
   }
 
   public static async updateBooking(
     bookingId: string,
     updateData: Partial<IBooking>
   ): Promise<any> {
-    try {
-      const booking = await Booking.findByIdAndUpdate(bookingId, updateData, { new: true })
-        .populate('user')
-        .populate('bus')
-        .populate('route')
-        .exec();
+
+      const booking = await Booking.findByIdAndUpdate(bookingId, updateData, { new: true }).exec();
+
       if (!booking) {
-        throw new AppError(
-          StatusConstants.NOT_FOUND.body.message,
-          StatusConstants.NOT_FOUND.httpStatusCode
-        );
+        throw new AppError('Booking not found', StatusConstants.NOT_FOUND.httpStatusCode);
       }
-      return booking.toObject();
-    } catch (error) {
-      console.error('Error updating booking:', error);
-      throw error;
-    }
+
+      const updatedBooking = await Booking.aggregate([
+        { $match: { _id: new mongoose.Types.ObjectId(bookingId) } },
+        {
+          $lookup: {
+            from: 'buses',
+            localField: 'bus',
+            foreignField: '_id',
+            as: 'bus',
+          },
+        },
+        { $unwind: '$bus' },
+        {
+          $lookup: {
+            from: 'routes',
+            localField: 'route',
+            foreignField: '_id',
+            as: 'route',
+          },
+        },
+        { $unwind: '$route' },
+      ]);
+
+      if (!updatedBooking || updatedBooking.length === 0) {
+        throw new AppError('Updated booking not found', StatusConstants.NOT_FOUND.httpStatusCode);
+      }
+
+      return updatedBooking[0];
+    
   }
 
   public static async deleteBooking(bookingId: string, session: ClientSession): Promise<void> {
-    try {
       const booking = await Booking.findById(bookingId).session(session);
       if (!booking) {
-        throw new AppError(
-          StatusConstants.NOT_FOUND.body.message,
-          StatusConstants.NOT_FOUND.httpStatusCode
-        );
+        throw new AppError('Booking not found', StatusConstants.NOT_FOUND.httpStatusCode);
       }
 
       const bus = await Bus.findById(booking.bus).session(session);
@@ -133,10 +201,7 @@ export default class BookingService {
       }
 
       await Booking.findByIdAndDelete(bookingId).session(session);
-    } catch (error) {
-      console.error('Error deleting booking:', error);
-      throw error;
-    }
+   
   }
 
   public static async getBookedSeats(busId: string): Promise<any> {
@@ -146,7 +211,6 @@ export default class BookingService {
       throw new Error('Invalid Bus ID');
     }
   
-    try {
       const bus = await Bus.findById(busId).select('seats').exec();
       console.log('Bus object from service:', bus); 
   
@@ -157,11 +221,6 @@ export default class BookingService {
       const bookedSeats = bus.seats.filter(seat => seat.isBooked);
   
       return bookedSeats;
-    } catch (error) {
-      console.error('Error in getBookedSeats service:', error);
-      throw error; 
-    }
+   
   }
-  
-
 }

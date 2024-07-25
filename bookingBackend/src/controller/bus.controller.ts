@@ -45,7 +45,6 @@ export default class BusController {
           StatusConstants.NOT_FOUND.httpStatusCode
         );
       }
-      logger.info('API get/api/bus/:id hit successfully');
       res.status(StatusConstants.OK.httpStatusCode).json({
         status: 'success',
         data: bus,
@@ -58,7 +57,6 @@ export default class BusController {
     public static async getAllBuses(req: Request, res: Response, next: NextFunction): Promise<void> {
       try {
           const { buses, totalBuses } = await BusService.getAllBuses(req);          
-          logger.info('API get/api/bus hit successfully');
           res.status(200).json({
               success: true,
               data: {

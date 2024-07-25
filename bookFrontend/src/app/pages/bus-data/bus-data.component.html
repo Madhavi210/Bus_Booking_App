@@ -54,9 +54,7 @@
             </tbody>
           </table>
 
-          <button class="btn btn-secondary m-1" routerLink="/home">
-            Home
-          </button>
+          <button class="btn btn-secondary m-1" routerLink="/home">Home</button>
         </div>
 
         <div *ngIf="!bus">
@@ -78,28 +76,28 @@
            
            <!-- Row container with dynamic columns -->
            <div *ngFor="let row of rows; let rowIndex = index" class="row-container">
-             <div class="seat-row">
-               <ng-container *ngFor="let col of columns; let colIndex = index">
-                 <div
-                   class="seat"
-                   [ngClass]="{
-                     'booked': isSeatBooked(rowIndex, colIndex),
-                     'single-lady': isSingleLadySeat(rowIndex, colIndex),
-                     'available': !isSeatBooked(rowIndex, colIndex) && !isSingleLadySeat(rowIndex, colIndex)
-                   }"
-                   (click)="onSeatClick(rowIndex, colIndex)"
-                 >
-                   {{ getSeatNumber(rowIndex, colIndex) }}
-                 </div>
-               </ng-container>
-             </div>
-           </div>
-         </div>
+            <div class="seat-row">
+              <ng-container *ngFor="let col of columns; let colIndex = index">
+                <div class="seat">
+                  <button class="seat-button"
+                          [ngClass]="{
+                            'booked': isSeatBooked(rowIndex, colIndex) && !isSingleLadySeat(rowIndex, colIndex),
+                            'singlelady': isSingleLadySeat(rowIndex, colIndex),
+                            'available': !isSeatBooked(rowIndex, colIndex) && !isSingleLadySeat(rowIndex, colIndex)
+                          }"
+                          (click)="onSeatClick(rowIndex, colIndex)">
+                    {{ getSeatNumber(rowIndex, colIndex) }}
+                  </button>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
          <!-- Seat Info Section -->
    <div class="seat-info d-flex text-center ">
-     <p class="m-2"><span class="seat available "></span> Available Seat</p>
-     <p class="m-2"><span class="seat single-lady"></span> Single Lady Seat</p>
-     <p class="m-2"><span class="seat booked"></span> Booked Seat</p>
+     <p class="m-2"><span class="seats availableseat "></span><span class=""> Available Seat</span></p>
+     <p class="m-2"><span class="seats single-ladyseat"></span> Single Lady Booked Seat</p>
+     <p class="m-2"><span class="seats bookedseat"></span> Booked Seat</p>
    </div>
        </div>
 

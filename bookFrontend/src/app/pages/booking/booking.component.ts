@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BusService } from 'src/app/core/services/bus/bus.service';
 import { BookingService } from 'src/app/core/services/booking/booking.service';
-import { IBus } from 'src/app/core/interface/bus.interface';
+import { RouteService } from 'src/app/core/services/route/route.service';
+import { IRoute } from 'src/app/core/interface/route.interface';
 import Swal from 'sweetalert2';
-import { FareService } from 'src/app/core/services/fare/fare.service';
 
 @Component({
   selector: 'app-booking',
@@ -14,143 +14,152 @@ import { FareService } from 'src/app/core/services/fare/fare.service';
 })
 export class BookingFormComponent implements OnInit {
   bookingForm!: FormGroup;
-  busId: string = '';
-  bus: IBus | undefined;
-  userId: string = '';
-  routeId: string = '';
-  seatNo: number = 0;
-
-  stations: string[] = []; // Array to hold station names
-  routeDistances: { [key: string]: number } = {};
+  paymentTypes = ['cash', 'card', 'upi'];
+  farePerKm = 10; // Example fare per km, adjust as needed
+  routeId!: string;
+  busId!: string;
+  seatNumber!: number;
+  routes!: IRoute;
+  date!: Date;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder, 
     private route: ActivatedRoute,
     private busService: BusService,
     private bookingService: BookingService,
-    private fareService: FareService,
+    private routeService: RouteService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.userId = localStorage.getItem('userId') || '';
-    this.busId = this.route.snapshot.paramMap.get('id') || '' ;
-    const seatNumber = this.route.snapshot.paramMap.get('seatnumber');
-    this.seatNo = seatNumber ? parseInt(seatNumber, 10) : 0;
-    console.log(this.seatNo, this.busId, this.userId, "seat bus user");
-    
-    if (!this.busId) {
-      console.error('Bus ID is missing from URL');
-      return;
-    }
+    this.route.paramMap.subscribe(params => {
+      this.busId = params.get('id')!;
+      this.seatNumber = +params.get('seatNumber')!;
+      this.initializeForm();
+      this.fetchRouteId();
+    });    
+  }
 
+  initializeForm(): void {
     this.bookingForm = this.fb.group({
-      fromStation: ['', Validators.required],
-      toStation: ['', Validators.required],
-      seatNumber: [this.seatNo, [Validators.required, Validators.min(1)]],
-      fare:[{ value: '', disabled: true }],
-      // paymentType: ['', Validators.required],
-      // transactionId: ['', Validators.required]
+      userName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      mobileNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      age: ['', [Validators.required, Validators.min(0)]],
+      busId: [this.busId],
+      routeId: [this.routeId],
+      fromStation: ['', [Validators.required]],
+      toStation: ['', [Validators.required]],
+      seatNumber: [this.seatNumber, [Validators.required]],
+      fare: [{ value: '', disabled: true }],
+      paymentType: ['cash', [Validators.required]],
+      paymentDetails: this.fb.group({
+        cardNumber: [''],
+        upiId: ['']
+      }),
+      isSingleLady: [false],
+      passengerType: ['']
     });
 
-    this.fetchBusDetails();
+    this.bookingForm.get('paymentType')?.valueChanges.subscribe(value => {
+      this.onPaymentTypeChange(value);
+    });
+
+    // Calculate fare on form changes
+    this.bookingForm.get('fromStation')?.valueChanges.subscribe(() => this.calculateFare());
+    this.bookingForm.get('toStation')?.valueChanges.subscribe(() => this.calculateFare());
   }
 
-  fetchBusDetails(): void {
-    this.busService.getBusById(this.busId).subscribe(
-      data => {
-        this.bus = data;
-        this.routeId = this.bus.route;
-        // let fare = 150;
-        this.stations = this.bus.stops.map(stop => stop.station); // Extract station names
-        this.calculateFare();
-      },
-      error => {
-        console.error('Error fetching bus details:', error);
-      }
-    );
+  fetchRouteId(): void {
+    this.busService.getBusById(this.busId).subscribe((data: any) => {
+      this.routeId = data.data.route;
+      this.fetchRouteDetails(this.routeId); // Fetch route details after setting routeId
+    });
   }
 
-  calculateFare(): void {
-    const fromStation = this.bookingForm.get('fromStation')?.value;
-    const toStation = this.bookingForm.get('toStation')?.value;    
-    if (fromStation && toStation && this.bus) {
-      const distance = this.calculateDistance(fromStation, toStation);
-      console.log(distance, "distance");
-      
-      this.fareService.getFareByRoute(this.routeId).subscribe(
-        fareDetails => {
-          const baseFarePerKm = fareDetails.baseFarePerKm;
-          const governmentTaxPercentage = fareDetails.governmentTaxPercentage;
-          this.fareService.calculateFare(distance, baseFarePerKm, governmentTaxPercentage).subscribe(
-            fare => {
-              this.bookingForm.patchValue({
-                fare: fare
-              });
-              console.log(fare);
-              
-            },
-            error => {
-              console.error('Error calculating fare:', error);
-            }
-          );
-        },
-        error => {
-          console.error('Error fetching fare details:', error);
-        }
-      );
-    }
-  }
 
+  fetchRouteDetails(routeId: string): void {
+    this.routeService.getRouteById(routeId).subscribe(route => {
+      this.routes = route;
+    });
+  }
 
   calculateDistance(fromStation: string, toStation: string): number {
-    let totalDistance = 0;
-    let currentStation = fromStation;
-
-    while (currentStation !== toStation) {
-      for (const key in this.routeDistances) {
-        const [startStation, endStation] = key.split('-');
-        if (startStation === currentStation) {
-          totalDistance += this.routeDistances[key];
-          currentStation = endStation;
-          break;
-        }
-      }
-      if (currentStation === toStation) break;
+    if (!this.routes) {
+      console.error('Route not loaded');
+      return 0;
     }
-    console.log(totalDistance, "total distance");
+
+    let totalDistance = 0;
+    let startIndex = this.routes.stations.findIndex(station => station.name === fromStation);
+    let endIndex = this.routes.stations.findIndex(station => station.name === toStation);
+
+    if (startIndex === -1 || endIndex === -1 || startIndex > endIndex) {
+      console.error('Invalid stations');
+      return 0;
+    }
+
+    for (let i = startIndex; i < endIndex; i++) {
+      totalDistance += this.routes.stations[i].distanceFromPrevious;
+    }
     
     return totalDistance;
   }
 
+  calculateFare(): void {
+    const fromStation = this.bookingForm.get('fromStation')?.value;
+    const toStation = this.bookingForm.get('toStation')?.value;
+
+    if (fromStation && toStation) {
+      const distance = this.calculateDistance(fromStation, toStation);
+      const fare = distance * this.farePerKm;
+      this.bookingForm.get('fare')?.setValue(fare);
+    }
+  }
+
+  onPaymentTypeChange(paymentType: string): void {
+    const paymentDetails = this.bookingForm.get('paymentDetails');
+    if (paymentType === 'card') {
+      paymentDetails?.get('cardNumber')?.setValidators([Validators.required]);
+      paymentDetails?.get('upiId')?.clearValidators();
+    } else if (paymentType === 'upi') {
+      paymentDetails?.get('upiId')?.setValidators([Validators.required]);
+      paymentDetails?.get('cardNumber')?.clearValidators();
+    } else {
+      paymentDetails?.get('cardNumber')?.clearValidators();
+      paymentDetails?.get('upiId')?.clearValidators();
+    }
+    paymentDetails?.get('cardNumber')?.updateValueAndValidity();
+    paymentDetails?.get('upiId')?.updateValueAndValidity();
+  }
 
   onSubmit(): void {
-    if (this.bookingForm.invalid) {
-      this.bookingForm.markAllAsTouched(); // Mark all controls as touched to display validation messages
-      return;
-    }
-
-    const bookingDetails = {
-      userId: this.userId,
-      busId: this.busId,
-      routeId: this.routeId,
-      ...this.bookingForm.value,
-      paymentDetails: {
-        transactionId: this.bookingForm.value.transactionId,
-        additionalCharges: 26.0 // Placeholder for additional charges
-      }
-      
-    };
+    console.log(this.bookingForm.value);
     
-    this.bookingService.createBooking(bookingDetails).subscribe(
-      () => {
-        Swal.fire('Success!', 'Your seat has been booked.', 'success');
-        this.router.navigate(['/home']);
-      },
-      error => {
-        console.error('Error booking seat:', error);
-        Swal.fire('Error!', 'There was an issue booking your seat.', 'error');
-      }
-    );
+    if (this.bookingForm.valid) {
+      const formData = this.bookingForm.value;
+      formData.totalFare = this.calculateTotalFare();
+      console.log(formData);
+      
+      // Submit form data to the server
+      this.bookingService.createBooking(formData).subscribe(
+        (response: any) => {
+          console.log('Booking successful:', response);
+          Swal.fire('Success', 'Booking successful!', 'success');
+          this.router.navigate(['/booking-success']); // Navigate to a success page
+        },
+        (error) => {
+          console.error('Booking failed:', error);
+          Swal.fire('Error', 'Booking failed!', 'error');
+        }
+      );
+    } else {
+      console.log('Form is invalid');
+    }
+  }
+
+  calculateTotalFare(): number {
+    const fare = this.bookingForm.get('fare')?.value || 0;
+    return fare + 26; // Adding fixed additional fare of 26
   }
 }

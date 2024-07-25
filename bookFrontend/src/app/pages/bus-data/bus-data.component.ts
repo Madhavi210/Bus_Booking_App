@@ -47,12 +47,9 @@ export class BusDataComponent {
 
   onSeatClick(row: number, col: number): void {
     const seatNumber = this.getSeatNumber(row, col);
-    console.log(seatNumber);
-    
     const seat = this.bus.seats.find(s => s.seatNumber === seatNumber);
-
     if (seat && !seat.isBooked) {
-      // this.router.navigate(['home/book/', this.busId, seatNumber]);
+      this.router.navigate(['home/book', this.busId, seatNumber]);
     }
   }
 

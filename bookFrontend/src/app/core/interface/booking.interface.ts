@@ -1,6 +1,10 @@
 export interface IBooking {
     _id: string;
-    user: string;
+    // user: string;
+    userName: string,
+    email: string,
+    mobileNumber: string,
+    age: number,
     bus: string;
     route: string;
     fromStation: string;
@@ -14,6 +18,7 @@ export interface IBooking {
       upiId?: string;
       additionalCharges?: number 
     };
+    passengerType: 'child' | 'adult';
     isSingleLady: boolean;
     createdAt?: Date;
     updatedAt?: Date;

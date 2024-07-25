@@ -3,8 +3,8 @@ import BookingService from "../service/booking.service";
 import AppError from "../utils/errorHandler";
 import StatusConstants from "../constant/statusConstant";
 import mongoose from "mongoose";
-import { Bus } from "../model/bus.model";
 import { logger } from "../utils/logger";
+
 export default class BookingController {
   public static async createBooking(
     req: Request,
@@ -12,21 +12,25 @@ export default class BookingController {
     next: NextFunction
   ): Promise<void> {
     const {
-      userId,
+      userName,
+      email,
+      mobileNumber,
+      age,
       busId,
       routeId,
       fromStation,
       toStation,
       seatNumber,
-      fare ,
+      fare,
       paymentType,
       paymentDetails,
       isSingleLady,
+      passengerType
     } = req.body;
 
-    if (!userId || !busId || !routeId) {
+    if (!userName || !email || !mobileNumber || !age || !busId || !routeId) {
       throw res.status(StatusConstants.BAD_REQUEST.httpStatusCode).json({
-        message: "userId, busId, and routeId are required fields.",
+        message: "userName, email, mobileNumber, age, busId, and routeId are required fields.",
       });
     }
 
@@ -35,19 +39,22 @@ export default class BookingController {
 
     try {
       const newBooking = await BookingService.createBooking(
-        userId,
+        userName,
+        email,
+        mobileNumber,
+        age,
         busId,
         routeId,
         fromStation,
         toStation,
         seatNumber,
-        fare ,
+        fare,
         paymentType,
         paymentDetails,
         isSingleLady,
-        session
+        session,
+        passengerType,
       );
-
       await session.commitTransaction();
       session.endSession();
       logger.info('API post/api/book hit successfully');
@@ -55,7 +62,6 @@ export default class BookingController {
     } catch (error) {
       await session.abortTransaction();
       session.endSession();
-      console.error("Error creating booking:", error);
       next(error);
     }
   }
@@ -71,7 +77,6 @@ export default class BookingController {
       logger.info('API get/api/book/:id hit successfully');
       res.status(StatusConstants.OK.httpStatusCode).json(booking);
     } catch (error) {
-      console.error("Error fetching booking by ID:", error);
       next(error);
     }
   }
@@ -84,9 +89,8 @@ export default class BookingController {
     try {
       const bookings = await BookingService.getAllBookings();
       logger.info('API get/api/book hit successfully');
-      res.status(StatusConstants.OK.httpStatusCode).json({ bookings });
+      res.status(StatusConstants.OK.httpStatusCode).json(bookings);
     } catch (error) {
-      console.error("Error fetching all bookings:", error);
       next(error);
     }
   }
@@ -99,15 +103,15 @@ export default class BookingController {
     const bookingId = req.params.id;
     const updateData = req.body;
 
+    if (!mongoose.Types.ObjectId.isValid(bookingId)) {
+      throw new AppError('Invalid booking ID', StatusConstants.BAD_REQUEST.httpStatusCode);
+    }
+
     try {
-      const updatedBooking = await BookingService.updateBooking(
-        bookingId,
-        updateData
-      );
+      const updatedBooking = await BookingService.updateBooking(bookingId, updateData);
       logger.info('API put/api/book/:id hit successfully');
       res.status(StatusConstants.OK.httpStatusCode).json(updatedBooking);
     } catch (error) {
-      console.error("Error updating booking:", error);
       next(error);
     }
   }
@@ -130,7 +134,6 @@ export default class BookingController {
     } catch (error) {
       await session.abortTransaction();
       session.endSession();
-      console.error("Error deleting booking:", error);
       next(error);
     }
   }
@@ -140,19 +143,14 @@ export default class BookingController {
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const busId = req.params.id;
-
-    if (!busId) {
-      throw res
-        .status(StatusConstants.BAD_REQUEST.httpStatusCode)
-        .json({ message: "Bus ID is required" });
-    }
+    const busId = req.params.busId;
     try {
       const bookedSeats = await BookingService.getBookedSeats(busId);
-      res.status(StatusConstants.OK.httpStatusCode).json({ bookedSeats });
+      logger.info('API get/api/book/seats hit successfully');
+      res.status(StatusConstants.OK.httpStatusCode).json(bookedSeats);
     } catch (error) {
-      console.error("Error fetching booked seats:", error);
       next(error);
     }
   }
 }
+

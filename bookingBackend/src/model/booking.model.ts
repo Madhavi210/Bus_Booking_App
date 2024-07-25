@@ -6,10 +6,29 @@ import { Route } from "./route.model";
 
 const bookingSchema = new Schema<IBooking>(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: User,
+    // user: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: User,
+    //   required: true,
+    // },
+    userName: {
+      type: String,
       required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      match: [/.+@.+\..+/, 'Please enter a valid email address.']
+    },
+    mobileNumber: {
+      type: String,
+      required: true,
+      match: [/^\d{10}$/, 'Please enter a valid 10-digit mobile number.']
+    },
+    age: {
+      type: Number,
+      required: true,
+      min: [1, 'Age must be greater than 0']
     },
     bus: { type: Schema.Types.ObjectId, ref: Bus, required: true },
     route: {
@@ -45,6 +64,11 @@ const bookingSchema = new Schema<IBooking>(
       additionalCharges: { type: Number },
     },
     isSingleLady: { type: Boolean, default: false },
+    passengerType: {
+      type: String,
+      enum: ['child', 'adult'],
+      required: false,
+    },
     createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }

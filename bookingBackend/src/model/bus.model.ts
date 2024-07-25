@@ -37,7 +37,6 @@ const busSchema = new Schema<IBus>(
         departureTime: { type: Date, required: true },
       },
     ],
-    // totalTiming: { type: Number },
     seats: [seatSchema],
     // seatId: {
     //   type: Schema.Types.ObjectId,
