@@ -10,6 +10,7 @@ import BusRouter from "./router/bus.router";
 import FareRouter from "./router/fare.router";
 import CouponRouter from "./router/coupon.router";
 import BookingRouter from "./router/booking.router";
+import ticketrouter from "./router/ticket.router";
 import { logger } from "./utils/logger";
 export default class App {
     private app: express.Application;
@@ -47,7 +48,7 @@ export default class App {
         this.app.use("/api/coupon", couponRoute);
         this.app.use("/api/fare", fareRoute);
         this.app.use("/api/book", bookingRoute);
-
+        this.app.use("/api/ticket", ticketrouter);
 
         this.app.use('/uploads', express.static(path.join(__dirname, 'uploads') ));        
         this.app.use(errorHandlerMiddleware);

@@ -32,7 +32,8 @@ import { AddFareComponent } from './pages/add-fare/add-fare.component';
 import { SeatingArrangementComponent } from './pages/seating-arrangement/seating-arrangement.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 // import { BookingFormComponentComponent } from './pages/booking-form-component/booking-form-component.component';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { FormsModule } from '@angular/forms';
+import { TicketComponent } from './pages/ticket/ticket.component'; // Import FormsModule
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +57,7 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
     AddFareComponent,
     SeatingArrangementComponent,
     PaymentComponent,
+    TicketComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,80 +1,123 @@
-<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="userName">Name</label>
-    <input id="userName" formControlName="userName" />
-    <div *ngIf="bookingForm.get('userName')?.invalid && bookingForm.get('userName')?.touched">
-      Name is required.
-    </div>
-  </div>
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="container mt-4">
+  <div class="form-section row ">
+    <h2 class="col-12 mb-3">User Details</h2>
 
-  <div>
-    <label for="email">Email</label>
-    <input id="email" formControlName="email" />
-    <div *ngIf="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched">
-      Valid email is required.
-    </div>
-  </div>
-
-  <div>
-    <label for="mobileNumber">Mobile Number</label>
-    <input id="mobileNumber" formControlName="mobileNumber" />
-    <div *ngIf="bookingForm.get('mobileNumber')?.invalid && bookingForm.get('mobileNumber')?.touched">
-      Valid mobile number is required.
-    </div>
-  </div>
-
-  <div>
-    <label for="age">Age</label>
-    <input id="age" formControlName="age" type="number" />
-    <div *ngIf="bookingForm.get('age')?.invalid && bookingForm.get('age')?.touched">
-      Age is required and must be a positive number.
-    </div>
-  </div>
-
-  <div>
-    <label for="fromStation">From Station</label>
-    <input id="fromStation" formControlName="fromStation" />
-  </div>
-
-  <div>
-    <label for="toStation">To Station</label>
-    <input id="toStation" formControlName="toStation" />
-  </div>
-
-  <div>
-    <label for="seatNumber">Seat Number</label>
-    <input id="seatNumber" formControlName="seatNumber" type="number" />
-  </div>
-
-  <div>
-    <label for="fare">Fare</label>
-    <input id="fare" formControlName="fare" type="number" />
-  </div>
-
-  <div>
-    <label>Payment Type</label>
-    <select formControlName="paymentType">
-      <option *ngFor="let type of paymentTypes" [value]="type">{{ type }}</option>
-    </select>
-  </div>
-
-  <div formGroupName="paymentDetails">
-    <div *ngIf="bookingForm.get('paymentType')?.value === 'card'">
-      <label for="cardNumber">Card Number</label>
-      <input id="cardNumber" formControlName="cardNumber" />
-      <div *ngIf="bookingForm.get('paymentDetails.cardNumber')?.invalid && bookingForm.get('paymentDetails.cardNumber')?.touched">
-        Card number is required.
+    <div class="col-md-6 mb-2">
+      <label for="userName ">Name <span class="text-danger">*</span></label>
+      <input id="userName" formControlName="userName" class="form-control" />
+      <div *ngIf="bookingForm.get('userName')?.invalid && bookingForm.get('userName')?.touched" class="text-danger">
+        Name is required.
       </div>
     </div>
 
-    <div *ngIf="bookingForm.get('paymentType')?.value === 'upi'">
-      <label for="upiId">UPI ID</label>
-      <input id="upiId" formControlName="upiId" />
-      <div *ngIf="bookingForm.get('paymentDetails.upiId')?.invalid && bookingForm.get('paymentDetails.upiId')?.touched">
-        UPI ID is required.
+    <div class="col-md-6 mb-2">
+      <label for="email">Email <span class="text-danger">*</span></label>
+      <input id="email" formControlName="email" class="form-control" />
+      <div *ngIf="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched" class="text-danger">
+        Valid email is required.
       </div>
+    </div>
+
+    <div class="col-md-6 mb-2">
+      <label for="mobileNumber">Mobile Number <span class="text-danger">*</span></label>
+      <input id="mobileNumber" formControlName="mobileNumber" class="form-control" />
+      <div *ngIf="bookingForm.get('mobileNumber')?.invalid && bookingForm.get('mobileNumber')?.touched" class="text-danger">
+        Valid mobile number is required.
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-2">
+      <label for="age">Age <span class="text-danger">*</span></label>
+      <input id="age" formControlName="age" type="number" class="form-control" />
+      <div *ngIf="bookingForm.get('age')?.invalid && bookingForm.get('age')?.touched" class="text-danger">
+        Age is required and must be a positive number.
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-2">
+      <label for="fromStation">From Station <span class="text-danger">*</span></label>
+      <select id="fromStation" formControlName="fromStation" class="form-control">
+        <option *ngFor="let station of stations" [value]="station">{{ station }}</option>
+      </select>
+      <div *ngIf="bookingForm.get('fromStation')?.invalid && bookingForm.get('fromStation')?.touched" class="text-danger">
+        From Station is required.
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-2">
+      <label for="toStation">To Station <span class="text-danger">*</span></label>
+      <select id="toStation" formControlName="toStation" class="form-control">
+        <option *ngFor="let station of stations" [value]="station">{{ station }}</option>
+      </select>
+      <div *ngIf="bookingForm.get('toStation')?.invalid && bookingForm.get('toStation')?.touched" class="text-danger">
+        To Station is required.
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-2">
+      <label for="seatNumber">Seat Number <span class="text-danger">*</span></label>
+      <input id="seatNumber" formControlName="seatNumber" type="number" class="form-control" readonly />
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <label for="passengerType">Passenger Type <span class="text-danger">*</span></label>
+      <select id="passengerType" formControlName="passengerType" class="form-control">
+        <option value="none">None</option>
+        <option value="child">Child</option>
+        <option value="adult">Adult</option>
+      </select>
+      <div *ngIf="bookingForm.get('passengerType')?.invalid && bookingForm.get('passengerType')?.touched" class="text-danger">
+        Passenger Type is required.
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <div class="form-check d-flex p-1">
+        <label for="isSingleLady" class="form-check-label m-1">Single Lady</label>
+        <input id="isSingleLady" type="checkbox" formControlName="isSingleLady" class="form-check-input m-1 border-2" />
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-section row mt-4">
+    <h2 class="col-12 mb-4">Payment Details</h2>
+
+    <div class=" mb-2">
+      <label for="fare" class="fs-5">Fare <span class="text-success ">{{fare}}</span></label>
+    </div>
+
+    <div class="col-md-6 mb-2">
+      <label>Payment Type <span class="text-danger">*</span></label>
+      <select formControlName="paymentType" class="form-control">
+        <option *ngFor="let type of paymentTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <div class="col-md-6 mb-2" formGroupName="paymentDetails">
+      <div *ngIf="bookingForm.get('paymentType')?.value === 'card'">
+        <label for="cardNumber">Card Number</label>
+        <input id="cardNumber" formControlName="cardNumber" class="form-control" />
+        <div *ngIf="bookingForm.get('paymentDetails.cardNumber')?.invalid && bookingForm.get('paymentDetails.cardNumber')?.touched" class="text-danger">
+          Card number is required.
+        </div>
+      </div>
+
+      <div *ngIf="bookingForm.get('paymentType')?.value === 'upi'">
+        <label for="upiId">UPI ID</label>
+        <input id="upiId" formControlName="upiId" class="form-control" />
+        <div *ngIf="bookingForm.get('paymentDetails.upiId')?.invalid && bookingForm.get('paymentDetails.upiId')?.touched" class="text-danger">
+          UPI ID is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mb-2">
+      <label for="totalFare" class="fs-5">Total Fare <span class="text-success">{{totalFare}}</span></label>
     </div>
   </div>
 
-  <button type="submit">Book Now</button>
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary btn-lg" >Book Now</button>
+  </div>
 </form>

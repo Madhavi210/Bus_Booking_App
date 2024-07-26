@@ -13,6 +13,7 @@ export class AddBusComponent implements OnInit {
   busForm: FormGroup;
   isEdit: boolean = false;
   busId: string | null = null;
+  seatingCapacities: number[] = [20, 32, 40, 56, 60];
 
   constructor(
     private fb: FormBuilder,
@@ -23,12 +24,8 @@ export class AddBusComponent implements OnInit {
     this.busForm = this.fb.group({
       busNumber: ['', Validators.required],
       seatingCapacity: [30, [Validators.required, Validators.min(1)]],
-      amenities: this.fb.array([
-        this.fb.control('WiFi'),
-        this.fb.control('Air Conditioning'),
-        this.fb.control('Reclining Seats')
-      ]),
-      routeName: ['', Validators.required],  // Updated to routeName
+      amenities: this.fb.array([this.fb.control('')]),
+      routeName: ['', Validators.required],
       stops: this.fb.array([]),
       busType: ['', Validators.required],
       seatsLayout: ['2x2', Validators.required],
@@ -59,9 +56,7 @@ export class AddBusComponent implements OnInit {
         this.busForm.patchValue({
           busNumber: bus.busNumber,
           seatingCapacity: bus.seatingCapacity,
-          // routeName: bus.routeName,  // Correctly set routeName
           busType: bus.busType,
-          // seatsLayout: bus.seatsLayout,
           rows: bus.rows,
           columns: bus.columns,
           date: bus.date
@@ -72,8 +67,14 @@ export class AddBusComponent implements OnInit {
         bus.stops.forEach(stop => {
           stopsArray.push(this.fb.group({
             station: [stop.station, Validators.required],
-            departureTime: [stop.departureTime, Validators.required]  // Changed to departureTime
+            departureTime: [stop.departureTime, Validators.required]
           }));
+        });
+
+        const amenitiesArray = this.busForm.get('amenities') as FormArray;
+        amenitiesArray.clear();
+        bus.amenities.forEach(amenity => {
+          amenitiesArray.push(this.fb.control(amenity));
         });
       });
     }
@@ -93,6 +94,10 @@ export class AddBusComponent implements OnInit {
 
   removeStop(index: number) {
     this.stops.removeAt(index);
+  }
+
+  addAmenity() {
+    this.amenities.push(this.fb.control(''));
   }
 
   onSubmit(): void {

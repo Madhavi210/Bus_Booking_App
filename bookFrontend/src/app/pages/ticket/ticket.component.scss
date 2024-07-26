@@ -1,0 +1,35 @@
+.ticket-container {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+h2, h4 {
+  margin: 0;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+strong {
+  color: #007bff;
+}
+
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+}

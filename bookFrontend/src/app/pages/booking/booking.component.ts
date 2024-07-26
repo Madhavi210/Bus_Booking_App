@@ -6,6 +6,7 @@ import { BookingService } from 'src/app/core/services/booking/booking.service';
 import { RouteService } from 'src/app/core/services/route/route.service';
 import { IRoute } from 'src/app/core/interface/route.interface';
 import Swal from 'sweetalert2';
+import { TicketService } from 'src/app/core/services/ticket/ticket.service';
 
 @Component({
   selector: 'app-booking',
@@ -14,8 +15,8 @@ import Swal from 'sweetalert2';
 })
 export class BookingFormComponent implements OnInit {
   bookingForm!: FormGroup;
-  paymentTypes = ['cash', 'card', 'upi'];
-  farePerKm = 10; // Example fare per km, adjust as needed
+  paymentTypes = ['card', 'upi'];
+  farePerKm = 10; 
   routeId!: string;
   busId!: string;
   seatNumber!: number;
@@ -23,6 +24,9 @@ export class BookingFormComponent implements OnInit {
   date!: Date;
   bookingData!: any;
   fare = 0;
+  totalFare = 0 ;
+  stations: string[] = [];
+  bookingId!: string;
 
   constructor(
     private fb: FormBuilder, 
@@ -30,7 +34,8 @@ export class BookingFormComponent implements OnInit {
     private busService: BusService,
     private bookingService: BookingService,
     private routeService: RouteService,
-    private router: Router
+    private router: Router,
+    private ticketService: TicketService,
   ) {}
 
   ngOnInit(): void {
@@ -54,13 +59,13 @@ export class BookingFormComponent implements OnInit {
       toStation: ['', [Validators.required]],
       seatNumber: [this.seatNumber, [Validators.required]],
       fare: [{ value: '', disabled: true }],
-      paymentType: ['cash', [Validators.required]],
+      paymentType: ['card', [Validators.required]],
       paymentDetails: this.fb.group({
         cardNumber: [''],
         upiId: ['']
       }),
       isSingleLady: [false],
-      passengerType: ['']
+      passengerType: ['none', [Validators.required]]
     });
 
     this.bookingForm.get('paymentType')?.valueChanges.subscribe(value => {
@@ -82,6 +87,7 @@ export class BookingFormComponent implements OnInit {
   fetchRouteDetails(routeId: string): void {
     this.routeService.getRouteById(routeId).subscribe(route => {
       this.routes = route;
+      this.stations = route.stations.map(station => station.name);
     });
   }
 
@@ -101,9 +107,9 @@ export class BookingFormComponent implements OnInit {
     }
 
     for (let i = startIndex; i < endIndex; i++) {
-      totalDistance += this.routes.stations[i].distanceFromPrevious;
+      totalDistance += this.routes.stations[endIndex].distanceFromPrevious;
     }
-
+    
     return totalDistance;
   }
 
@@ -114,6 +120,7 @@ export class BookingFormComponent implements OnInit {
     if (fromStation && toStation) {
       const distance = this.calculateDistance(fromStation, toStation);
       this.fare = distance * this.farePerKm;
+      this.totalFare = this.fare + 26; 
       this.bookingForm.get('fare')?.setValue(this.fare);
     }
   }
@@ -156,16 +163,47 @@ export class BookingFormComponent implements OnInit {
           upiId: formData.paymentDetails.upiId
         },
         isSingleLady: formData.isSingleLady,
-        passengerType: 'adult'
+        passengerType: formData.passengerType
       };
 
       // Submit form data to the server
       this.bookingService.createBooking(this.bookingData).subscribe(
         (response: any) => {
           console.log(response);
+          this.bookingId = response._id;
+          console.log(this.bookingId, response );
+
+          const ticketData = {
+            ...this.bookingData,
+            bookingId: this.bookingId,
+            pnrNumber: this.generatePnrNumber() // Generate PNR Number here
+          };
+
+          this.ticketService.createTicket(ticketData).subscribe(
+            (ticketResponse) => {
+              console.log('Ticket created:', ticketResponse);
+              
+              Swal.fire({
+                title: 'Success',
+                text: 'Booking and ticket creation successful!',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'View Ticket',
+                cancelButtonText: 'Close'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.router.navigate(['home/ticket', this.bookingId]);
+                } else {
+                  this.router.navigate(['/home/busData', this.busId]);
+                }
+              });
+            },
+            (error) => {
+              console.error('Error creating ticket:', error);
+              Swal.fire('Error', 'Failed to create ticket!', 'error');
+            }
+          );
           
-          Swal.fire('Success', 'Booking successful!', 'success');
-          this.router.navigate(['/booking-success']);
         },
         (error) => {
           console.error(error);
@@ -177,9 +215,17 @@ export class BookingFormComponent implements OnInit {
     }
   }
 
-  calculateTotalFare(): number {
-    const totalFare = this.bookingForm.get('fare')?.value || 0;
-    return totalFare + 26; // Adding fixed additional fare of 26
+  generatePnrNumber(): string {
+    const randomNumber = Math.floor(Math.random() * 1000000);
+    const pnrNumber = `G${randomNumber.toString().padStart(6, '0')}`;
+    return pnrNumber;
   }
+
+  calculateTotalFare(): void {
+    const tFare = this.bookingForm.get('fare')?.value || 0;
+     this.totalFare = this.fare + 26; // Adding fixed additional fare of 26
+  }
+
+  
 }
 

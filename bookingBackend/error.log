@@ -4,3 +4,9 @@
 2024-07-26T06:19:41.957Z [31merror[39m: API post/api/bus hit with error Invalid seat layout
 2024-07-26T06:28:07.925Z [31merror[39m: API post/api/bus hit with error Invalid seat layout
 2024-07-26T06:30:19.221Z [31merror[39m: API post/api/bus hit with error Invalid seat layout
+2024-07-26T08:53:15.516Z [31merror[39m: API post/api/bus hit with error Invalid stop station name
+2024-07-26T11:09:16.960Z [31merror[39m: API post/api/book hit with error Seat already booked
+2024-07-26T11:10:59.453Z [31merror[39m: API post/api/book hit with error Seat already booked
+2024-07-26T11:11:14.720Z [31merror[39m: API post/api/book hit with error Seat already booked
+2024-07-26T11:13:57.611Z [31merror[39m: API post/api/book hit with error Seat already booked
+2024-07-26T11:49:17.536Z [31merror[39m: API post/api/book hit with error Seat already booked

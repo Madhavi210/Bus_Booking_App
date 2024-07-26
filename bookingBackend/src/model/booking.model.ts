@@ -14,20 +14,24 @@ const bookingSchema = new Schema<IBooking>(
     userName: {
       type: String,
       required: true,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
+      trim: true,
       match: [/.+@.+\..+/, 'Please enter a valid email address.']
     },
     mobileNumber: {
       type: String,
       required: true,
+      trim: true,
       match: [/^\d{10}$/, 'Please enter a valid 10-digit mobile number.']
     },
     age: {
       type: Number,
       required: true,
+      trim: true,
       min: [1, 'Age must be greater than 0']
     },
     bus: { type: Schema.Types.ObjectId, ref: Bus, required: true },
@@ -39,10 +43,12 @@ const bookingSchema = new Schema<IBooking>(
     fromStation: {
       type: String,
       required: true,
+      trim: true,
     },
     toStation: {
       type: String,
       required: true,
+      trim: true,
     },
     date: {
       type: Date,
@@ -51,11 +57,12 @@ const bookingSchema = new Schema<IBooking>(
     seatNumber: {
       type: Number,
       required: true,
+      trim: true,
     },
     fare: { type: Number, required: true },
     paymentType: {
       type: String,
-      enum: ["cash", "card", "upi"],
+      enum: [ "card", "upi"],
       required: true,
     },
     paymentDetails: {
@@ -66,7 +73,7 @@ const bookingSchema = new Schema<IBooking>(
     isSingleLady: { type: Boolean, default: false },
     passengerType: {
       type: String,
-      enum: ['child', 'adult'],
+      enum: ['child', 'adult', 'none'],
       required: false,
     },
     createdAt: { type: Date, default: Date.now },

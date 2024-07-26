@@ -17,12 +17,14 @@ const busSchema = new Schema<IBus>(
       type: String,
       unique: true,
       required: true,
+      trim: true,
     },
     seatingCapacity: {
       type: Number,
       required: true,
     },
-    amenities: [{ type: String }],
+    amenities: [{ type: String , trim: true,
+    }],
     route: {
       type: Schema.Types.ObjectId,
       ref: Route,
@@ -33,6 +35,7 @@ const busSchema = new Schema<IBus>(
         station: {
           type: String,
           required: true,
+          trim: true,
         },
         departureTime: { type: Date, required: true },
       },

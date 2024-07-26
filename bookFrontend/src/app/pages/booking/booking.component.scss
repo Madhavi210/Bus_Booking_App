@@ -1,19 +1,35 @@
-/* booking-form.component.scss */
 form {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.form-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #007bff;
 }
 
 div {
-  margin-bottom: 15px;
+  // margin-bottom: 3px;
 }
 
 label {
   display: block;
   margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
 }
 
 input,
@@ -22,6 +38,7 @@ select {
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 button {
@@ -31,6 +48,7 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width: 100%;
 }
 
 button[disabled] {
@@ -40,5 +58,9 @@ button[disabled] {
 
 div > div {
   color: red;
-  font-size: 12px;
+  font-size: 14px;
+}
+
+.form-check-input{
+  width: 7px;
 }
