@@ -1,0 +1,6 @@
+2024-07-26T05:27:23.351Z [31merror[39m: API post/api/book hit with error Booking validation failed: passengerType: `` is not a valid enum value for path `passengerType`.
+2024-07-26T06:16:21.752Z [31merror[39m: API post/api/bus hit with error Invalid seat layout
+2024-07-26T06:19:23.477Z [31merror[39m: API post/api/bus hit with error Invalid stop station name
+2024-07-26T06:19:41.957Z [31merror[39m: API post/api/bus hit with error Invalid seat layout
+2024-07-26T06:28:07.925Z [31merror[39m: API post/api/bus hit with error Invalid seat layout
+2024-07-26T06:30:19.221Z [31merror[39m: API post/api/bus hit with error Invalid seat layout

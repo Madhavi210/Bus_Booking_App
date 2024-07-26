@@ -12,7 +12,7 @@ export class BusService {
 
   constructor(private http: HttpClient) {}
 
-  createBus(busData: any): Observable<IBus> {
+  createBus(busData: any): Observable<any> {
     return this.http.post<IBus>(this.apiUrl, busData)
   }
 

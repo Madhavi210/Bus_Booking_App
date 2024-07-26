@@ -4,7 +4,7 @@ import StatusConstants from '../constant/statusConstant';
 
 class CouponService {
   public static async createCoupon(couponData: any): Promise<any> {
-    const { code, discountPercentage, validFrom, validTo } = couponData;
+    const { code, discountPercentage, validFrom, validTo, usageLimit = 0, usageCount = 0 } = couponData;
 
     const existingCoupon = await Coupon.findOne({ code }).exec();
     if (existingCoupon) {
@@ -14,7 +14,7 @@ class CouponService {
       );
     }
 
-    const newCoupon = new Coupon({ code, discountPercentage, validFrom, validTo });
+    const newCoupon = new Coupon({ code, discountPercentage, validFrom, validTo, usageLimit, usageCount });
     await newCoupon.save();
     return newCoupon;
   }

@@ -56,9 +56,8 @@ export default class RouteService {
         StatusConstants.NOT_FOUND.httpStatusCode
       );
     }
+
     const updatedRoute = await Route.findByIdAndUpdate(id, updates, { new: true, session }).exec();
     return updatedRoute ? updatedRoute.toObject() : null;
   }
-
-
 }

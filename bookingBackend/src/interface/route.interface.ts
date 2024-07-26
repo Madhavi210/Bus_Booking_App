@@ -4,6 +4,7 @@ export interface IStation {
   name: string;
   distanceFromPrevious: number;
   // timing: Date;
+  stationNumber:number;
 }
 
 export default interface IRoute extends Document {

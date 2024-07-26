@@ -5,6 +5,7 @@ import StatusConstants from "../constant/statusConstant";
 import mongoose from "mongoose";
 import { Bus } from "../model/bus.model";
 import { logger } from "../utils/logger";
+import { log } from "winston";
 export default class BusController {
   public static async createBus(
     req: Request,
@@ -27,6 +28,7 @@ export default class BusController {
     } catch (error) {
       await session.abortTransaction();
       session.endSession();
+      logger.error('API post/api/bus hit with error', error);
       next(error);
     }
   }
@@ -39,6 +41,7 @@ export default class BusController {
     const busId = req.params.id;
     try {
       const bus = await BusService.getBusById(busId);
+      console.log(bus)
       if (!bus) {
         throw new AppError(
           StatusConstants.NOT_FOUND.body.message,
@@ -47,7 +50,7 @@ export default class BusController {
       }
       res.status(StatusConstants.OK.httpStatusCode).json({
         status: 'success',
-        data: bus,
+        bus,
       });
     } catch (error) {
       next(error);

@@ -1,5 +1,5 @@
 export interface ICoupon {
-  _id: string;
+    _id?: string;
     code: string;
     discountPercentage: number;
     validFrom: Date;

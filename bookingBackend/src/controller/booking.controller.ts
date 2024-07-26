@@ -28,16 +28,15 @@ export default class BookingController {
       passengerType
     } = req.body;
 
-    if (!userName || !email || !mobileNumber || !age || !busId || !routeId) {
-      throw res.status(StatusConstants.BAD_REQUEST.httpStatusCode).json({
-        message: "userName, email, mobileNumber, age, busId, and routeId are required fields.",
-      });
-    }
-
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
+      if (!userName || !email || !mobileNumber || !age || !busId || !routeId) {
+         res.status(400).json({ message: 'Missing required fields: userName, email, mobileNumber, age, busId, and routeId are required' });
+         return;
+      }
+
       const newBooking = await BookingService.createBooking(
         userName,
         email,
@@ -55,14 +54,16 @@ export default class BookingController {
         session,
         passengerType,
       );
+      
       await session.commitTransaction();
-      session.endSession();
-      logger.info('API post/api/book hit successfully');
       res.status(StatusConstants.CREATED.httpStatusCode).json(newBooking);
+      logger.info('API post/api/book hit successfully');
     } catch (error) {
       await session.abortTransaction();
-      session.endSession();
+      logger.error('API post/api/book hit with error', error);
       next(error);
+    } finally {
+      session.endSession();
     }
   }
 

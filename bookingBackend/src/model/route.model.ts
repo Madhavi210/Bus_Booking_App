@@ -10,7 +10,10 @@ const stationSchema = new Schema<IStation>({
     type: Number,
     required: true,
   }, // Distance from the previous station
-
+  stationNumber: {
+    type: Number,
+    required: true,
+  }
 });
 
 const routeSchema = new Schema<IRoute>(
@@ -25,5 +28,14 @@ const routeSchema = new Schema<IRoute>(
   },
   { timestamps: true }
 );
+
+routeSchema.pre('save', function (next) {
+  if (this.isModified('stations')) {
+    this.stations.forEach((station, index) => {
+      station.stationNumber = index + 1; // Assign stationNumber starting from 1
+    });
+  }
+  next();
+});
 
 export const Route = model<IRoute>("Route", routeSchema);

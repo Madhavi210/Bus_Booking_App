@@ -61,4 +61,23 @@ table {
     display: inline-block;
     min-width: 50px;
   }
+    
+  .btn-primary {
+    background-color: #64a8f1;
+    border: none;
+    color: #fff;
+  }
   
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  .btn-danger {
+    background-color: rgba(253, 53, 96, 0.8);
+    color: white;
+    border: none;
+  }
+  .btn-danger:hover {
+    background-color: rgba(241, 11, 61, 0.8);
+    color: white;
+    border: none;
+  }

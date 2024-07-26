@@ -23,50 +23,40 @@ export class AddRouteComponent {
 
   ngOnInit(): void {
     this.createRouteForm = this.fb.group({
-      totalDistance: [0, [Validators.required, Validators.min(1)]],
-      stations: this.fb.array([
-        this.createStation()
-      ])
+      routeName: ['', Validators.required],
+      stations: this.fb.array([this.createStation()])
     });
+
     this.routeId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.isEdit = true
-    this.initializeForm();
-    console.log(this.isEdit);
+    this.isEdit = !!this.routeId;
     
     if (this.isEdit) {
       this.loadRouteData();
     }
   }
 
-  initializeForm(): void {
-    this.createRouteForm = this.fb.group({
-      totalDistance: [0, [Validators.required, Validators.min(1)]],
-      stations: this.fb.array([this.createStationGroup(), this.createStationGroup()]),
-      
-    });
-  }
-  createStationGroup(): FormGroup {
+  createStation(): FormGroup {
     return this.fb.group({
       name: ['', Validators.required],
       distanceFromPrevious: [0, [Validators.required, Validators.min(0)]],
-      timing: [null, Validators.required]
+      stationNumber: [1, Validators.required]  // Adding stationNumber
     });
   }
+
   loadRouteData(): void {
     if (this.routeId) {
       this.routeService.getRouteById(this.routeId).subscribe(route => {
         this.createRouteForm.patchValue({
-          // totalDistance: route.totalDistance
+          routeName: route.routeName
         });
-  
+
         const stationsArray = this.createRouteForm.get('stations') as FormArray;
         stationsArray.clear();
         route.stations.forEach(station => {
-          console.log('Patching station:', station); // Debug line
-          stationsArray.push(this.fb.group({
-            name: [station.name, Validators.required],
-            distanceFromPrevious: [station.distanceFromPrevious, [Validators.required, Validators.min(0)]],
-            // timing: [station., Validators.required]  
+          stationsArray.push(this.createStation().patchValue({
+            name: station.name,
+            distanceFromPrevious: station.distanceFromPrevious,
+            stationNumber: station.stationNumber
           }));
         });
       });
@@ -77,21 +67,11 @@ export class AddRouteComponent {
     return this.createRouteForm.get('stations') as FormArray;
   }
 
-  createStation(): FormGroup {
-    return this.fb.group({
-      name: ['', Validators.required],
-      distanceFromPrevious: [0, [Validators.required, Validators.min(0)]],
-      timing: ["", Validators.required]
-    });
-  }
-
   addStation(): void {
     this.stations.push(this.createStation());
   }
 
   removeStation(index: number): void {
-    console.log(index);
-    
     if (this.stations.length > 1) {
       this.stations.removeAt(index);
     } else {
@@ -103,7 +83,7 @@ export class AddRouteComponent {
     if (this.createRouteForm.valid) {
       const routeData = this.createRouteForm.value;
       if (this.isEdit && this.routeId) {
-        this.routeService.updateRoute(this.routeId!, routeData).subscribe({
+        this.routeService.updateRoute(this.routeId, routeData).subscribe({
           next: () => {
             Swal.fire('Success', 'Route updated successfully', 'success');
             this.router.navigate(['/admin/routeList']);

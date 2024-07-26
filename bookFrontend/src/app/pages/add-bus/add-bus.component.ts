@@ -1,9 +1,7 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BusService } from 'src/app/core/services/bus/bus.service';
-import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,7 +9,7 @@ import Swal from 'sweetalert2';
   templateUrl: './add-bus.component.html',
   styleUrls: ['./add-bus.component.scss']
 })
-export class AddBusComponent {
+export class AddBusComponent implements OnInit {
   busForm: FormGroup;
   isEdit: boolean = false;
   busId: string | null = null;
@@ -24,21 +22,23 @@ export class AddBusComponent {
   ) {
     this.busForm = this.fb.group({
       busNumber: ['', Validators.required],
-      seatingCapacity: [40, [Validators.required, Validators.min(1)]],
+      seatingCapacity: [30, [Validators.required, Validators.min(1)]],
       amenities: this.fb.array([
         this.fb.control('WiFi'),
-        this.fb.control('AC'),
-        this.fb.control('Charging Ports')
+        this.fb.control('Air Conditioning'),
+        this.fb.control('Reclining Seats')
       ]),
-      route: ['', Validators.required],
+      routeName: ['', Validators.required],  // Updated to routeName
       stops: this.fb.array([]),
-      totalTiming: [0, Validators.required],
-      // Seats are set directly, not included in the form
+      busType: ['', Validators.required],
+      seatsLayout: ['2x2', Validators.required],
+      rows: [0, [Validators.required, Validators.min(1)]],
+      columns: [0, [Validators.required, Validators.min(1)]],
+      date: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.addDefaultSeats(); // Initialize default seats but not in the form
     this.busId = this.activatedRoute.snapshot.paramMap.get('id');
     this.isEdit = !!this.busId;
     if (this.isEdit) {
@@ -49,7 +49,7 @@ export class AddBusComponent {
   createStopGroup(): FormGroup {
     return this.fb.group({
       station: ['', Validators.required],
-      timing: ['', Validators.required]
+      departureTime: ['', Validators.required]  // Changed to departureTime
     });
   }
 
@@ -59,8 +59,12 @@ export class AddBusComponent {
         this.busForm.patchValue({
           busNumber: bus.busNumber,
           seatingCapacity: bus.seatingCapacity,
-          route: bus.route,
-          totalTiming: bus.date
+          // routeName: bus.routeName,  // Correctly set routeName
+          busType: bus.busType,
+          // seatsLayout: bus.seatsLayout,
+          rows: bus.rows,
+          columns: bus.columns,
+          date: bus.date
         });
 
         const stopsArray = this.busForm.get('stops') as FormArray;
@@ -68,7 +72,7 @@ export class AddBusComponent {
         bus.stops.forEach(stop => {
           stopsArray.push(this.fb.group({
             station: [stop.station, Validators.required],
-            timing: [stop.departureTime, Validators.required]
+            departureTime: [stop.departureTime, Validators.required]  // Changed to departureTime
           }));
         });
       });
@@ -84,25 +88,11 @@ export class AddBusComponent {
   }
 
   addStop() {
-    this.stops.push(this.fb.group({
-      station: ['', Validators.required],
-      timing: ['', Validators.required]
-    }));
+    this.stops.push(this.createStopGroup());
   }
 
   removeStop(index: number) {
     this.stops.removeAt(index);
-  }
-
-  addDefaultSeats() {
-    // Default seat initialization for backend
-    const seats = Array.from({ length: 40 }, (_, i) => ({
-      seatNumber: i + 1,
-      isBooked: false
-    }));
-
-    // Send seats data to backend or use it as needed
-    console.log(seats);
   }
 
   onSubmit(): void {
@@ -121,7 +111,9 @@ export class AddBusComponent {
         });
       } else {
         this.busService.createBus(busData).subscribe({
-          next: () => {
+          next: (response) => {
+            console.log(response);
+            
             Swal.fire('Success', 'Bus created successfully', 'success');
             this.router.navigate(['/admin/busList']);
           },

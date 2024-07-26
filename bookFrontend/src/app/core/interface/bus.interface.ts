@@ -1,7 +1,7 @@
 export interface ISeat {
   seatNumber: number;
   isBooked: boolean;
-  booking?: string; // booking ID reference
+  bookingDate?: Date; // booking ID reference
   isSingleLady: boolean;
 }
 

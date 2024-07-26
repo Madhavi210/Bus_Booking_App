@@ -5,6 +5,7 @@ import AppError from '../utils/errorHandler';
 import StatusConstants from '../constant/statusConstant';
 import { StatusCode } from '../enum/statusCode';
 import { logger } from '../utils/logger';
+
 export default class RouteController {
   public static async createRoute(
     req: Request,
@@ -84,7 +85,6 @@ export default class RouteController {
     }
   }
 
-
   public static async updateRoute(
     req: Request,
     res: Response,
@@ -106,12 +106,11 @@ export default class RouteController {
       await session.commitTransaction();
       session.endSession();
       logger.info('API put/api/route/:id hit successfully');
-      res.status(StatusConstants.OK.httpStatusCode).json(updatedRoute);
+      res.status(StatusCode.OK).json(updatedRoute);
     } catch (error) {
       await session.abortTransaction();
       session.endSession();
       next(error);
     }
   }
-
 }

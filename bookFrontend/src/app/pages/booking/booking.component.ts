@@ -21,6 +21,8 @@ export class BookingFormComponent implements OnInit {
   seatNumber!: number;
   routes!: IRoute;
   date!: Date;
+  bookingData!: any;
+  fare = 0;
 
   constructor(
     private fb: FormBuilder, 
@@ -47,7 +49,7 @@ export class BookingFormComponent implements OnInit {
       mobileNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       age: ['', [Validators.required, Validators.min(0)]],
       busId: [this.busId],
-      routeId: [this.routeId],
+      routeId: [''],
       fromStation: ['', [Validators.required]],
       toStation: ['', [Validators.required]],
       seatNumber: [this.seatNumber, [Validators.required]],
@@ -65,18 +67,17 @@ export class BookingFormComponent implements OnInit {
       this.onPaymentTypeChange(value);
     });
 
-    // Calculate fare on form changes
     this.bookingForm.get('fromStation')?.valueChanges.subscribe(() => this.calculateFare());
     this.bookingForm.get('toStation')?.valueChanges.subscribe(() => this.calculateFare());
   }
 
   fetchRouteId(): void {
     this.busService.getBusById(this.busId).subscribe((data: any) => {
-      this.routeId = data.data.route;
-      this.fetchRouteDetails(this.routeId); // Fetch route details after setting routeId
+      this.routeId = data.bus.route;
+      this.bookingForm.patchValue({ routeId: this.routeId });
+      this.fetchRouteDetails(this.routeId);
     });
   }
-
 
   fetchRouteDetails(routeId: string): void {
     this.routeService.getRouteById(routeId).subscribe(route => {
@@ -102,7 +103,7 @@ export class BookingFormComponent implements OnInit {
     for (let i = startIndex; i < endIndex; i++) {
       totalDistance += this.routes.stations[i].distanceFromPrevious;
     }
-    
+
     return totalDistance;
   }
 
@@ -112,8 +113,8 @@ export class BookingFormComponent implements OnInit {
 
     if (fromStation && toStation) {
       const distance = this.calculateDistance(fromStation, toStation);
-      const fare = distance * this.farePerKm;
-      this.bookingForm.get('fare')?.setValue(fare);
+      this.fare = distance * this.farePerKm;
+      this.bookingForm.get('fare')?.setValue(this.fare);
     }
   }
 
@@ -134,22 +135,40 @@ export class BookingFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.bookingForm.value);
-    
     if (this.bookingForm.valid) {
-      const formData = this.bookingForm.value;
-      formData.totalFare = this.calculateTotalFare();
-      console.log(formData);
-      
+      const formData = this.bookingForm.getRawValue();
+      const totalFare = this.calculateTotalFare();
+
+      this.bookingData = {
+        userName: formData.userName,
+        email: formData.email,
+        mobileNumber: formData.mobileNumber,
+        age: formData.age,
+        busId: this.busId,
+        routeId: this.routeId,
+        fromStation: formData.fromStation,
+        toStation: formData.toStation,
+        seatNumber: formData.seatNumber,
+        fare: this.fare,
+        paymentType: formData.paymentType,
+        paymentDetails: {
+          cardNumber: formData.paymentDetails.cardNumber,
+          upiId: formData.paymentDetails.upiId
+        },
+        isSingleLady: formData.isSingleLady,
+        passengerType: 'adult'
+      };
+
       // Submit form data to the server
-      this.bookingService.createBooking(formData).subscribe(
+      this.bookingService.createBooking(this.bookingData).subscribe(
         (response: any) => {
-          console.log('Booking successful:', response);
+          console.log(response);
+          
           Swal.fire('Success', 'Booking successful!', 'success');
-          this.router.navigate(['/booking-success']); // Navigate to a success page
+          this.router.navigate(['/booking-success']);
         },
         (error) => {
-          console.error('Booking failed:', error);
+          console.error(error);
           Swal.fire('Error', 'Booking failed!', 'error');
         }
       );
@@ -159,7 +178,8 @@ export class BookingFormComponent implements OnInit {
   }
 
   calculateTotalFare(): number {
-    const fare = this.bookingForm.get('fare')?.value || 0;
-    return fare + 26; // Adding fixed additional fare of 26
+    const totalFare = this.bookingForm.get('fare')?.value || 0;
+    return totalFare + 26; // Adding fixed additional fare of 26
   }
 }
+

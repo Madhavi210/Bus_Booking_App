@@ -33,7 +33,7 @@ export class BusDataComponent {
   fetchBusDetails(): void {
     this.busService.getBusById(this.busId).subscribe(
       (data: any) => {
-        this.bus = data.data;
+        this.bus = data.bus;
         const totalSeats = this.bus.seatingCapacity;
         const seatsPerRow = this.columns.length;
         this.rows = Array(Math.ceil(totalSeats / seatsPerRow)).fill(0).map((_, i) => i);

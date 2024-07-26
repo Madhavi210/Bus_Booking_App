@@ -1,5 +1,11 @@
 <!-- src/app/coupon/coupon.component.html -->
-
+<div class="m-3 d-flex justify-content-between">
+  <h3 class="">Coupons</h3>
+  <div>
+    <button type="button" class="btn btn-secondary m-1" (click)="goBack()">Back</button>
+    <button type="button" class="btn btn-secondary m-1" routerLink="/admin/addbus"> Add coupon</button>
+  </div>
+</div>
 <div class="m-5">
   <table >
     <thead>
@@ -8,6 +14,9 @@
         <th>Discount</th>
         <th>Valid From</th>
         <th>Valid To</th>
+        <th>Usage Limit</th>
+        <th>Usage Count</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -18,13 +27,20 @@
             {{ coupon.discountPercentage }}%
           </ng-container>
           <ng-template #fixedAmount>
-            {{ coupon.discountAmount | currency }}
+            {{ coupon.discountPercentage | currency:'INR' }}
           </ng-template>
         </td>
         <td>{{ coupon.validFrom | date }}</td>
         <td>{{ coupon.validTo | date }}</td>
+        <td>{{ coupon.usageLimit }}</td>
+        <td>{{ coupon.usageCount  }}</td>
+        <td>
+          <button class="btn btn-primary m-1" type="button" ><i class="fas fa-edit"></i></button>
+          <button class="btn btn-danger m-1" type="button" (click)="deleteCoupon(coupon._id!)"><i class="fas fa-trash"></i></button>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
   
+

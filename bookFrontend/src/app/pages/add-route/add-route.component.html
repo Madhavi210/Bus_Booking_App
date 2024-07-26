@@ -1,69 +1,67 @@
 <section>
-    <div class="container-fluid p-0 m-0">
-      <div class="row sec1">
-        <div class="d-flex align-items-center justify-content-center">
-          <div class="form-container rounded-lg shadow-lg p-4">
-            <h4 class="mb-4 text-center">
-              <i class="fas fa-route p-2 fs-1"></i><br>
-              <span>Route</span>
-            </h4>
-  
-            <!-- Route Creation Form -->
-            <form [formGroup]="createRouteForm" (ngSubmit)="onSubmit()">
-              <div class="form-group">
-                <label class="mb-2" for="totalDistance">Total Distance (km) <span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="totalDistance" formControlName="totalDistance" placeholder="Enter total distance">
-                <div *ngIf="createRouteForm.get('totalDistance')?.errors && (createRouteForm.get('totalDistance')?.dirty || createRouteForm.get('totalDistance')?.touched)" class="text-danger">
-                  <div *ngIf="createRouteForm.get('totalDistance')?.hasError('required')">Total distance is required.</div>
-                  <div *ngIf="createRouteForm.get('totalDistance')?.hasError('min')">Distance must be at least 1 km.</div>
-                </div>
+  <div class="container-fluid p-0 m-0">
+    <div class="row sec1">
+      <div class="d-flex align-items-center justify-content-center">
+        <div class="form-container rounded-lg shadow-lg p-4">
+          <h4 class="mb-4 text-center">
+            <i class="fas fa-route p-2 fs-1"></i><br>
+            <span>Route</span>
+          </h4>
+
+          <!-- Route Creation Form -->
+          <form [formGroup]="createRouteForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label class="mb-2" for="routeName">Route Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="routeName" formControlName="routeName" placeholder="Enter route name">
+              <div *ngIf="createRouteForm.get('routeName')?.invalid && (createRouteForm.get('routeName')?.dirty || createRouteForm.get('routeName')?.touched)" class="text-danger">
+                <div *ngIf="createRouteForm.get('routeName')?.hasError('required')">Route name is required.</div>
               </div>
-  
-              <div formArrayName="stations">
-                <div *ngFor="let station of stations.controls; let i = index" [formGroupName]="i" class="form-group">
-                  <div class="row">
-                    <div class="col-md-4">
-                      <label class="mb-2" for="stationName{{i}}">Station {{i + 1}} Name <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" [id]="'stationName' + i" formControlName="name" placeholder="Enter station name">
-                      <div *ngIf="station.get('name')?.errors && (station.get('name')?.dirty || station.get('name')?.touched)" class="text-danger">
-                        <div *ngIf="station.get('name')?.hasError('required')">Station name is required.</div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <label class="mb-2" for="distanceFromPrevious{{i}}">Distance From Previous (km) <span class="text-danger">*</span></label>
-                      <input type="number" class="form-control" [id]="'distanceFromPrevious' + i" formControlName="distanceFromPrevious" placeholder="Enter distance from previous station">
-                      <div *ngIf="station.get('distanceFromPrevious')?.errors && (station.get('distanceFromPrevious')?.dirty || station.get('distanceFromPrevious')?.touched)" class="text-danger">
-                        <div *ngIf="station.get('distanceFromPrevious')?.hasError('required')">Distance from previous station is required.</div>
-                        <div *ngIf="station.get('distanceFromPrevious')?.hasError('min')">Distance must be at least 0 km.</div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <label class="mb-2" for="timing{{i}}">Station Timing <span class="text-danger">*</span></label>
-                      <input type="datetime-local" class="form-control" [id]="'timing' + i" formControlName="timing">
-                      <div *ngIf="station.get('timing')?.errors && (station.get('timing')?.dirty || station.get('timing')?.touched)" class="text-danger">
-                        <div *ngIf="station.get('timing')?.hasError('required')">Timing is required.</div>
-                      </div>
+            </div>
+
+            <div formArrayName="stations">
+              <div *ngFor="let station of stations.controls; let i = index" [formGroupName]="i" class="form-group">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="mb-2" for="stationName{{i}}">Station {{i + 1}} Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" [id]="'stationName' + i" formControlName="name" placeholder="Enter station name">
+                    <div *ngIf="station.get('name')?.invalid && (station.get('name')?.dirty || station.get('name')?.touched)" class="text-danger">
+                      <div *ngIf="station.get('name')?.hasError('required')">Station name is required.</div>
                     </div>
                   </div>
-                  <div class="mt-2" *ngIf="i > 1">
-                    <button type="button" class="btn btn-danger" (click)="removeStation(i)">Delete Station</button>
+                  <div class="col-md-3">
+                    <label class="mb-2" for="distanceFromPrevious{{i}}">Distance From Previous (km) <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" [id]="'distanceFromPrevious' + i" formControlName="distanceFromPrevious" placeholder="Enter distance from previous station">
+                    <div *ngIf="station.get('distanceFromPrevious')?.invalid && (station.get('distanceFromPrevious')?.dirty || station.get('distanceFromPrevious')?.touched)" class="text-danger">
+                      <div *ngIf="station.get('distanceFromPrevious')?.hasError('required')">Distance from previous station is required.</div>
+                      <div *ngIf="station.get('distanceFromPrevious')?.hasError('min')">Distance must be at least 0 km.</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="mb-2" for="stationNumber{{i}}">Station Number <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" [id]="'stationNumber' + i" formControlName="stationNumber" placeholder="Enter station number">
+                    <div *ngIf="station.get('stationNumber')?.invalid && (station.get('stationNumber')?.dirty || station.get('stationNumber')?.touched)" class="text-danger">
+                      <div *ngIf="station.get('stationNumber')?.hasError('required')">Station number is required.</div>
+                    </div>
                   </div>
                 </div>
+                <div class="mt-2" *ngIf="stations.length > 1">
+                  <button type="button" class="btn btn-danger" (click)="removeStation(i)">Delete Station</button>
+                </div>
               </div>
-  
-              <div class="form-group mt-3">
-                <button type="button" class="btn btn-secondary" (click)="addStation()">Add Station</button>
-              </div>
-  
-              <div class="form-group d-flex mt-4">
-                <button type="submit" class="btn btn-primary m-2">Save</button>
-                <button type="reset" class="btn btn-secondary m-2">Reset</button>
-                <button type="button" class="btn btn-secondary m-2"routerLink="/admin/routeList" >Dashboard</button>
-              </div>
-            </form>
-          </div>
+            </div>
+
+            <div class="form-group mt-3">
+              <button type="button" class="btn btn-secondary" (click)="addStation()">Add Station</button>
+            </div>
+
+            <div class="form-group d-flex mt-4">
+              <button type="submit" class="btn btn-primary m-2">Save</button>
+              <button type="reset" class="btn btn-secondary m-2">Reset</button>
+              <button type="button" class="btn btn-secondary m-2" routerLink="/admin/routeList">Dashboard</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </section>
-  
+  </div>
+</section>
