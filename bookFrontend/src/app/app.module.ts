@@ -34,6 +34,8 @@ import { PaymentComponent } from './pages/payment/payment.component';
 // import { BookingFormComponentComponent } from './pages/booking-form-component/booking-form-component.component';
 import { FormsModule } from '@angular/forms';
 import { TicketComponent } from './pages/ticket/ticket.component'; // Import FormsModule
+import { NgxPrintModule } from 'ngx-print';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +70,7 @@ import { TicketComponent } from './pages/ticket/ticket.component'; // Import For
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    NgxPrintModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

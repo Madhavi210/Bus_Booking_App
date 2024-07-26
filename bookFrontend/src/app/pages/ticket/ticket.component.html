@@ -67,26 +67,81 @@
   </div>
 </div>
 
-<!-- <div class="container mt-4">
-  <div *ngIf="ticket" class="card">
-    <div class="card-header">
-      <h5 class="card-title">Ticket</h5>
+
+<!-- Print button -->
+<button ngxPrint [printSectionId]="'print-section'" class="btn btn-primary">
+  Print Ticket
+</button>
+
+<!-- Content to print -->
+<div id="print-section" class="ticket-container container mt-5 p-4 shadow-sm rounded">
+  <div class="text-center mb-4">
+    <i class="fa-solid fa-circle-check fs-1 text-success"></i>
+    <h2 class="text-success">Your Booking is Confirmed</h2>
+  </div>
+  <div class="row mb-3 d-flex justify-content-between p-3">
+    <div class="col-md-6">
+      <h3 class="text-muted">Bus Ticket</h3>
     </div>
-    <div class="card-body">
-      <h6 class="card-subtitle mb-2 text-muted">Booking ID: {{ ticket.bookingId }}</h6>
-      <p><strong>PNR Number:</strong> {{ ticket.pnrNumber }}</p>
-      <p><strong>Name:</strong> {{ ticket.userName }}</p>
-      <p><strong>Email:</strong> {{ ticket.email }}</p>
-      <p><strong>Mobile Number:</strong> {{ ticket.mobileNumber }}</p>
-      <p><strong>Age:</strong> {{ ticket.age }}</p>
-      <p><strong>From Station:</strong> {{ ticket.fromStation }}</p>
-      <p><strong>To Station:</strong> {{ ticket.toStation }}</p>
-      <p><strong>Seat Number:</strong> {{ ticket.seatNumber }}</p>
-      <p><strong>Single Lady:</strong> {{ ticket.isSingleLady ? 'Yes' : 'No' }}</p>
-      <p><strong>Passenger Type:</strong> {{ ticket.passengerType }}</p>
-      <p><strong>Fare:</strong> ₹{{ ticket.fare }}</p>
-      <p><strong>Payment Type:</strong> {{ ticket.paymentType }}</p>
-      <p><strong>Bus ID:</strong> {{ ticket.busId }}</p>
+    <div class="col-md-6">
+      <h4 class="text-muted">PNR: {{ pnrNumber }}</h4>
     </div>
   </div>
-</div> -->
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <strong>Name:</strong> {{ ticket.userName }}
+    </div>
+    <div class="col-md-6 mb-3">
+      <strong>Email:</strong> {{ ticket.email }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <strong>Mobile Number:</strong> {{ ticket.mobileNumber }}
+    </div>
+    <div class="col-md-6 mb-3">
+      <strong>Age:</strong> {{ ticket.age }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <strong>From Station:</strong> {{ ticket.fromStation }}
+    </div>
+    <div class="col-md-6 mb-3">
+      <strong>To Station:</strong> {{ ticket.toStation }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <strong>Seat Number:</strong> {{ ticket.seatNumber }}
+    </div>
+    <div class="col-md-6 mb-3">
+      <strong>Single Lady:</strong> {{ ticket.isSingleLady ? 'Yes' : 'No' }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <strong>Passenger Type:</strong> {{ ticket.passengerType }}
+    </div>
+    <div class="col-md-6 mb-3">
+      <strong>Fare:</strong> ₹{{ ticket.fare }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <strong>Payment Type:</strong> {{ ticket.paymentType }}
+    </div>
+    <div class="col-md-6 mb-3">
+      <strong>Payment Status:</strong> Success
+    </div>
+  </div>
+</div>
+
+
+
