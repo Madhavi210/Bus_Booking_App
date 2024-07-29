@@ -1,9 +1,9 @@
 <section>
-  <div class="container-fluid p-0 m-0">
+  <div class="container-fluid  m-0">
     <div class="row sec1">
       <div class="d-flex align-items-center justify-content-center">
         <div class="form-container rounded-lg shadow-lg p-4">
-          <h4 class="mb-4 text-center">
+          <h4 class="mb-2 text-center">
             <i class="fas fa-route p-2 fs-1"></i><br>
             <span>Route</span>
           </h4>
@@ -21,14 +21,14 @@
             <div formArrayName="stations">
               <div *ngFor="let station of stations.controls; let i = index" [formGroupName]="i" class="form-group">
                 <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <label class="mb-2" for="stationName{{i}}">Station {{i + 1}} Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" [id]="'stationName' + i" formControlName="name" placeholder="Enter station name">
                     <div *ngIf="station.get('name')?.invalid && (station.get('name')?.dirty || station.get('name')?.touched)" class="text-danger">
                       <div *ngIf="station.get('name')?.hasError('required')">Station name is required.</div>
                     </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <label class="mb-2" for="distanceFromPrevious{{i}}">Distance From Previous (km) <span class="text-danger">*</span></label>
                     <input type="number" class="form-control" [id]="'distanceFromPrevious' + i" formControlName="distanceFromPrevious" placeholder="Enter distance from previous station">
                     <div *ngIf="station.get('distanceFromPrevious')?.invalid && (station.get('distanceFromPrevious')?.dirty || station.get('distanceFromPrevious')?.touched)" class="text-danger">
@@ -43,9 +43,11 @@
                       <div *ngIf="station.get('stationNumber')?.hasError('required')">Station number is required.</div>
                     </div>
                   </div>
-                </div>
-                <div class="mt-2" *ngIf="stations.length > 1">
-                  <button type="button" class="btn btn-danger" (click)="removeStation(i)">Delete Station</button>
+                  <div class="col-md-1">
+                    <div class="mt-4" *ngIf=" i > 1">
+                      <button type="button" class="btn btn-danger" (click)="removeStation(i)"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -54,10 +56,10 @@
               <button type="button" class="btn btn-secondary" (click)="addStation()">Add Station</button>
             </div>
 
-            <div class="form-group d-flex mt-4">
-              <button type="submit" class="btn btn-primary m-2">Save</button>
-              <button type="reset" class="btn btn-secondary m-2">Reset</button>
-              <button type="button" class="btn btn-secondary m-2" routerLink="/admin/routeList">Dashboard</button>
+            <div class="form-group  d-flex mt-3">
+              <button type="submit" class="btn btn-primary m-1">Save</button>
+              <button type="reset" class="btn btn-secondary m-1">Reset</button>
+              <button type="button" class="btn btn-secondary m-1" routerLink="/admin/routeList">Dashboard</button>
             </div>
           </form>
         </div>

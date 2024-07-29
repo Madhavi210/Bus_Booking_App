@@ -47,7 +47,7 @@
     <div class="col-md-6 mb-2">
       <label for="toStation">To Station <span class="text-danger">*</span></label>
       <select id="toStation" formControlName="toStation" class="form-control">
-        <option *ngFor="let station of stations" [value]="station">{{ station }}</option>
+        <option *ngFor="let station of stations" [value]="station">{{ station }} </option>
       </select>
       <div *ngIf="bookingForm.get('toStation')?.invalid && bookingForm.get('toStation')?.touched" class="text-danger">
         To Station is required.
@@ -115,6 +115,12 @@
     <div class="col-12 mb-2">
       <label for="totalFare" class="fs-5">Total Fare <span class="text-success">{{totalFare}}</span></label>
     </div>
+
+    <!-- <div class="col-md-6 mb-2">
+      <label for="couponCode">Coupon Code</label>
+      <input id="couponCode" formControlName="couponCode" class="form-control" />
+      <button type="button" (click)="applyCoupon()" class="btn btn-secondary mt-2">Apply Coupon</button>
+    </div> -->
   </div>
 
   <div class="text-center">

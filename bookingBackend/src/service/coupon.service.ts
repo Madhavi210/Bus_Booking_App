@@ -60,6 +60,32 @@ class CouponService {
     const now = new Date();
     return now >= new Date(coupon.validFrom) && now <= new Date(coupon.validTo);
   }
+
+  public static async applyCoupon(code: string): Promise<{ success: boolean, discount: number }> {
+    const coupon = await this.getCouponByCode(code);
+
+    if (!this.isCouponValid(coupon)) {
+      throw new AppError(
+        "Coupon is not valid or has expired.",
+        StatusConstants.BAD_REQUEST.httpStatusCode
+      );
+    }
+
+    if (coupon.usageLimit && coupon.usageCount >= coupon.usageLimit) {
+      throw new AppError(
+        "Coupon usage limit reached.",
+        StatusConstants.BAD_REQUEST.httpStatusCode
+      );
+    }
+
+    // Increment the usage count
+    coupon.usageCount += 1;
+    await coupon.save();
+
+    return { success: true, discount: coupon.discountPercentage };
+  }
+
+  
 }
 
 export default CouponService;

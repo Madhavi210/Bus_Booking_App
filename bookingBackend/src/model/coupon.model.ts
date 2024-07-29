@@ -7,6 +7,7 @@ const couponSchema = new Schema<ICoupon>(
       type: String,
       unique: true,
       required: true,
+      trim: true,
     },
     discountPercentage: {
       type: Number,

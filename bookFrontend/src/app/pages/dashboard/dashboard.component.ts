@@ -10,9 +10,9 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  totalUsers: number = 4;
-  totalBuses: number = 5;
-  totalRoutes: number = 5;
+  totalUsers: number = 0;
+  totalBuses: number = 0;
+  totalRoutes: number = 0;
   
     // Pie chart data
     public pieChartData: number[] = [];
@@ -40,8 +40,7 @@ export class DashboardComponent implements OnInit {
     );
     this.busservice.getAllBuses().subscribe(
       (data) => {
-        this.totalBuses = data.totalBuses; // Ensure `totalBuses` matches your API response
-        console.log(this.totalBuses);
+        this.totalBuses = data.data.totalBuses; // Ensure `totalBuses` matches your API response
         
         // this.updateChart();
       },

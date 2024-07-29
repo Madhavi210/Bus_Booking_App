@@ -61,7 +61,8 @@ export default class BusService {
     const route = await Route.findOne({ routeName: routeName }).session(
       session
     );
-
+    console.log(route, routeName, "route");
+    
     if (!route) {
       throw new AppError(
         "Route not found",
@@ -136,6 +137,8 @@ export default class BusService {
 
     return await newBus.save({ session });
   }
+
+
   public static async getBusById(id: string): Promise<IBus | null> {
     return Bus.findById(id).exec();
   }
@@ -145,9 +148,13 @@ export default class BusService {
     const limit = parseInt(req.query.limit as string) || 10;
     const skip = (page - 1) * limit;
 
-    const startingStop = req.query.startingStop as string;
-    const endingStop = req.query.endingStop as string;
+    const startingS = req.query.startingStop as string;
+    const endingS = req.query.endingStop as string;
     const dbDate = req.query.date as string;
+
+    const startingStop = startingS?.trim().toLowerCase();
+    const endingStop = endingS?.trim().toLowerCase();
+
     const dateStart = moment.utc(dbDate).startOf("day").toDate();
     const dateEnd = moment.utc(dbDate).endOf("day").toDate();
 

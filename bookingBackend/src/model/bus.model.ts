@@ -36,6 +36,7 @@ const busSchema = new Schema<IBus>(
           type: String,
           required: true,
           trim: true,
+          lowercase: true,
         },
         departureTime: { type: Date, required: true },
       },
@@ -50,6 +51,7 @@ const busSchema = new Schema<IBus>(
       type: String,
       enum: ['Seater', 'Sleeper'], 
       required: true,
+      trim: true,
     },
     seatsLayout: {
       type: String, // e.g., "2x2", "2x1", "1x1", "3x2"
@@ -70,6 +72,7 @@ const busSchema = new Schema<IBus>(
   },
   { timestamps: true }
 );
+
 
 export const Bus = model<IBus>("Bus", busSchema);
 

@@ -54,6 +54,8 @@ export default class BookingService {
       throw new AppError('Seat already booked', StatusConstants.BAD_REQUEST.httpStatusCode);
     }
 
+    
+
     const seat = bus.seats.find(seat => seat.seatNumber === seatNumber);
     if (seat) {
       seat.isBooked = true;

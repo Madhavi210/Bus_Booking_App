@@ -31,4 +31,9 @@ export class CouponService {
   deleteCoupon(code: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${code}`)
   }
+
+  applyCoupon(code: string): Observable<{ success: boolean; discount: number }> {
+    return this.http.post<{ success: boolean; discount: number }>(`${this.apiUrl}/${code}`, {});
+  }
+
 }

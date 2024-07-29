@@ -6,11 +6,6 @@ import { Route } from "./route.model";
 
 const bookingSchema = new Schema<IBooking>(
   {
-    // user: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: User,
-    //   required: true,
-    // },
     userName: {
       type: String,
       required: true,
@@ -57,7 +52,6 @@ const bookingSchema = new Schema<IBooking>(
     seatNumber: {
       type: Number,
       required: true,
-      trim: true,
     },
     fare: { type: Number, required: true },
     paymentType: {

@@ -10,3 +10,12 @@
 2024-07-26T11:11:14.720Z [31merror[39m: API post/api/book hit with error Seat already booked
 2024-07-26T11:13:57.611Z [31merror[39m: API post/api/book hit with error Seat already booked
 2024-07-26T11:49:17.536Z [31merror[39m: API post/api/book hit with error Seat already booked
+2024-07-29T08:36:16.756Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:36:34.838Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:36:43.382Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:40:17.589Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:42:27.935Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:45:43.110Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:51:15.141Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:54:48.975Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:55:16.471Z [31merror[39m: API post/api/bus hit with error Route not found

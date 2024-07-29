@@ -72,7 +72,9 @@ export class AddRouteComponent {
   }
 
   removeStation(index: number): void {
-    if (this.stations.length > 1) {
+    console.log(index,' index removed');
+    
+    if (index > 1) {
       this.stations.removeAt(index);
     } else {
       Swal.fire('Warning', 'At least one station is required.', 'warning');

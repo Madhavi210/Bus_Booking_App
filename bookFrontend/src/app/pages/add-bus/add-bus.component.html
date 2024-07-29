@@ -1,4 +1,4 @@
-<div class="m-5">
+<!-- <div class="m-5">
   <form [formGroup]="busForm" (ngSubmit)="onSubmit()" class="bus-form">
     <div class="form-group">
       <label for="busNumber">Bus Number</label>
@@ -67,6 +67,113 @@
     <div>
       <button type="submit" class="btn btn-success m-1">Save</button>
       <button type="button" class="btn btn-secondary m-1" routerLink="/admin/busList">Bus List</button>
+    </div>
+  </form>
+</div> -->
+
+<!-- add-bus.component.html -->
+<div class="container mt-4">
+  <form [formGroup]="busForm" (ngSubmit)="onSubmit()" class="bus-form">
+    <div class="row ">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="busNumber">Bus Number</label>
+          <input id="busNumber" formControlName="busNumber" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="seatingCapacity">Seating Capacity</label>
+          <select id="seatingCapacity" formControlName="seatingCapacity" class="form-control">
+            <option *ngFor="let capacity of seatingCapacities" [value]="capacity">{{capacity}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input id="date" type="date" formControlName="date" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row ">
+      <div class="col-md-12">
+        <div formArrayName="amenities" class="form-group">
+          <label>Amenities</label>
+          <div *ngFor="let amenity of amenities.controls; let i = index" class="form-group d-flex ">
+            <input [formControlName]="i" class="form-control" placeholder="Add an amenity" />
+            <button type="button" (click)="removeAmenity(i)" class="btn btn-danger btn-sm m-1"><i class="fas fa-trash"></i></button>
+          </div>
+          <button type="button" (click)="addAmenity()" class="btn btn-primary">Add Amenity</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row ">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="routeName">Route Name</label>
+          <select id="routeName" formControlName="routeName" (change)="onRouteChange()" class="form-control">
+            <option *ngFor="let route of routes" [value]="route.routeName">{{route.routeName}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row ">
+      <div class="col-md-12">
+        <div formArrayName="stops" class="form-group">
+          <label>Stops</label>
+          <div *ngFor="let stop of stops.controls; let i = index" [formGroupName]="i" class="stop-item mb-2">
+            <div class="row mb-1">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="station-{{i}}">Station</label>
+                  <input id="station-{{i}}" formControlName="station" class="form-control" readonly />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="departureTime-{{i}}">Departure Time</label>
+                  <input id="departureTime-{{i}}" type="datetime-local" formControlName="departureTime" class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row ">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="busType">Bus Type</label>
+          <select id="busType" formControlName="busType" class="form-control">
+            <option value="Sleeper">Sleeper</option>
+            <option value="Seater">Seater</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="rows">Rows</label>
+          <input id="rows" type="number" formControlName="rows" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="columns">Columns</label>
+          <input id="columns" type="number" formControlName="columns" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <button type="submit" class="btn btn-success m-1">Save</button>
+        <button type="button" class="btn btn-secondary m-1" routerLink="/admin/busList">Bus List</button>
+      </div>
     </div>
   </form>
 </div>

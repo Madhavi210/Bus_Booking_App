@@ -19,6 +19,8 @@ export default class CouponRouter {
     this.router.delete('/:code',  Authentication.authUser, Authentication.authAdmin, CouponController.deleteCoupon);
 
     this.router.get('/', CouponController.getAllCoupons);
+
+    this.router.post('/:code', CouponController.applyCoupon);
   }
 
   public getRouter() {

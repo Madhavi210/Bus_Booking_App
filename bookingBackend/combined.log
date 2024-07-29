@@ -2799,3 +2799,316 @@
 2024-07-26T13:05:17.173Z [32minfo[39m: API get/api/route/:id hit successfully
 2024-07-26T13:08:40.484Z [32minfo[39m: Server is running on port 3000
 2024-07-26T13:08:41.218Z [32minfo[39m: Connected to MongoDB
+2024-07-29T05:39:21.594Z [32minfo[39m: Server is running on port 3000
+2024-07-29T05:39:22.440Z [32minfo[39m: Connected to MongoDB
+2024-07-29T05:40:58.725Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-29T05:40:58.896Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T05:41:03.295Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T05:43:06.345Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T05:51:10.793Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T05:51:52.271Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:03:03.209Z [32minfo[39m: Server is running on port 3000
+2024-07-29T06:03:04.035Z [32minfo[39m: Connected to MongoDB
+2024-07-29T06:20:17.938Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:20:28.274Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:20:34.353Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:22:09.068Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:23:39.831Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:25:58.667Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:29:29.807Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:29:32.911Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:30:38.727Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:30:42.954Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:30:57.899Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:32:39.621Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:33:44.072Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:34:46.947Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:34:49.131Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:35:58.349Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:36:21.223Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:36:22.243Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:36:43.189Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:36:47.218Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:36:54.213Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:36:56.557Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:37:00.324Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:37:04.301Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:37:07.514Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:37:09.849Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:37:28.058Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:37:37.750Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:37:45.848Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:37:55.846Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:37:57.317Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:38:05.262Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:38:07.188Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:38:17.815Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:38:22.086Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:38:26.540Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:38:28.442Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:38:29.982Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:38:36.041Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:38:45.780Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:39:42.637Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:39:50.874Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:40:51.474Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:41:32.656Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:41:54.100Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:42:08.475Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:42:11.954Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:42:14.572Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:42:16.672Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:42:56.861Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:42:59.613Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:43:03.280Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:43:05.997Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:43:10.964Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:43:13.354Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:43:15.857Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:43:31.953Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:44:05.448Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:44:45.255Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:45:09.505Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:45:32.512Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:45:39.255Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:45:45.891Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:45:52.403Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:46:06.445Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:46:08.097Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:46:13.272Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:46:22.390Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:46:29.317Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:46:59.339Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:47:00.950Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:47:02.541Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:47:11.580Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:47:13.218Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:47:16.214Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:47:22.159Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:47:36.122Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:47:40.416Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:47:44.222Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:04.716Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:10.180Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:13.203Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:17.532Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:21.170Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:24.531Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:45.783Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:48.053Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:48.444Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:48.655Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:48.835Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:48:49.015Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:49:14.173Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:49:20.399Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:50:41.414Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T06:51:15.564Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T06:51:19.214Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T07:08:13.868Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T07:12:27.262Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T07:12:47.517Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T07:15:39.550Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T07:15:51.392Z [32minfo[39m: All coupons retrieved successfully
+2024-07-29T07:16:07.159Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-29T07:24:17.921Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-29T07:24:18.005Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T07:24:25.918Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T07:25:31.571Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T07:25:31.655Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T07:29:06.695Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-29T07:31:07.861Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T08:14:24.577Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T08:15:10.503Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T08:15:49.019Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T08:19:34.551Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:19:35.306Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:19:50.384Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:19:51.311Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:20:32.552Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:20:33.235Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:20:40.121Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:20:40.671Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:20:47.423Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:20:48.026Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:20:56.223Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:20:56.841Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:21:31.850Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:21:38.221Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:21:38.838Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:22:06.355Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:22:07.043Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:22:20.817Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:22:21.477Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:22:39.578Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:22:40.195Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:22:50.067Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:22:50.697Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:30:31.233Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:30:31.960Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:31:27.974Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:31:28.557Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:33:12.093Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:33:12.646Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:33:36.081Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:33:36.784Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:34:06.454Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:34:07.066Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:35:03.982Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-29T08:35:04.084Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:35:08.642Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:35:27.190Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:36:16.756Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:36:34.838Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:36:43.382Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:38:20.154Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:39:01.327Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:39:16.440Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:39:18.709Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:39:27.144Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:40:17.589Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:41:49.468Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:41:52.274Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:42:27.935Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:43:28.042Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:43:39.921Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:43:44.988Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:43:46.707Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:44:13.827Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:44:54.396Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:45:12.637Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:45:43.110Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:47:43.810Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:47:45.515Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:49:22.001Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:49:24.466Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:50:42.827Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T08:51:15.141Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:54:22.129Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:54:23.339Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:54:40.287Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:54:41.365Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:54:48.975Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:55:14.725Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:55:15.569Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:55:16.471Z [31merror[39m: API post/api/bus hit with error Route not found
+2024-07-29T08:56:52.899Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T08:57:20.577Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:57:21.848Z [32minfo[39m: Connected to MongoDB
+2024-07-29T08:57:28.489Z [32minfo[39m: Server is running on port 3000
+2024-07-29T08:57:29.994Z [32minfo[39m: Connected to MongoDB
+2024-07-29T09:06:42.640Z [32minfo[39m: API delete/api/bus/:id hit successfully
+2024-07-29T09:06:45.619Z [32minfo[39m: API delete/api/bus/:id hit successfully
+2024-07-29T09:06:47.917Z [32minfo[39m: API delete/api/bus/:id hit successfully
+2024-07-29T09:06:50.817Z [32minfo[39m: API delete/api/bus/:id hit successfully
+2024-07-29T09:06:55.130Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:07:00.111Z [32minfo[39m: API delete/api/route/:id hit successfully
+2024-07-29T09:07:00.170Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:07:02.713Z [32minfo[39m: API delete/api/route/:id hit successfully
+2024-07-29T09:07:02.772Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:07:05.468Z [32minfo[39m: API delete/api/route/:id hit successfully
+2024-07-29T09:07:05.526Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:07:08.177Z [32minfo[39m: API delete/api/route/:id hit successfully
+2024-07-29T09:07:08.232Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:07:12.553Z [32minfo[39m: API delete/api/route/:id hit successfully
+2024-07-29T09:07:12.610Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:07:15.484Z [32minfo[39m: API delete/api/route/:id hit successfully
+2024-07-29T09:07:15.537Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:10:00.401Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:10:00.472Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:10:34.164Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:10:43.226Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:12:48.616Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:12:48.698Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:13:03.048Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:19:52.886Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T09:20:30.959Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:23:46.973Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T09:23:52.520Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:25:22.893Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:25:22.972Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:26:41.341Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:26:41.437Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:26:55.922Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:27:59.189Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:27:59.283Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:29:54.581Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:29:54.687Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:33:12.324Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:33:12.412Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:34:18.206Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:34:18.302Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:34:54.312Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:36:16.256Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:36:16.367Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:39:01.632Z [32minfo[39m: API post/api/route hit successfully
+2024-07-29T09:39:01.718Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:39:19.634Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:43:52.669Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T09:44:02.826Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:45:42.052Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T09:45:45.887Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:45:55.400Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:49:12.677Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T09:49:16.278Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:51:42.165Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T09:52:00.778Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:53:57.939Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T09:54:00.318Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:56:11.872Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T09:56:14.249Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T09:58:43.250Z [32minfo[39m: API post/api/bus hit successfully
+2024-07-29T10:01:01.109Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-29T10:02:58.334Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T10:03:59.178Z [32minfo[39m: API post/api/book hit successfully
+2024-07-29T10:03:59.196Z [32minfo[39m: Generated PNR number: G335554
+2024-07-29T10:17:15.512Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T10:17:28.793Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T10:20:19.777Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T10:22:00.692Z [32minfo[39m: API post/api/book hit successfully
+2024-07-29T10:22:00.709Z [32minfo[39m: Generated PNR number: G943762
+2024-07-29T10:31:07.336Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-29T10:31:07.446Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:31:12.433Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:31:19.913Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T10:31:46.167Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:32:17.401Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:32:41.137Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:06.803Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:11.123Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:25.544Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:28.062Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:28.376Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:29.088Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:29.446Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:49.440Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:51.166Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T10:33:53.348Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T13:00:40.585Z [32minfo[39m: Server is running on port 3000
+2024-07-29T13:00:41.287Z [32minfo[39m: Connected to MongoDB
+2024-07-29T13:22:42.118Z [32minfo[39m: Server is running on port 3000
+2024-07-29T13:22:42.947Z [32minfo[39m: Connected to MongoDB
+2024-07-29T13:23:15.400Z [32minfo[39m: Server is running on port 3000
+2024-07-29T13:23:16.082Z [32minfo[39m: Connected to MongoDB
+2024-07-29T13:23:28.287Z [32minfo[39m: Server is running on port 3000
+2024-07-29T13:23:29.118Z [32minfo[39m: Connected to MongoDB
+2024-07-29T13:24:33.382Z [32minfo[39m: Server is running on port 3000
+2024-07-29T13:24:34.142Z [32minfo[39m: Connected to MongoDB
+2024-07-29T13:24:58.906Z [32minfo[39m: Server is running on port 3000
+2024-07-29T13:24:59.650Z [32minfo[39m: Connected to MongoDB
+2024-07-29T13:25:40.636Z [32minfo[39m: Server is running on port 3000
+2024-07-29T13:25:41.290Z [32minfo[39m: Connected to MongoDB
+2024-07-29T13:26:03.697Z [32minfo[39m: Server is running on port 3000
+2024-07-29T13:26:04.443Z [32minfo[39m: Connected to MongoDB
+2024-07-29T13:26:35.277Z [32minfo[39m: Server is running on port 3000
+2024-07-29T13:26:35.825Z [32minfo[39m: Connected to MongoDB
+2024-07-29T13:33:25.010Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-29T13:33:25.157Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T13:33:34.489Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T13:33:55.712Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T13:34:00.436Z [32minfo[39m: API get/api/route hit successfully
+2024-07-29T13:34:23.652Z [32minfo[39m: All coupons retrieved successfully
+2024-07-29T13:34:36.734Z [32minfo[39m: API post/api/user/login hit successfully
+2024-07-29T13:35:11.713Z [32minfo[39m: API get/api/route/:id hit successfully
+2024-07-29T13:35:33.274Z [32minfo[39m: API post/api/book hit successfully
+2024-07-29T13:35:33.287Z [32minfo[39m: Generated PNR number: G005929

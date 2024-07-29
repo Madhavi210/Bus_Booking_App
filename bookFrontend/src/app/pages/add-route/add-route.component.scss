@@ -71,3 +71,19 @@
     }
   }
   
+  .btn-danger {
+    background-color: #dc3545; /* Red background color */
+    border-color: #dc3545; /* Red border color */
+    padding: 0.5rem 1rem; /* Adjust padding for better button size */
+    font-size: 0.875rem; /* Ensure text size is consistent */
+    border-radius: 0.25rem; /* Rounded corners for consistency */
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333; /* Darker red for hover effect */
+    border-color: #bd2130; /* Darker red border color for hover effect */
+  }
+  
+  .btn-danger:focus, .btn-danger:active {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5); /* Shadow on focus and active states */
+  }

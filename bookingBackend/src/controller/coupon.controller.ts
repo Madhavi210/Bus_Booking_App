@@ -85,4 +85,20 @@ export default class CouponController {
       next(error);
     }
   }
+
+  public static async applyCoupon(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const { code } = req.params;
+    try {
+      const result = await CouponService.applyCoupon(code);
+      logger.info('Coupon applied successfully', { code });
+      res.status(StatusConstants.OK.httpStatusCode).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }

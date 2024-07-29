@@ -1,8 +1,11 @@
+// add-bus.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BusService } from 'src/app/core/services/bus/bus.service';
 import Swal from 'sweetalert2';
+import { IRoute, IStation } from 'src/app/core/interface/route.interface';
+import { RouteService } from 'src/app/core/services/route/route.service';
 
 @Component({
   selector: 'app-add-bus',
@@ -14,12 +17,15 @@ export class AddBusComponent implements OnInit {
   isEdit: boolean = false;
   busId: string | null = null;
   seatingCapacities: number[] = [20, 32, 40, 56, 60];
+  routes: IRoute[] = [];
+  stations: IStation[] = [];
 
   constructor(
     private fb: FormBuilder,
     private busService: BusService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private routeService: RouteService,
   ) {
     this.busForm = this.fb.group({
       busNumber: ['', Validators.required],
@@ -28,7 +34,6 @@ export class AddBusComponent implements OnInit {
       routeName: ['', Validators.required],
       stops: this.fb.array([]),
       busType: ['', Validators.required],
-      seatsLayout: ['2x2', Validators.required],
       rows: [0, [Validators.required, Validators.min(1)]],
       columns: [0, [Validators.required, Validators.min(1)]],
       date: ['', Validators.required]
@@ -41,12 +46,45 @@ export class AddBusComponent implements OnInit {
     if (this.isEdit) {
       this.loadBusData();
     }
+    this.loadRoutes();
   }
 
-  createStopGroup(): FormGroup {
-    return this.fb.group({
-      station: ['', Validators.required],
-      departureTime: ['', Validators.required]  // Changed to departureTime
+  loadRoutes(): void {
+    this.routeService.getAllRoutes().subscribe({
+      next: (response) => {
+        this.routes = response.routes;
+      },
+      error: (error) => {
+        console.error('Failed to load routes', error);
+      }
+    });
+  }
+
+  onRouteChange(): void {
+    const selectedRouteName = this.busForm.get('routeName')?.value;
+    
+    if (selectedRouteName) {
+      const selectedRoute = this.routes.find(route => route.routeName === selectedRouteName);
+      if (selectedRoute) {
+        this.stations = selectedRoute.stations.map((station, index) => ({
+          name: station.name,
+          timing: station.timing || '',
+          distanceFromPrevious: station.distanceFromPrevious,
+          stationNumber: station.stationNumber
+        }));
+        this.populateStops();
+      }
+    }
+  }
+
+  populateStops(): void {
+    const stopsArray = this.busForm.get('stops') as FormArray;
+    stopsArray.clear();
+    this.stations.forEach(station => {
+      stopsArray.push(this.fb.group({
+        station: [station.name, Validators.required],
+        departureTime: ['', Validators.required]
+      }));
     });
   }
 
@@ -56,80 +94,91 @@ export class AddBusComponent implements OnInit {
         this.busForm.patchValue({
           busNumber: bus.busNumber,
           seatingCapacity: bus.seatingCapacity,
+          // routeName: bus.routeName,
           busType: bus.busType,
           rows: bus.rows,
           columns: bus.columns,
-          date: bus.date
-        });
-
-        const stopsArray = this.busForm.get('stops') as FormArray;
-        stopsArray.clear();
-        bus.stops.forEach(stop => {
-          stopsArray.push(this.fb.group({
-            station: [stop.station, Validators.required],
-            departureTime: [stop.departureTime, Validators.required]
-          }));
+          date: bus.date,
         });
 
         const amenitiesArray = this.busForm.get('amenities') as FormArray;
         amenitiesArray.clear();
-        bus.amenities.forEach(amenity => {
+        bus.amenities.forEach((amenity: string) => {
           amenitiesArray.push(this.fb.control(amenity));
+        });
+
+        const stopsArray = this.busForm.get('stops') as FormArray;
+        stopsArray.clear();
+        bus.stops.forEach((stop: any) => {
+          stopsArray.push(this.fb.group({
+            station: stop.station,
+            departureTime: stop.departureTime
+          }));
         });
       });
     }
   }
 
-  get amenities() {
-    return this.busForm.get('amenities') as FormArray;
+  addAmenity(): void {
+    const amenities = this.busForm.get('amenities') as FormArray;
+    amenities.push(this.fb.control(''));
   }
 
-  get stops() {
-    return this.busForm.get('stops') as FormArray;
+  removeAmenity(index: number): void {
+    this.amenities.removeAt(index);
   }
 
-  addStop() {
-    this.stops.push(this.createStopGroup());
-  }
+  // removeStop(index: number): void {
+  //   const stopsArray = this.busForm.get('stops') as FormArray;
+  //   stopsArray.removeAt(index);
+  // }
 
-  removeStop(index: number) {
-    this.stops.removeAt(index);
-  }
-
-  addAmenity() {
-    this.amenities.push(this.fb.control(''));
-  }
+  // addStop(): void {
+  //   const stopsArray = this.busForm.get('stops') as FormArray;
+  //   stopsArray.push(this.fb.group({
+  //     station: ['', Validators.required],
+  //     departureTime: ['', Validators.required]
+  //   }));
+  // }
 
   onSubmit(): void {
     if (this.busForm.valid) {
       const busData = this.busForm.value;
+      busData.routeName = busData.routeName.trim();
+      console.log(busData, 'busdata');
+      console.log(this.busForm.value, 'busform');
+      
       if (this.isEdit && this.busId) {
         this.busService.updateBus(this.busId, busData).subscribe({
-          next: () => {
-            Swal.fire('Success', 'Bus updated successfully', 'success');
+          next: (response) => {
+            Swal.fire('Success', 'Bus updated successfully!', 'success');
             this.router.navigate(['/admin/busList']);
           },
           error: (error) => {
-            console.error('Bus update failed', error);
-            Swal.fire('Error', 'Bus update failed', 'error');
+            Swal.fire('Error', 'Failed to update bus', 'error');
           }
         });
       } else {
         this.busService.createBus(busData).subscribe({
           next: (response) => {
-            console.log(response);
-            
-            Swal.fire('Success', 'Bus created successfully', 'success');
+            Swal.fire('Success', 'Bus added successfully!', 'success');
             this.router.navigate(['/admin/busList']);
           },
           error: (error) => {
-            console.error('Bus creation failed', error);
-            Swal.fire('Error', 'Bus creation failed', 'error');
+            Swal.fire('Error', 'Failed to add bus', 'error');
           }
         });
       }
-    } else {
-      this.busForm.markAllAsTouched();
     }
   }
+
+  get amenities(): FormArray {
+    return this.busForm.get('amenities') as FormArray;
+  }
+
+  get stops(): FormArray {
+    return this.busForm.get('stops') as FormArray;
+  }
+
+  
 }

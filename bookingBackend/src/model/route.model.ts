@@ -5,14 +5,18 @@ const stationSchema = new Schema<IStation>({
   name: {
     type: String,
     required: true,
+    trim: true,
+    lowercase: true,
   },
   distanceFromPrevious: {
     type: Number,
     required: true,
+    trim: true,
   }, // Distance from the previous station
   stationNumber: {
     type: Number,
     required: true,
+    trim: true,
   }
 });
 
@@ -23,6 +27,8 @@ const routeSchema = new Schema<IRoute>(
       type: String,
       required: true,
       unique: true, // Ensure the route name is unique
+      trim: true,
+
     },
     stations: [stationSchema],
   },
